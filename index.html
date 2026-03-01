@@ -1646,11 +1646,16 @@ function goToSlide(n) {
 
 setInterval(() => goToSlide(currentSlide + 1), 5000);
 
-const SHEET_ID = '2PACX-1vQn2Gmg0F5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mr0kw9FYbHwY8eppjRplB9tdUR0iLs2';
-const BASE = 'https://docs.google.com/spreadsheets/d/e/' + SHEET_ID + '/pub?output=csv&sheet=';
+const SHEET_URLS = {
+  announcements: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQn2Gmg0F5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mr0kw9FYbHwY8eppjRplB9tdUR0iLs2/pub?output=csv&sheet=announcements',
+  enrollment:    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRzajlmiWqpCb4QclB5woMSgcVFlVLzHIL_uMNSBwQ1xmTM1CEGkE-qeyW5GcrKFIr43fz8XlrWEjAB/pub?output=csv',
+  ppas:          'https://docs.google.com/spreadsheets/d/e/2PACX-1vQn2Gmg0F5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mr0kw9FYbHwY8eppjRplB9tdUR0iLs2/pub?output=csv&sheet=ppas',
+  settings:      'https://docs.google.com/spreadsheets/d/e/2PACX-1vQn2Gmg0F5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mr0kw9FYbHwY8eppjRplB9tdUR0iLs2/pub?output=csv&sheet=settings',
+};
 
 async function fetchCSV(sheet) {
-  const res = await fetch(BASE + sheet);
+  const url = SHEET_URLS[sheet] || '';
+  const res = await fetch(url);
   const text = await res.text();
   const rows = text.trim().split('\n').map(r => {
     const result = []; let cur = '', inQ = false;
