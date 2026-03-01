@@ -1481,92 +1481,15 @@
 
     <!-- ANNOUNCEMENTS -->
     <h2 class="section-title">Pinakabagong Announcements</h2>
-
-    <div class="announcement-card">
-      <div class="ann-date"><span class="day">27</span><span>Feb</span></div>
-      <div class="ann-content">
-        <span class="ann-tag">Enrollment</span>
-        <h4>Bukas na ang Enrollment para sa SY 2025–2026</h4>
-        <p>Maaari nang mag-enroll ang mga magulang at guardian. Dalhin ang mga kinakailangang dokumento sa registrar ng paaralan.</p>
-      </div>
-    </div>
-
-    <div class="announcement-card">
-      <div class="ann-date"><span class="day">20</span><span>Feb</span></div>
-      <div class="ann-content">
-        <span class="ann-tag">Advisory</span>
-        <h4>3rd Quarter Assessment Schedule — Inilabas na</h4>
-        <p>Ang iskedyul ng 3rd Quarter Assessment ay inilabas na. Ihanda ang mga bata para sa paparating na eksamen.</p>
-      </div>
-    </div>
-
-    <div class="announcement-card">
-      <div class="ann-date"><span class="day">15</span><span>Feb</span></div>
-      <div class="ann-content">
-        <span class="ann-tag">Health</span>
-        <h4>Libreng Medical & Dental Mission — March 5</h4>
-        <p>Magkakaroon ng libreng medical at dental mission para sa lahat ng mag-aaral. Ipapamahagi ng class advisers ang consent forms.</p>
-      </div>
-    </div>
-
-    <div class="announcement-card">
-      <div class="ann-date"><span class="day">10</span><span>Feb</span></div>
-      <div class="ann-content">
-        <span class="ann-tag">Reminder</span>
-        <h4>Huwag Kalimutang Isumite ang mga School Forms</h4>
-        <p>Pakisubmit ang lahat ng natitirang school forms sa inyong class adviser bago mag-Marso 1.</p>
-      </div>
+    <div id="main-announcements-container">
+      <p style="color:var(--gray); font-size:0.9rem;">Naglo-load...</p>
     </div>
 
     <!-- EVENTS & ACTIVITIES -->
     <div class="events-section">
       <h2 class="section-title">Events & Activities</h2>
-      <div class="events-grid">
-
-        <div class="event-card">
-          <div class="event-header">
-            <div class="event-date-box"><span class="eday">5</span><span>Mar</span></div>
-            <h4>Medical & Dental Mission</h4>
-          </div>
-          <div class="event-body">
-            <p>Libreng medical at dental checkup para sa lahat ng mag-aaral ng IYES.</p>
-            <div class="event-meta">📍 School Covered Court &nbsp;•&nbsp; 8:00 AM</div>
-          </div>
-        </div>
-
-        <div class="event-card">
-          <div class="event-header">
-            <div class="event-date-box"><span class="eday">15</span><span>Mar</span></div>
-            <h4>Foundation Day Celebration</h4>
-          </div>
-          <div class="event-body">
-            <p>Pagdiriwang ng anibersaryo ng IYES kasama ang mga laro, sayaw, at programa.</p>
-            <div class="event-meta">📍 School Grounds &nbsp;•&nbsp; 7:30 AM</div>
-          </div>
-        </div>
-
-        <div class="event-card">
-          <div class="event-header">
-            <div class="event-date-box"><span class="eday">28</span><span>Mar</span></div>
-            <h4>3rd Quarter Card Giving Day</h4>
-          </div>
-          <div class="event-body">
-            <p>Pamamahagi ng report cards para sa ikatlong quarter. Kailangan ang presensya ng magulang.</p>
-            <div class="event-meta">📍 Classrooms &nbsp;•&nbsp; 8:00 AM</div>
-          </div>
-        </div>
-
-        <div class="event-card">
-          <div class="event-header">
-            <div class="event-date-box"><span class="eday">22</span><span>Apr</span></div>
-            <h4>Earth Day: Tree Planting Activity</h4>
-          </div>
-          <div class="event-body">
-            <p>Pagtatanim ng puno bilang bahagi ng programa ng paaralan para sa kapaligiran.</p>
-            <div class="event-meta">📍 School Vicinity &nbsp;•&nbsp; 7:00 AM</div>
-          </div>
-        </div>
-
+      <div class="events-grid" id="main-events-container">
+        <p style="color:var(--gray); font-size:0.9rem;">Naglo-load...</p>
       </div>
     </div>
 
@@ -1651,6 +1574,7 @@ const SHEET_URLS = {
   enrollment:    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRzajImiWqpCb4QclB5woMSgcVFlVLzHIL_uMNSBwQ1xmTM1CEGkE-qeyW5GcrKFIr43fz8XIrWEjAB/pub?gid=0&single=true&output=csv',
   ppas:          'https://docs.google.com/spreadsheets/d/e/2PACX-1vQn2Gmg0F5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mr0kw9FYbHwY8eppjRplB9tdUR0iLs2/pub?output=csv&sheet=ppas',
   settings:      'https://docs.google.com/spreadsheets/d/e/2PACX-1vQn2Gmg0F5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mr0kw9FYbHwY8eppjRplB9tdUR0iLs2/pub?output=csv&sheet=settings',
+  events:        'https://docs.google.com/spreadsheets/d/e/2PACX-1vTcahFgkkHP_K5x8dFXCxj77xXNDmZDnmprNTY5xgGytr0WcY6bdlrKNHYpGfjkB7aP0ypydeWbf7ip/pub?gid=0&single=true&output=csv',
 };
 
 async function fetchCSV(sheet) {
@@ -1771,6 +1695,54 @@ loadEnrollment();
 loadPPAs();
 loadAnnouncements();
 loadSettings();
+
+async function loadMainAnnouncements() {
+  try {
+    const data = await fetchCSV('announcements');
+    if (!data.length) return;
+    const el = document.getElementById('main-announcements-container');
+    if (!el) return;
+    el.innerHTML = data.map(row => {
+      const d = new Date(row.date);
+      const day = isNaN(d) ? '--' : d.getDate();
+      const mon = isNaN(d) ? row.date : d.toLocaleString('en', {month:'short'});
+      return `<div class="announcement-card">
+        <div class="ann-date"><span class="day">${day}</span><span>${mon}</span></div>
+        <div class="ann-content">
+          <span class="ann-tag">${row.tag||''}</span>
+          <h4>${row.title||''}</h4>
+          <p>${row.content||''}</p>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) { console.error('Main announcements error:', e); }
+}
+
+async function loadMainEvents() {
+  try {
+    const data = await fetchCSV('events');
+    if (!data.length) return;
+    const el = document.getElementById('main-events-container');
+    if (!el) return;
+    el.innerHTML = data.map(row => {
+      const d = new Date(row.date);
+      const day = isNaN(d) ? '--' : d.getDate();
+      const mon = isNaN(d) ? row.date : d.toLocaleString('en', {month:'short'});
+      return `<div class="event-card">
+        <div class="event-header">
+          <div class="event-date-box"><span class="eday">${day}</span><span>${mon}</span></div>
+          <h4>${row.title||''}</h4>
+        </div>
+        <div class="event-body">
+          <p>${row.description||''}</p>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) { console.error('Main events error:', e); }
+}
+
+loadMainAnnouncements();
+loadMainEvents();
 </script>
 
 <script data-cfasync="false" src
