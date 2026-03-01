@@ -783,21 +783,29 @@
       </div>
     </div>
 
-    <!-- 1. VIDEO (placeholder) -->
+    <!-- 1. VIDEO -->
     <div class="slide">
       <div class="slide-placeholder" style="background: linear-gradient(135deg, #1a1a2e, #16213e);">
-        <div class="pl-icon">🎬</div>
-        <div class="pl-title">Introductory Video</div>
-        <div class="pl-sub">Ilayang Yuni Elementary School</div>
+        <div id="introductory_video-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+          <div style="text-align:center;">
+            <div style="font-size:8rem;">🎬</div>
+            <div style="font-family:'Merriweather',serif; font-size:3.8rem; font-weight:900; color:white; margin-top:16px;">Introductory Video</div>
+            <div style="font-size:1.8rem; color:rgba(255,255,255,0.85); margin-top:8px;">Ilayang Yuni Elementary School</div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- 2. RESPONSABLE FRAMEWORK -->
     <div class="slide">
       <div class="slide-placeholder" style="background: linear-gradient(135deg, #6a0dad, #c0392b);">
-        <div class="pl-icon">📋</div>
-        <div class="pl-title">RESPONSABLE Framework</div>
-        <div class="pl-sub">"Sa Ilayang Yuni, Lahat RESPONSABLE"</div>
+        <div id="responsable_framework-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+          <div style="text-align:center;">
+            <div style="font-size:8rem;">📋</div>
+            <div style="font-family:'Merriweather',serif; font-size:3.8rem; font-weight:900; color:white; margin-top:16px;">RESPONSABLE Framework</div>
+            <div style="font-size:1.8rem; color:rgba(255,255,255,0.85); margin-top:8px;">"Sa Ilayang Yuni, Lahat RESPONSABLE"</div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -839,8 +847,8 @@
           <div style="background:rgba(255,255,255,0.08); border-radius:12px; padding:18px 22px; display:flex; flex-direction:column; gap:9px;">
             <div style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:var(--yellow); border-bottom:1px solid rgba(245,194,0,0.3); padding-bottom:8px;">📍 Contact Information</div>
             <div style="display:flex; gap:8px; align-items:flex-start;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">ADDRESS</div><div style="font-size:1.8rem; color:white; font-weight:700;">Sitio Central A, Brgy. Ilayang Yuni, Mulanay, Quezon 4312</div></div>
-            <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">EMAIL</div><div style="font-size:1.8rem; color:white; font-weight:700;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dfeeefe7e6ede69fbbbaafbabbf1b8b0a9f1afb7">[email&#160;protected]</a></div></div>
-            <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">CONTACT</div><div style="font-size:1.8rem; color:white; font-weight:700;">09302613511</div></div>
+            <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">EMAIL</div><div id="about-email" style="font-size:1.8rem; color:white; font-weight:700;">—</div></div>
+            <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">CONTACT</div><div id="about-contact" style="font-size:1.8rem; color:white; font-weight:700;">—</div></div>
           </div>
 
         </div>
@@ -1497,14 +1505,6 @@
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <div class="vm-card">
-      <div class="vm-title">🌟 Aming Bisyon</div>
-      <p>Nangangarap tayo ng mga Pilipinong taos-pusong nagmamahal sa kanilang bansa at ang kanilang mga pagpapahalaga at kakayahan ay nagbibigay-daan sa kanila na matupad ang kanilang buong potensyal.</p>
-      <div class="vm-divider"></div>
-      <div class="vm-title">🎯 Aming Misyon</div>
-      <p>Pangalagaan at itaguyod ang karapatan ng bawat Pilipino sa kalidad, makatarungan, at kumpletong pangunahing edukasyon.</p>
-    </div>
-
     <div class="quick-links">
       <h2 class="section-title" style="margin-bottom:14px; font-size:1.55rem;">Mabilis na Links</h2>
       <a href="#" class="quick-link-item"><span class="icon">📋</span> Citizens Charter</a>
@@ -1567,13 +1567,14 @@ function goToSlide(n) {
   dots[currentSlide].classList.add('active');
 }
 
-setInterval(() => goToSlide(currentSlide + 1), 5000);
+setInterval(() => goToSlide(currentSlide + 1), 30000);
 
 const SHEET_URLS = {
   announcements: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQn2Gmg0F5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mr0kw9FYbHwY8eppjRplB9tdUR0iLs2/pub?output=csv&sheet=announcements',
   enrollment:    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRzajImiWqpCb4QclB5woMSgcVFlVLzHIL_uMNSBwQ1xmTM1CEGkE-qeyW5GcrKFIr43fz8XIrWEjAB/pub?gid=0&single=true&output=csv',
-  ppas:          'https://docs.google.com/spreadsheets/d/e/2PACX-1vQn2Gmg0F5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mr0kw9FYbHwY8eppjRplB9tdUR0iLs2/pub?output=csv&sheet=ppas',
-  settings:      'https://docs.google.com/spreadsheets/d/e/2PACX-1vQn2Gmg0F5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mr0kw9FYbHwY8eppjRplB9tdUR0iLs2/pub?output=csv&sheet=settings',
+  ppas:          'https://docs.google.com/spreadsheets/d/e/2PACX-1vTO_CIBCrsO34vJeJAUYqe9-xi012DDc5fDuZuwcj_OJBAbgQCeXoW7ONyZkocAWafsNU8KFrcokOHX/pub?gid=0&single=true&output=csv',
+  settings:      'https://docs.google.com/spreadsheets/d/e/2PACX-1vSieM-BANe-E6ILA87jaigqKX1B5pWZmOaJv9dc7iaevGfdxkYK4tzyMS24rdLXqhO6vsGpyRgAKjIU/pub?gid=0&single=true&output=csv',
+  personnel:     'https://docs.google.com/spreadsheets/d/e/2PACX-1vQnizZJncB_od07MZzc4sM0HED8Iiwi3iTgD12w8bQ2BYpcv_H9FauezWSpz4x92zVd6X2WJQxC6M9E/pub?gid=0&single=true&output=csv',
   events:        'https://docs.google.com/spreadsheets/d/e/2PACX-1vTcahFgkkHP_K5x8dFXCxj77xXNDmZDnmprNTY5xgGytr0WcY6bdlrKNHYpGfjkB7aP0ypydeWbf7ip/pub?gid=0&single=true&output=csv',
 };
 
@@ -1674,20 +1675,56 @@ async function loadSettings() {
     const data = await fetchCSV('settings');
     const s = {};
     data.forEach(r => { if(r.key) s[r.key] = r.value; });
+
     function driveUrl(url) {
       if (!url) return '';
       const m = url.match(/[-\w]{25,}/);
       return m ? `https://drive.google.com/uc?export=view&id=${m[0]}` : url;
     }
-    const keys = ['announcements_image_slideshow','events_image_slideshow','personnel_image_slideshow',
+
+    // Image slideshows
+    const imgKeys = ['announcements_image_slideshow','events_image_slideshow','personnel_image_slideshow',
       'liquidation_image_slideshow','school_map_image_slideshow','spta_image_slideshow',
       'selg_image_slideshow','teachers_club_image_slideshow','links_image_slideshow'];
-    keys.forEach(key => {
+    imgKeys.forEach(key => {
       const el = document.getElementById(key + '-container');
       if (el && s[key]) {
         el.innerHTML = `<img src="${driveUrl(s[key])}" style="width:100%;height:100%;object-fit:contain;">`;
       }
     });
+
+    // Introductory Video
+    if (s['introductory_video']) {
+      const el = document.getElementById('introductory_video-container');
+      if (el) {
+        // Support YouTube links
+        const ytMatch = s['introductory_video'].match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]+)/);
+        if (ytMatch) {
+          el.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&mute=1&loop=1&playlist=${ytMatch[1]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="display:block;"></iframe>`;
+        } else {
+          el.innerHTML = `<video src="${s['introductory_video']}" autoplay muted loop style="width:100%;height:100%;object-fit:cover;"></video>`;
+        }
+      }
+    }
+
+    // RESPONSABLE Framework image
+    if (s['responsable_framework_image']) {
+      const el = document.getElementById('responsable_framework-container');
+      if (el) {
+        el.innerHTML = `<img src="${driveUrl(s['responsable_framework_image'])}" style="width:100%;height:100%;object-fit:contain;">`;
+      }
+    }
+
+    // About Us contact info
+    if (s['contact_number']) {
+      const el = document.getElementById('about-contact');
+      if (el) el.textContent = s['contact_number'];
+    }
+    if (s['email_address']) {
+      const el = document.getElementById('about-email');
+      if (el) el.textContent = s['email_address'];
+    }
+
   } catch(e) { console.error('Settings load error:', e); }
 }
 
