@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organizations - Ilayang Yuni Elementary School</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #1a2fa0; --blue-dark: #0d1e6b; --blue-light: #e8edf8; --blue-xlight: #f4f6fb;
+    --white: #ffffff; --gray: #6b7280; --yellow: #f5c200;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Source Sans 3',sans-serif; background:var(--blue-xlight); color:#1a1a2e; }
+
+  .topbar { background:var(--blue-dark); color:rgba(255,255,255,0.8); font-size:0.78rem; padding:6px 40px; display:flex; justify-content:center; align-items:center; }
+  header { background:white; border-bottom:4px solid var(--blue); padding:16px 40px; display:flex; align-items:center; gap:20px; box-shadow:0 2px 12px rgba(26,47,160,0.08); }
+  .logo-wrap img { width:90px; height:90px; object-fit:contain; }
+  .school-title h1 { font-family:'Merriweather',serif; font-size:1.35rem; font-weight:900; color:var(--blue-dark); text-transform:uppercase; letter-spacing:0.5px; }
+  .school-title .tagline-main { font-size:0.9rem; color:var(--blue); font-weight:700; margin-top:5px; font-style:italic; }
+  .school-title .dep-tag { font-size:0.78rem; color:var(--gray); font-weight:400; margin-top:2px; display:block; }
+
+  nav { background:var(--blue); padding:0 40px; position:sticky; top:0; z-index:100; }
+  nav ul { display:flex; list-style:none; overflow-x:auto; }
+  nav ul li a { display:block; color:rgba(255,255,255,0.85); text-decoration:none; padding:13px; font-size:0.78rem; font-weight:600; text-transform:uppercase; border-bottom:3px solid transparent; white-space:nowrap; }
+  nav ul li.active a { color:var(--yellow); border-bottom-color:var(--yellow); }
+
+  .page-hero { background:linear-gradient(135deg,var(--blue-dark),var(--blue)); padding:32px 40px; text-align:center; }
+  .page-hero h2 { font-family:'Merriweather',serif; font-size:1.6rem; font-weight:900; color:white; }
+
+  .page { max-width:960px; margin:0 auto; padding:40px 24px 60px; }
+
+  /* TABS */
+  .org-tabs { display:flex; gap:8px; margin-bottom:28px; }
+  .org-tab {
+    padding:10px 24px; border-radius:8px; font-size:0.82rem; font-weight:700;
+    cursor:pointer; border:2px solid var(--blue-light); background:white; color:var(--gray);
+    transition:all 0.2s;
+  }
+  .org-tab.active { background:var(--blue); color:white; border-color:var(--blue); }
+  .org-tab:hover:not(.active) { border-color:var(--blue); color:var(--blue); }
+
+  .org-panel { display:none; }
+  .org-panel.active { display:block; }
+
+  .img-placeholder {
+    background:white; border-radius:12px; border:2px dashed var(--blue-light);
+    padding:60px 40px; text-align:center; color:var(--gray);
+  }
+  .img-placeholder .icon { font-size:3rem; margin-bottom:12px; }
+  .img-placeholder p { font-size:0.85rem; }
+  .org-img { width:100%; border-radius:12px; box-shadow:0 4px 24px rgba(26,47,160,0.12); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>Department of Education &nbsp;|&nbsp; Region IV-A CALABARZON &nbsp;|&nbsp; Division of Quezon &nbsp;|&nbsp; Mulanay District 2</span>
+</div>
+
+<header>
+  <div class="logo-wrap"><img src="assets/logo.png" alt="IYES Logo"></div>
+  <div class="school-title">
+    <h1>Ilayang Yuni Elementary School</h1>
+    <div class="tagline-main">"Sa Ilayang Yuni, Lahat RESPONSABLE"</div>
+    <span class="dep-tag">Sitio Central A, Brgy. Ilayang Yuni, Mulanay, Quezon 4312</span>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="announcements.html">Announcements</a></li>
+    <li><a href="events.html">Events & Activities</a></li>
+    <li><a href="#">Enrollment ▾</a></li>
+    <li><a href="personnel.html">School Personnel</a></li>
+    <li><a href="school-map.html">School Map</a></li>
+    <li><a href="citizens-charter.html">Citizens Charter ▾</a></li>
+    <li><a href="#">Liquidation ▾</a></li>
+    <li><a href="ppas.html">PPAs ▾</a></li>
+    <li class="active"><a href="organizations.html">Organizations ▾</a></li>
+    <li><a href="links.html">Links</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <h2>🏫 Organizations</h2>
+</div>
+
+<div class="page">
+  <div class="org-tabs">
+    <div class="org-tab active" onclick="showTab('spta')">SPTA</div>
+    <div class="org-tab" onclick="showTab('selg')">SELG</div>
+    <div class="org-tab" onclick="showTab('teachers')">Teachers Club</div>
+  </div>
+
+  <div id="tab-spta" class="org-panel active">
+    <div class="img-placeholder">
+      <div class="icon">👨‍👩‍👧‍👦</div>
+      <p>SPTA — Larawan mula Google Drive<br><small>I-upload ang picture at ilagay ang link sa Google Sheets</small></p>
+    </div>
+  </div>
+
+  <div id="tab-selg" class="org-panel">
+    <div class="img-placeholder">
+      <div class="icon">🎓</div>
+      <p>SELG — Larawan mula Google Drive<br><small>I-upload ang picture at ilagay ang link sa Google Sheets</small></p>
+    </div>
+  </div>
+
+  <div id="tab-teachers" class="org-panel">
+    <div class="img-placeholder">
+      <div class="icon">👩‍🏫</div>
+      <p>Teachers Club — Larawan mula Google Drive<br><small>I-upload ang picture at ilagay ang link sa Google Sheets</small></p>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(tab) {
+  document.querySelectorAll('.org-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.org-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+<script>
+const SHEET_ID = '2PACX-1vQn2GmgOF5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mrOkw9FYbHwY8eppjRplB9tdUR0iLs2';
+const BASE = 'https://docs.google.com/spreadsheets/d/e/' + SHEET_ID + '/pub?output=csv&sheet=';
+
+async function fetchCSV(sheet) {
+  const res = await fetch(BASE + sheet);
+  const text = await res.text();
+  const rows = text.trim().split('\n').map(r => {
+    const result = []; let cur = '', inQ = false;
+    for (let c of r) {
+      if (c === '"') inQ = !inQ;
+      else if (c === ',' && !inQ) { result.push(cur.trim()); cur = ''; }
+      else cur += c;
+    }
+    result.push(cur.trim()); return result;
+  });
+  const headers = rows[0];
+  return rows.slice(1).filter(r => r.some(c => c)).map(row => Object.fromEntries(headers.map((h,i) => [h, row[i]||''])));
+}
+
+function driveUrl(url) {
+  if (!url) return '';
+  const m = url.match(/[-\w]{25,}/);
+  return m ? `https://drive.google.com/uc?export=view&id=${m[0]}` : url;
+}
+
+async function loadOrgs() {
+  const data = await fetchCSV('settings');
+  const s = {};
+  data.forEach(r => { if(r.key) s[r.key] = r.value; });
+  [['spta','tab-spta'],['selg','tab-selg'],['teachers_club','tab-teachers']].forEach(([key, tabId]) => {
+    const val = s[key + '_image_slideshow'];
+    const el = document.getElementById(tabId);
+    if (el && val) {
+      el.innerHTML = `<img src="${driveUrl(val)}" class="org-img">`;
+    }
+  });
+}
+loadOrgs();
+</script>
+</body>
+</html>

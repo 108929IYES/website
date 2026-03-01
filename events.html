@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events & Activities - Ilayang Yuni Elementary School</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #1a2fa0; --blue-dark: #0d1e6b; --blue-mid: #2a45c8;
+    --blue-light: #e8edf8; --blue-xlight: #f4f6fb;
+    --white: #ffffff; --gray: #6b7280; --yellow: #f5c200;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Source Sans 3',sans-serif; background:var(--blue-xlight); color:#1a1a2e; }
+
+  /* TOPBAR */
+  .topbar {
+    background: var(--blue-dark);
+    color: rgba(255,255,255,0.8);
+    font-size: 0.78rem; padding: 6px 40px;
+    display: flex; justify-content: center; align-items: center;
+  }
+
+  /* HEADER */
+  header {
+    background: white;
+    border-bottom: 4px solid var(--blue);
+    padding: 16px 40px;
+    display: flex; align-items: center; gap: 20px;
+    box-shadow: 0 2px 12px rgba(26,47,160,0.08);
+  }
+  .logo-wrap img { width: 90px; height: 90px; object-fit: contain; }
+  .school-title h1 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.35rem; font-weight: 900;
+    color: var(--blue-dark); text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .school-title .tagline-main {
+    font-size: 0.9rem; color: var(--blue);
+    font-weight: 700; margin-top: 5px; font-style: italic;
+  }
+  .school-title .dep-tag {
+    font-size: 0.78rem; color: var(--gray);
+    font-weight: 400; margin-top: 2px; display: block;
+  }
+
+  /* NAV */
+  nav { background: var(--blue); padding: 0 40px; position: sticky; top: 0; z-index: 100; }
+  nav ul { display: flex; list-style: none; overflow-x: auto; }
+  nav ul li a {
+    display: block; color: rgba(255,255,255,0.85); text-decoration: none;
+    padding: 13px; font-size: 0.78rem; font-weight: 600; text-transform: uppercase;
+    border-bottom: 3px solid transparent; white-space: nowrap;
+  }
+  nav ul li.active a { color: var(--yellow); border-bottom-color: var(--yellow); }
+
+  /* PAGE HERO */
+  .page-hero {
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+    padding: 32px 40px; text-align: center;
+  }
+  .page-hero h2 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.6rem; font-weight: 900; color: white;
+  }
+
+  /* PAGE */
+  .page { max-width: 960px; margin: 0 auto; padding: 40px 24px 60px; }
+
+  .section-title {
+    font-family: 'Merriweather', serif;
+    font-size: 1rem; font-weight: 900; color: var(--blue-dark);
+    margin-bottom: 20px; padding-bottom: 10px;
+    border-bottom: 3px solid var(--blue-light);
+  }
+
+  /* EVENT CARDS */
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .event-card {
+    background: white; border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(26,47,160,0.08);
+    border: 2px solid var(--blue-light);
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .event-card:hover { border-color: var(--blue); transform: translateY(-3px); }
+
+  .event-img {
+    width: 100%; height: 160px; object-fit: cover;
+    background: var(--blue-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+  }
+  .event-body { padding: 16px; }
+  .event-date {
+    font-size: 0.68rem; font-weight: 700; color: var(--blue);
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;
+  }
+  .event-title {
+    font-family: 'Merriweather', serif;
+    font-size: 0.88rem; font-weight: 700; color: var(--blue-dark);
+    margin-bottom: 6px; line-height: 1.4;
+  }
+  .event-desc { font-size: 0.78rem; color: var(--gray); line-height: 1.6; }
+  .event-tag {
+    display: inline-block; background: var(--blue-light);
+    color: var(--blue); font-size: 0.65rem; font-weight: 700;
+    padding: 2px 10px; border-radius: 10px; margin-top: 8px;
+    text-transform: uppercase;
+  }
+
+  .empty-state {
+    text-align: center; padding: 60px 20px; color: var(--gray);
+  }
+  .empty-state .icon { font-size: 3rem; margin-bottom: 16px; }
+  .empty-state p { font-size: 0.88rem; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>Department of Education &nbsp;|&nbsp; Region IV-A CALABARZON &nbsp;|&nbsp; Division of Quezon &nbsp;|&nbsp; Mulanay District 2</span>
+</div>
+
+<header>
+  <div class="logo-wrap">
+    <img src="assets/logo.png" alt="IYES Logo">
+  </div>
+  <div class="school-title">
+    <h1>Ilayang Yuni Elementary School</h1>
+    <div class="tagline-main">"Sa Ilayang Yuni, Lahat RESPONSABLE"</div>
+    <span class="dep-tag">Sitio Central A, Brgy. Ilayang Yuni, Mulanay, Quezon 4312</span>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="announcements.html">Announcements</a></li>
+    <li class="active"><a href="events.html">Events & Activities</a></li>
+    <li><a href="#">Enrollment ▾</a></li>
+    <li><a href="personnel.html">School Personnel</a></li>
+    <li><a href="school-map.html">School Map</a></li>
+    <li><a href="citizens-charter.html">Citizens Charter ▾</a></li>
+    <li><a href="#">Liquidation ▾</a></li>
+    <li><a href="ppas.html">PPAs ▾</a></li>
+    <li><a href="organizations.html">Organizations ▾</a></li>
+    <li><a href="links.html">Links</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <h2>📅 Events & Activities</h2>
+</div>
+
+<div class="page">
+  <h2 class="section-title">Mga Aktibidad ng Paaralan</h2>
+
+  <!-- Events will be loaded from Google Sheets -->
+  <div id="events-container">
+    <div class="empty-state">
+      <div class="icon">📅</div>
+      <p>Walang events sa ngayon.<br>Pakibalik na lang po mamaya.</p>
+    </div>
+  </div>
+</div>
+
+
+<script>
+const SHEET_ID = '2PACX-1vQn2GmgOF5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mrOkw9FYbHwY8eppjRplB9tdUR0iLs2';
+const BASE = 'https://docs.google.com/spreadsheets/d/e/' + SHEET_ID + '/pub?output=csv&sheet=';
+
+async function fetchCSV(sheet) {
+  const res = await fetch(BASE + sheet);
+  const text = await res.text();
+  const rows = text.trim().split('\n').map(r => {
+    const result = [];
+    let cur = '', inQ = false;
+    for (let c of r) {
+      if (c === '"') inQ = !inQ;
+      else if (c === ',' && !inQ) { result.push(cur.trim()); cur = ''; }
+      else cur += c;
+    }
+    result.push(cur.trim());
+    return result;
+  });
+  const headers = rows[0];
+  return rows.slice(1).filter(r => r.some(c => c)).map(row => Object.fromEntries(headers.map((h,i) => [h, row[i]||''])));
+}
+
+async function loadEvents() {
+  const container = document.getElementById('events-container');
+  if (!container) return;
+  container.innerHTML = '<p style="color:#6b7280;text-align:center;padding:40px;grid-column:1/-1;">Loading...</p>';
+  try {
+    const data = await fetchCSV('events');
+    if (!data.length) { container.innerHTML = '<p style="color:#6b7280;text-align:center;padding:40px;grid-column:1/-1;">Walang events sa ngayon.</p>'; return; }
+    container.innerHTML = data.map(row => {
+      const d = new Date(row.date);
+      const dateStr = isNaN(d) ? row.date : d.toLocaleDateString('en',{month:'long',day:'numeric',year:'numeric'});
+      const img = row.photo_url ? `<img src="${row.photo_url}" style="width:100%;height:180px;object-fit:cover;border-radius:10px 10px 0 0;" onerror="this.style.display='none'">` : `<div style="height:120px;background:var(--blue-light);border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;font-size:2rem;">📅</div>`;
+      return `<div class="event-card">${img}<div class="event-body"><div class="event-date">${dateStr}</div><h4 class="event-title">${row.title||''}</h4><p class="event-desc">${row.description||''}</p></div></div>`;
+    }).join('');
+  } catch(e) {
+    container.innerHTML = '<p style="color:#c62828;text-align:center;padding:40px;grid-column:1/-1;">Hindi ma-load ang data. Subukan muli.</p>';
+  }
+}
+
+loadEvents();
+</script>
+</body>
+</html>
