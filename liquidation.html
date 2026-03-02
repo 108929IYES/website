@@ -205,10 +205,6 @@
 </head>
 <body>
 
-<div class="demo-note">
-  👆 <strong>I-hover ang "Liquidation"</strong> sa navigation para makita ang dropdown ng mga buwan.
-</div>
-
 <!-- HEADER -->
 <div class="topbar">
   <span>Department of Education &nbsp;|&nbsp; Region IV-A CALABARZON &nbsp;|&nbsp; Division of Quezon &nbsp;|&nbsp; Mulanay District 2</span>
@@ -232,11 +228,11 @@
     <li><a href="about.html">About Us</a></li>
     <li><a href="announcements.html">Announcements</a></li>
     <li><a href="events.html">Events & Activities</a></li>
-    <li><a href="#">Enrollment ▾</a></li>
+    <li><a href="enrollment.html">Enrollment ▾</a></li>
     <li><a href="personnel.html">School Personnel</a></li>
     <li><a href="school-map.html">School Map</a></li>
     <li><a href="citizens-charter.html">Citizens Charter ▾</a></li>
-    <li><a href="#">Liquidation ▾</a></li>
+    <li><a href="liquidation.html">Liquidation ▾</a></li>
     <li><a href="ppas.html">PPAs ▾</a></li>
     <li><a href="organizations.html">Organizations ▾</a></li>
     <li><a href="links.html">Links</a></li>
@@ -256,7 +252,7 @@
 
 <script>
 async function loadImage() {
-  const res = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQn2GmgOF5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mrOkw9FYbHwY8eppjRplB9tdUR0iLs2/pub?output=csv&sheet=settings');
+  const res = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSieM-BANe-E6ILA87jaigqKX1B5pWZmOaJv9dc7iaevGfdxkYK4tzyMS24rdLXqhO6vsGpyRgAKjIU/pub?gid=0&single=true&output=csv');
   const text = await res.text();
   const rows = text.trim().split('\n').map(r => r.split(',').map(c => c.replace(/^"|"$/g,'').trim()));
   const headers = rows[0];

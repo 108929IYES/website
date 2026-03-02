@@ -57,11 +57,11 @@
     <li><a href="about.html">About Us</a></li>
     <li><a href="announcements.html">Announcements</a></li>
     <li><a href="events.html">Events & Activities</a></li>
-    <li><a href="#">Enrollment ▾</a></li>
+    <li><a href="enrollment.html">Enrollment ▾</a></li>
     <li><a href="personnel.html">School Personnel</a></li>
     <li><a href="school-map.html">School Map</a></li>
     <li><a href="citizens-charter.html">Citizens Charter ▾</a></li>
-    <li><a href="#">Liquidation ▾</a></li>
+    <li><a href="liquidation.html">Liquidation ▾</a></li>
     <li><a href="ppas.html">PPAs ▾</a></li>
     <li><a href="organizations.html">Organizations ▾</a></li>
     <li class="active"><a href="links.html">Links</a></li>
@@ -72,32 +72,50 @@
   <h2>🔗 Links</h2>
 </div>
 
+<style>
+  .links-table { width:100%; border-collapse:collapse; background:white; border-radius:12px; overflow:hidden; box-shadow:0 2px 16px rgba(26,47,160,0.08); }
+  .links-table thead tr { background:var(--blue-dark); color:white; }
+  .links-table th { padding:14px 20px; text-align:left; font-size:1rem; font-weight:700; letter-spacing:0.5px; }
+  .links-table td { padding:14px 20px; font-size:1rem; border-bottom:1px solid var(--blue-light); }
+  .links-table tr:last-child td { border-bottom:none; }
+  .links-table tr:hover td { background:var(--blue-xlight); }
+  .links-table td a { color:var(--blue); font-weight:600; text-decoration:none; word-break:break-all; }
+  .links-table td a:hover { text-decoration:underline; }
+  .page { max-width:100%; padding:40px 48px 60px; }
+</style>
+
 <div class="page">
-  <div id="links-container" class="img-placeholder">
-    <div class="icon">🔗</div>
-    <p>Links — Larawan mula Google Drive<br><small>I-upload ang picture at ilagay ang link sa Google Sheets</small></p>
-  </div>
+  <div id="links-container"><p style="color:#6b7280;text-align:center;padding:40px;">Loading...</p></div>
 </div>
 
-
 <script>
-async function loadImage() {
-  const res = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQn2GmgOF5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mrOkw9FYbHwY8eppjRplB9tdUR0iLs2/pub?output=csv&sheet=settings');
-  const text = await res.text();
-  const rows = text.trim().split('\n').map(r => r.split(',').map(c => c.replace(/^"|"$/g,'').trim()));
-  const headers = rows[0];
-  const data = rows.slice(1).map(row => Object.fromEntries(headers.map((h,i)=>[h,row[i]||''])));
-  const s = {};
-  data.forEach(r => { if(r.key) s[r.key] = r.value; });
-  const url = s['links_image_slideshow'];
-  const el = document.getElementById('links-container');
-  if (el && url) {
-    const m = url.match(/[-\w]{25,}/);
-    const imgUrl = m ? `https://drive.google.com/uc?export=view&id=${m[0]}` : url;
-    el.innerHTML = `<img src="${imgUrl}" style="width:100%;border-radius:12px;box-shadow:0 4px 24px rgba(26,47,160,0.12);">`;
+async function loadLinks() {
+  const container = document.getElementById('links-container');
+  try {
+    const res = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRCisp-y68BU0-E1JSfLwZ64KymhaPibM02ozwyKq4fObnm2Tx0kEafSbG456Woh-Ytsjvjf117aSEp/pub?gid=0&single=true&output=csv');
+    const text = await res.text();
+    const rows = text.trim().split('\n');
+    const headers = rows[0].split(',').map(h => h.trim());
+    const data = rows.slice(1).filter(r => r.trim()).map(r => {
+      const cols = r.split(',').map(c => c.replace(/^"|"$/g,'').trim());
+      return Object.fromEntries(headers.map((h,i) => [h, cols[i]||'']));
+    });
+    if (!data.length || !data[0].name) {
+      container.innerHTML = '<p style="color:#6b7280;text-align:center;padding:40px;">Walang links sa ngayon.</p>';
+      return;
+    }
+    container.innerHTML = `<table class="links-table">
+      <thead><tr><th>Name</th><th>Link</th></tr></thead>
+      <tbody>${data.map(row => `<tr>
+        <td>${row.name||''}</td>
+        <td><a href="${row.link||'#'}" target="_blank">${row.link||''}</a></td>
+      </tr>`).join('')}</tbody>
+    </table>`;
+  } catch(e) {
+    container.innerHTML = '<p style="color:#c62828;text-align:center;padding:40px;">Hindi ma-load ang data. Subukan muli.</p>';
   }
 }
-loadImage();
+loadLinks();
 </script>
 </body>
 </html>

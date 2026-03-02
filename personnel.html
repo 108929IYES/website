@@ -193,11 +193,11 @@
     <li><a href="about.html">About Us</a></li>
     <li><a href="announcements.html">Announcements</a></li>
     <li><a href="events.html">Events & Activities</a></li>
-    <li><a href="#">Enrollment ▾</a></li>
+    <li><a href="enrollment.html">Enrollment ▾</a></li>
     <li class="active"><a href="personnel.html">School Personnel</a></li>
     <li><a href="school-map.html">School Map</a></li>
     <li><a href="citizens-charter.html">Citizens Charter ▾</a></li>
-    <li><a href="#">Liquidation ▾</a></li>
+    <li><a href="liquidation.html">Liquidation ▾</a></li>
     <li><a href="ppas.html">PPAs ▾</a></li>
     <li><a href="organizations.html">Organizations ▾</a></li>
     <li><a href="links.html">Links</a></li>
@@ -485,11 +485,10 @@
 
 
 <script>
-const SHEET_ID = '2PACX-1vQn2GmgOF5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mrOkw9FYbHwY8eppjRplB9tdUR0iLs2';
-const BASE = 'https://docs.google.com/spreadsheets/d/e/' + SHEET_ID + '/pub?output=csv&sheet=';
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTsazmsH513VVHt4PxV6TH1vWjUdO23C9YgfaBu_2VJIZ5WDgzkPtkeJtVeBhnSeEckz6Qantg2swAX/pub?gid=0&single=true&output=csv';
 
 async function fetchCSV(sheet) {
-  const res = await fetch(BASE + sheet);
+  const res = await fetch(SHEET_URL);
   const text = await res.text();
   const rows = text.trim().split('\n').map(r => {
     const result = []; let cur = '', inQ = false;

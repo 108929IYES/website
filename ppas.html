@@ -95,11 +95,11 @@
     <li><a href="about.html">About Us</a></li>
     <li><a href="announcements.html">Announcements</a></li>
     <li><a href="events.html">Events & Activities</a></li>
-    <li><a href="#">Enrollment ▾</a></li>
+    <li><a href="enrollment.html">Enrollment ▾</a></li>
     <li><a href="personnel.html">School Personnel</a></li>
     <li><a href="school-map.html">School Map</a></li>
     <li><a href="citizens-charter.html">Citizens Charter ▾</a></li>
-    <li><a href="#">Liquidation ▾</a></li>
+    <li><a href="liquidation.html">Liquidation ▾</a></li>
     <li class="active"><a href="ppas.html">PPAs ▾</a></li>
     <li><a href="organizations.html">Organizations ▾</a></li>
     <li><a href="links.html">Links</a></li>
@@ -114,54 +114,16 @@
   <h2 class="section-title">Mga PPAs ng Paaralan</h2>
 
   <!-- PPAs will be loaded from Google Sheets -->
-  <div id="ppas-container">
-    <div class="ppa-card">
-      <div class="ppa-tags">
-        <span class="ppa-tag tag-bedp">BEDP: QUALITY</span>
-        <span class="ppa-tag tag-kalilayan">KALILAYAN: Linangun ang kakayahan ng mga mag-aaral</span>
-        <span class="ppa-tag tag-responsable">RESPONSABLE: Strengthening Achievements</span>
-      </div>
-      <div class="ppa-title">ARAL Reading Program</div>
-      <div class="ppa-objectives">
-        <strong>Objectives</strong>
-        To decrease the number of non-readers by 30% at the end of School Year 2025–2026.
-      </div>
-    </div>
-    <div class="ppa-card">
-      <div class="ppa-tags">
-        <span class="ppa-tag tag-bedp">BEDP: QUALITY</span>
-        <span class="ppa-tag tag-kalilayan">KALILAYAN: Linangun ang kakayahan ng mga mag-aaral</span>
-        <span class="ppa-tag tag-responsable">RESPONSABLE: Strengthening Achievements</span>
-      </div>
-      <div class="ppa-title">Math Intervention Program</div>
-      <div class="ppa-objectives">
-        <strong>Objectives</strong>
-        To improve the numeracy skills of learners by 25% at the end of School Year 2025–2026.
-      </div>
-    </div>
-    <div class="ppa-card">
-      <div class="ppa-tags">
-        <span class="ppa-tag tag-bedp">BEDP: ACCESS</span>
-        <span class="ppa-tag tag-kalilayan">KALILAYAN: Palakasin ang ugnayan ng paaralan at komunidad</span>
-        <span class="ppa-tag tag-responsable">RESPONSABLE: Building Community Partnerships</span>
-      </div>
-      <div class="ppa-title">Brigada Eskwela</div>
-      <div class="ppa-objectives">
-        <strong>Objectives</strong>
-        To mobilize community volunteers in maintaining and improving school facilities before the opening of classes.
-      </div>
-    </div>
-  </div>
+  <div id="ppas-container"><p style="color:#6b7280;text-align:center;padding:40px;">Loading...</p></div>
 
 </div>
 
 
 <script>
-const SHEET_ID = '2PACX-1vQn2GmgOF5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mrOkw9FYbHwY8eppjRplB9tdUR0iLs2';
-const BASE = 'https://docs.google.com/spreadsheets/d/e/' + SHEET_ID + '/pub?output=csv&sheet=';
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTO_CIBCrsO34vJeJAUYqe9-xi012DDc5fDuZuwcj_OJBAbgQCeXoW7ONyZkocAWafsNU8KFrcokOHX/pub?gid=0&single=true&output=csv';
 
 async function fetchCSV(sheet) {
-  const res = await fetch(BASE + sheet);
+  const res = await fetch(SHEET_URL);
   const text = await res.text();
   const rows = text.trim().split('\n').map(r => {
     const result = [];

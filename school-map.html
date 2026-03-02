@@ -78,11 +78,11 @@
     <li><a href="about.html">About Us</a></li>
     <li><a href="announcements.html">Announcements</a></li>
     <li><a href="events.html">Events & Activities</a></li>
-    <li><a href="#">Enrollment ▾</a></li>
+    <li><a href="enrollment.html">Enrollment ▾</a></li>
     <li><a href="personnel.html">School Personnel</a></li>
     <li class="active"><a href="school-map.html">School Map</a></li>
     <li><a href="citizens-charter.html">Citizens Charter ▾</a></li>
-    <li><a href="#">Liquidation ▾</a></li>
+    <li><a href="liquidation.html">Liquidation ▾</a></li>
     <li><a href="ppas.html">PPAs ▾</a></li>
     <li><a href="organizations.html">Organizations ▾</a></li>
     <li><a href="links.html">Links</a></li>
@@ -103,13 +103,11 @@
       <span>🔍 I-click ang mapa para mag-zoom</span>
     </div>
     <div class="map-container" id="mapWrap" onclick="toggleZoom(event)">
-      <img src="assets/schoolmap.jpg" alt="IYES School Map" id="mapImg">
+      <img src="assets/school-map.png" alt="IYES School Map" id="mapImg">
       <div class="zoom-badge">🔍 Click to Zoom</div>
     </div>
     <div class="map-actions">
-      <a href="assets/IYES_School_Map.pdf" download class="btn btn-yellow">
-        ⬇️ I-download ang School Map (PDF)
-      </a>
+
       <button class="btn btn-primary" onclick="openFullscreen()">
         🔲 Buong Screen
       </button>
@@ -200,24 +198,6 @@
   }
 </script>
 
-<script>
-async function loadImage() {
-  const res = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQn2GmgOF5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mrOkw9FYbHwY8eppjRplB9tdUR0iLs2/pub?output=csv&sheet=settings');
-  const text = await res.text();
-  const rows = text.trim().split('\n').map(r => r.split(',').map(c => c.replace(/^"|"$/g,'').trim()));
-  const headers = rows[0];
-  const data = rows.slice(1).map(row => Object.fromEntries(headers.map((h,i)=>[h,row[i]||''])));
-  const s = {};
-  data.forEach(r => { if(r.key) s[r.key] = r.value; });
-  const url = s['school_map_image_slideshow'];
-  const el = document.getElementById('school-map-container');
-  if (el && url) {
-    const m = url.match(/[-\w]{25,}/);
-    const imgUrl = m ? `https://drive.google.com/uc?export=view&id=${m[0]}` : url;
-    el.innerHTML = `<img src="${imgUrl}" style="width:100%;border-radius:12px;box-shadow:0 4px 24px rgba(26,47,160,0.12);">`;
-  }
-}
-loadImage();
-</script>
+
 </body>
 </html>
