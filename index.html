@@ -227,6 +227,10 @@
     0%,100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
   }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.85; transform: scale(1.02); }
+  }
 
   /* STATS */
   .stats {
@@ -491,20 +495,20 @@
     position: relative;
     z-index: 2;
     border-radius: 0;
-    overflow: visible;
+    overflow: hidden;
     box-shadow: none;
     background: rgba(255,255,255,0.1);
-    height: 544px;
+    height: 680px;
   }
-  .slide { display: none; position: relative; width: 100%; height: 544px; }
+  .slide { display: none; position: relative; width: 100%; height: 680px; }
   .slide.active { display: block; }
   .slide img {
-    width: 100%; height: 544px;
+    width: 100%; height: 680px;
     object-fit: cover;
     display: block;
   }
   .slide-placeholder {
-    width: 100%; height: 544px;
+    width: 100%; height: 680px;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     gap: 16px;
@@ -521,19 +525,16 @@
     text-align: center;
   }
   .slide-dots {
-    display: flex; justify-content: center; gap: 6px;
-    padding: 12px 20px;
-    background: rgba(13,30,107,0.9);
-    flex-wrap: wrap;
-    width: 100%;
+    display: flex; justify-content: center; gap: 10px;
+    padding: 14px 0;
+    background: rgba(0,0,0,0.25);
   }
   .dot {
-    width: 8px; height: 8px;
+    width: 12px; height: 12px;
     border-radius: 50%;
     background: rgba(255,255,255,0.4);
     cursor: pointer;
     transition: background 0.2s;
-    flex-shrink: 0;
   }
   .dot.active { background: var(--yellow); }
   .responsable-section {
@@ -694,7 +695,7 @@
 
     <!-- A. DEPED VISION, MISSION, CORE VALUES -->
     <div class="slide active">
-      <div class="slide-placeholder" style="background: linear-gradient(135deg, #0d1e6b, #1a2fa0); padding: 32px 40px; flex-direction: column; gap: 20px; justify-content: center; min-height: 544px;">
+      <div class="slide-placeholder" style="background: linear-gradient(135deg, #0d1e6b, #1a2fa0); padding: 32px 40px; flex-direction: column; gap: 20px; justify-content: center; min-height: 680px;">
         
         <!-- Title -->
         <div style="text-align:center; margin-bottom:4px;">
@@ -785,14 +786,21 @@
         </div>
       </div>
     </div>
-      </div>
-    </div>
+
+
 
     <!-- 2. RESPONSABLE FRAMEWORK -->
     <div class="slide">
       <div class="slide-placeholder" style="background: linear-gradient(135deg, #6a0dad, #c0392b);">
-        <div id="responsable_framework-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-          <img src="assets/responsable.jpg" style="width:100%;height:100%;object-fit:contain;">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+          <img src="https://raw.githubusercontent.com/IYES-School/assets/main/responsable-framework.png" 
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+               style="width:100%;height:100%;object-fit:contain;">
+          <div style="display:none;text-align:center;flex-direction:column;align-items:center;">
+            <div style="font-size:8rem;">📋</div>
+            <div style="font-family:'Merriweather',serif; font-size:3.8rem; font-weight:900; color:white; margin-top:16px;">RESPONSABLE Framework</div>
+            <div style="font-size:1.8rem; color:rgba(255,255,255,0.85); margin-top:8px;">"Sa Ilayang Yuni, Lahat RESPONSABLE"</div>
+          </div>
         </div>
       </div>
     </div>
@@ -800,7 +808,7 @@
 
     <!-- 3. ABOUT US -->
     <div class="slide">
-      <div class="slide-placeholder" style="background: linear-gradient(135deg, #0d1e6b, #1a2fa0); padding: 32px 40px; flex-direction: row; gap: 30px; justify-content: center; align-items: center; min-height: 544px;">
+      <div class="slide-placeholder" style="background: linear-gradient(135deg, #0d1e6b, #1a2fa0); padding: 32px 40px; flex-direction: row; gap: 30px; justify-content: center; align-items: center; min-height: 680px;">
         
         <!-- LEFT: Logo + School Name -->
         <div style="flex:0.8; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;">
@@ -835,8 +843,8 @@
           <div style="background:rgba(255,255,255,0.08); border-radius:12px; padding:18px 22px; display:flex; flex-direction:column; gap:9px;">
             <div style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:var(--yellow); border-bottom:1px solid rgba(245,194,0,0.3); padding-bottom:8px;">📍 Contact Information</div>
             <div style="display:flex; gap:8px; align-items:flex-start;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">ADDRESS</div><div style="font-size:1.8rem; color:white; font-weight:700;">Sitio Central A, Brgy. Ilayang Yuni, Mulanay, Quezon 4312</div></div>
-            <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">EMAIL</div><div id="about-email" style="font-size:1.8rem; color:white; font-weight:700;">—</div></div>
-            <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">CONTACT</div><div id="about-contact" style="font-size:1.8rem; color:white; font-weight:700;">—</div></div>
+            <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">EMAIL</div><div id="about-email" style="font-size:1.8rem; color:white; font-weight:700;">108929@deped.gov.ph</div></div>
+            <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">CONTACT</div><div id="about-contact" style="font-size:1.8rem; color:white; font-weight:700;">09302613511</div></div>
           </div>
 
         </div>
@@ -851,44 +859,34 @@
           <div style="font-family:'Merriweather',serif; font-size:2.6rem; font-weight:900; color:white; margin-top:4px;">📢 Announcements</div>
         </div>
         <div id="ann-slide-container" style="display:flex; flex-direction:column; gap:10px;">
-          <div style="background:rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; display:flex; gap:14px; align-items:flex-start;">
-            <div style="background:var(--blue-dark); border-radius:8px; padding:8px 12px; text-align:center; flex-shrink:0;"><span style="font-size:1.8rem; font-weight:900; color:white; display:block; line-height:1;">27</span><span style="font-size:1rem; color:rgba(255,255,255,0.7); text-transform:uppercase;">Feb</span></div>
-            <div><span style="background:var(--yellow); color:var(--blue-dark); font-size:1rem; font-weight:800; padding:2px 8px; border-radius:10px; text-transform:uppercase;">Enrollment</span><div style="font-size:1.45rem; font-weight:700; color:white; margin-top:4px;">Early Registration — SY 2026–2027</div><div style="font-size:1.25rem; color:rgba(255,255,255,0.7); margin-top:2px;">Maaari nang magparehistro ang mga batang papasok ng Kinder...</div></div>
-          </div>
-          <div style="background:rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; display:flex; gap:14px; align-items:flex-start;">
-            <div style="background:var(--blue-dark); border-radius:8px; padding:8px 12px; text-align:center; flex-shrink:0;"><span style="font-size:1.8rem; font-weight:900; color:white; display:block; line-height:1;">20</span><span style="font-size:1rem; color:rgba(255,255,255,0.7); text-transform:uppercase;">Feb</span></div>
-            <div><span style="background:var(--yellow); color:var(--blue-dark); font-size:1rem; font-weight:800; padding:2px 8px; border-radius:10px; text-transform:uppercase;">Advisory</span><div style="font-size:1.45rem; font-weight:700; color:white; margin-top:4px;">3rd Quarter Assessment Schedule</div><div style="font-size:1.25rem; color:rgba(255,255,255,0.7); margin-top:2px;">Ang iskedyul ng 3rd Quarter Assessment ay inilabas na...</div></div>
-          </div>
-          <div style="background:rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; display:flex; gap:14px; align-items:flex-start;">
-            <div style="background:var(--blue-dark); border-radius:8px; padding:8px 12px; text-align:center; flex-shrink:0;"><span style="font-size:1.8rem; font-weight:900; color:white; display:block; line-height:1;">15</span><span style="font-size:1rem; color:rgba(255,255,255,0.7); text-transform:uppercase;">Feb</span></div>
-            <div><span style="background:var(--yellow); color:var(--blue-dark); font-size:1rem; font-weight:800; padding:2px 8px; border-radius:10px; text-transform:uppercase;">Reminder</span><div style="font-size:1.45rem; font-weight:700; color:white; margin-top:4px;">Bayad ng Misc Fees</div><div style="font-size:1.25rem; color:rgba(255,255,255,0.7); margin-top:2px;">Pakiusap sa lahat ng magulang na bayaran na ang misc fees...</div></div>
-          </div>
+          <div style="color:rgba(255,255,255,0.5); font-style:italic;">Naglo-load...</div>
         </div>
       </div>
     </div>
 
-    <!-- 5. WINNERS - Dynamic Cards from Google Sheets -->
+    <!-- 6. WINNERS - Dynamic from Google Sheets -->
     <div class="slide">
-      <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0); flex-direction:column; gap:0; justify-content:center; align-items:center; padding:0;">
-        <div id="winners-slide-container" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; overflow:hidden; text-align:center;">
-          <div style="text-align:center; padding:40px;">
-            <div style="font-size:4rem; margin-bottom:8px;">🏆</div>
-            <div style="font-family:'Merriweather',serif; font-size:2.5rem; font-weight:900; color:var(--yellow);">CONGRATULATIONS!</div>
-            <div style="font-size:1.2rem; color:rgba(255,255,255,0.5); margin-top:16px; font-style:italic;">Loading winners...</div>
+      <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0); flex-direction:column; gap:0; justify-content:center; align-items:center; overflow:hidden; padding:0;">
+        <div id="winners-slide-container" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; position:relative;">
+          <div style="text-align:center; padding:20px;">
+            <div style="font-size:3rem;">🏆</div>
+            <div style="font-size:1.5rem; color:rgba(255,255,255,0.7);">Naglo-load...</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 6. EVENTS & ACTIVITIES - Dynamic Cards -->
+    <!-- 7. EVENTS & ACTIVITIES - Dynamic Cards -->
     <div class="slide">
       <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0); padding:28px 40px; flex-direction:column; gap:14px; justify-content:center;">
         <div style="text-align:center; margin-bottom:4px;">
           <div style="font-size:1.05rem; font-weight:800; color:var(--yellow); letter-spacing:3px; text-transform:uppercase;">Ilayang Yuni Elementary School</div>
-          <div style="font-family:'Merriweather',serif; font-size:2.6rem; font-weight:900; color:white; margin-top:4px;">📅 Events & Activities</div>
+          <div style="font-family:'Merriweather',serif; font-size:2.6rem; font-weight:900; color:white; margin-top:4px;">📅 Events &amp; Activities</div>
         </div>
         <div id="events-slide-container" style="display:flex; flex-direction:column; gap:10px;">
-          <div style="color:rgba(255,255,255,0.5); text-align:center; font-style:italic;">Loading events...</div>
+          <div style="background:rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; display:flex; gap:14px; align-items:flex-start;">
+            <div style="color:rgba(255,255,255,0.5); font-size:1.2rem; font-style:italic;">Naglo-load...</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1031,11 +1029,14 @@
       </div>
     </div>
 
-    <!-- 5. SCHOOL PERSONNEL -->
+    <!-- 9. SCHOOL PERSONNEL - Image from GitHub -->
     <div class="slide">
       <div class="slide-placeholder" style="background: linear-gradient(135deg, #1565c0, #1976d2);">
-        <div id="personnel_image_slideshow-container" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"><img src="assets/personnel.jpg" style="width:100%;height:100%;object-fit:contain;" onerror="this.style.display='none'">
-          <div style="text-align:center;">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+          <img src="https://raw.githubusercontent.com/IYES-School/assets/main/personnel.png"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+               style="width:100%;height:100%;object-fit:contain;">
+          <div style="display:none;text-align:center;flex-direction:column;align-items:center;">
             <div style="font-size:8rem; margin-bottom:16px;">👩‍🏫</div>
             <div style="font-family:'Merriweather',serif; font-size:3.8rem; font-weight:900; color:white;">School Personnel</div>
             <div style="font-size:1.8rem; color:rgba(255,255,255,0.85); margin-top:8px;">Organizational Chart</div>
@@ -1044,11 +1045,14 @@
       </div>
     </div>
 
-    <!-- 6. SCHOOL MAP (moved here after Personnel) -->
+    <!-- 10. SCHOOL MAP - Image from GitHub -->
     <div class="slide">
       <div class="slide-placeholder" style="background: linear-gradient(135deg, #1b5e20, #2e7d32);">
-        <div id="school_map_image_slideshow-container" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"><img src="assets/map.jpg" style="width:100%;height:100%;object-fit:contain;" onerror="this.style.display='none'">
-          <div style="text-align:center;">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+          <img src="https://raw.githubusercontent.com/IYES-School/assets/main/school-map.png"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+               style="width:100%;height:100%;object-fit:contain;">
+          <div style="display:none;text-align:center;flex-direction:column;align-items:center;">
             <div style="font-size:8rem; margin-bottom:16px;">🗺️</div>
             <div style="font-family:'Merriweather',serif; font-size:3.8rem; font-weight:900; color:white;">School Map</div>
             <div style="font-size:1.8rem; color:rgba(255,255,255,0.85); margin-top:8px;">Ilayang Yuni, Mulanay, Quezon</div>
@@ -1335,8 +1339,8 @@
         </table>
       </div>
     </div>
-      </div>
-    </div>
+
+
 
     <!-- 10. PPAs -->
     <div class="slide">
@@ -1345,16 +1349,21 @@
           <div style="font-size:1.05rem; font-weight:800; color:var(--yellow); letter-spacing:3px; text-transform:uppercase;">Ilayang Yuni Elementary School</div>
           <div style="font-family:'Merriweather',serif; font-size:2.2rem; font-weight:900; color:white; margin-top:4px;">📌 Programs, Projects & Activities</div>
         </div>
-        <div id="ppas-slide-list" style="display:grid; grid-template-columns:1fr 1fr; gap:8px 32px;"></div>
+        <div id="ppas-slide-list" style="display:grid; grid-template-columns:1fr 1fr; gap:6px 32px;">
+          <div style="color:rgba(255,255,255,0.5); font-style:italic;">Naglo-load...</div>
+        </div>
         <div style="text-align:center; margin-top:8px; font-size:1.15rem; color:rgba(255,255,255,0.5); font-style:italic;">Para sa buong detalye, bisitahin ang PPAs tab</div>
       </div>
     </div>
 
-    <!-- 11. ORGANIZATIONS -->
+    <!-- 19. SPTA - Image from GitHub -->
     <div class="slide">
       <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0); flex-direction:column; gap:16px; justify-content:center; align-items:center;">
-        <div id="spta_image_slideshow-container" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"><img src="assets/spta.jpg" style="width:100%;height:100%;object-fit:contain;" onerror="this.style.display='none'">
-          <div style="text-align:center;">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+          <img src="https://raw.githubusercontent.com/IYES-School/assets/main/spta.png"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+               style="width:100%;height:100%;object-fit:contain;">
+          <div style="display:none;text-align:center;flex-direction:column;align-items:center;">
             <div style="font-size:3.8rem; margin-bottom:12px;">👨‍👩‍👧‍👦</div>
             <div style="font-family:'Merriweather',serif; font-size:2.2rem; font-weight:900; color:white;">SPTA</div>
             <div style="font-size:1.4rem; color:rgba(255,255,255,0.7); margin-top:8px;">School Parent-Teachers Association</div>
@@ -1363,10 +1372,14 @@
       </div>
     </div>
 
+    <!-- 20. SELG - Image from GitHub -->
     <div class="slide">
       <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0); flex-direction:column; gap:16px; justify-content:center; align-items:center;">
-        <div id="selg_image_slideshow-container" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"><img src="assets/selg.jpg" style="width:100%;height:100%;object-fit:contain;" onerror="this.style.display='none'">
-          <div style="text-align:center;">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+          <img src="https://raw.githubusercontent.com/IYES-School/assets/main/selg.png"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+               style="width:100%;height:100%;object-fit:contain;">
+          <div style="display:none;text-align:center;flex-direction:column;align-items:center;">
             <div style="font-size:3.8rem; margin-bottom:12px;">🎓</div>
             <div style="font-family:'Merriweather',serif; font-size:2.2rem; font-weight:900; color:white;">SELG</div>
             <div style="font-size:1.4rem; color:rgba(255,255,255,0.7); margin-top:8px;">Supreme Elementary Learners Government</div>
@@ -1375,10 +1388,14 @@
       </div>
     </div>
 
+    <!-- 21. TEACHERS CLUB - Image from GitHub -->
     <div class="slide">
       <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0); flex-direction:column; gap:16px; justify-content:center; align-items:center;">
-        <div id="teachers_club_image_slideshow-container" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"><img src="assets/teachers.jpg" style="width:100%;height:100%;object-fit:contain;" onerror="this.style.display='none'">
-          <div style="text-align:center;">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+          <img src="https://raw.githubusercontent.com/IYES-School/assets/main/teachers-club.png"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+               style="width:100%;height:100%;object-fit:contain;">
+          <div style="display:none;text-align:center;flex-direction:column;align-items:center;">
             <div style="font-size:3.8rem; margin-bottom:12px;">👩‍🏫</div>
             <div style="font-family:'Merriweather',serif; font-size:2.2rem; font-weight:900; color:white;">Teachers Club</div>
             <div style="font-size:1.4rem; color:rgba(255,255,255,0.7); margin-top:8px;">Ilayang Yuni Teachers Club</div>
@@ -1387,11 +1404,14 @@
       </div>
     </div>
 
-    <!-- 12. LINKS -->
+    <!-- 22. LINKS - Image from GitHub -->
     <div class="slide">
       <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0); flex-direction:column; gap:16px; justify-content:center; align-items:center;">
-        <div id="links_image_slideshow-container" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"><img src="assets/links.jpg" style="width:100%;height:100%;object-fit:contain;" onerror="this.style.display='none'">
-          <div style="text-align:center;">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+          <img src="https://raw.githubusercontent.com/IYES-School/assets/main/links.png"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+               style="width:100%;height:100%;object-fit:contain;">
+          <div style="display:none;text-align:center;flex-direction:column;align-items:center;">
             <div style="font-size:3.8rem; margin-bottom:12px;">🔗</div>
             <div style="font-family:'Merriweather',serif; font-size:2.2rem; font-weight:900; color:white;">Links</div>
             <div style="font-size:1.4rem; color:rgba(255,255,255,0.7); margin-top:8px;">Mga Kapaki-pakinabang na Link</div>
@@ -1401,6 +1421,28 @@
     </div>
 
     <!-- Dots -->
+    <div class="slide-dots">
+      <span class="dot active" onclick="goToSlide(0)"></span>
+      <span class="dot" onclick="goToSlide(1)"></span>
+      <span class="dot" onclick="goToSlide(2)"></span>
+      <span class="dot" onclick="goToSlide(3)"></span>
+      <span class="dot" onclick="goToSlide(4)"></span>
+      <span class="dot" onclick="goToSlide(5)"></span>
+      <span class="dot" onclick="goToSlide(6)"></span>
+      <span class="dot" onclick="goToSlide(7)"></span>
+      <span class="dot" onclick="goToSlide(8)"></span>
+      <span class="dot" onclick="goToSlide(9)"></span>
+      <span class="dot" onclick="goToSlide(10)"></span>
+      <span class="dot" onclick="goToSlide(11)"></span>
+      <span class="dot" onclick="goToSlide(12)"></span>
+      <span class="dot" onclick="goToSlide(13)"></span>
+      <span class="dot" onclick="goToSlide(14)"></span>
+      <span class="dot" onclick="goToSlide(15)"></span>
+      <span class="dot" onclick="goToSlide(16)"></span>
+      <span class="dot" onclick="goToSlide(17)"></span>
+      <span class="dot" onclick="goToSlide(18)"></span>
+      <span class="dot" onclick="goToSlide(19)"></span>
+    </div>
   </div>
 </section>
 
@@ -1474,24 +1516,27 @@
   </div>
 </footer>
 
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
 // SLIDESHOW
-let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
+document.addEventListener('DOMContentLoaded', function() {
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.hero-slideshow .slide');
+  const dots = document.querySelectorAll('.slide-dots .dot');
 
-function goToSlide(n) {
-  slides[currentSlide].classList.remove('active');
-  dots[currentSlide].classList.remove('active');
-  currentSlide = (n + slides.length) % slides.length;
-  slides[currentSlide].classList.add('active');
-  dots[currentSlide].classList.add('active');
-}
+  window.goToSlide = function(n) {
+    slides[currentSlide].classList.remove('active');
+    dots[currentSlide].classList.remove('active');
+    currentSlide = (n + slides.length) % slides.length;
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+  }
 
-setInterval(() => goToSlide(currentSlide + 1), 30000);
+  setInterval(() => window.goToSlide(currentSlide + 1), 30000);
+});
 
 const SHEET_URLS = {
-  announcements: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQn2Gmg0F5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mr0kw9FYbHwY8eppjRplB9tdUR0iLs2/pub?output=csv&sheet=announcements',
+  announcements: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQn2Gmg0F5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mr0kw9FYbHwY8eppjRplB9tdUR0iLs2/pub?gid=0&single=true&output=csv',
   enrollment:    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRzajImiWqpCb4QclB5woMSgcVFlVLzHIL_uMNSBwQ1xmTM1CEGkE-qeyW5GcrKFIr43fz8XIrWEjAB/pub?gid=0&single=true&output=csv',
   ppas:          'https://docs.google.com/spreadsheets/d/e/2PACX-1vTO_CIBCrsO34vJeJAUYqe9-xi012DDc5fDuZuwcj_OJBAbgQCeXoW7ONyZkocAWafsNU8KFrcokOHX/pub?gid=0&single=true&output=csv',
   settings:      'https://docs.google.com/spreadsheets/d/e/2PACX-1vSieM-BANe-E6ILA87jaigqKX1B5pWZmOaJv9dc7iaevGfdxkYK4tzyMS24rdLXqhO6vsGpyRgAKjIU/pub?gid=0&single=true&output=csv',
@@ -1654,8 +1699,88 @@ loadEnrollment();
 loadPPAs();
 loadAnnouncements();
 loadSettings();
-loadWinners();
-loadEventsSlide();
+
+
+// ===== WINNERS SLIDESHOW =====
+let winnersData = [];
+let currentWinnerIndex = 0;
+let winnersInterval = null;
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (isNaN(d)) return dateStr;
+  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase();
+}
+
+function renderWinner(w) {
+  const rankColors = {
+    'FIRST': '#f5c200', 'SECOND': '#C0C0C0', 'THIRD': '#CD7F32',
+    '1ST': '#f5c200', '2ND': '#C0C0C0', '3RD': '#CD7F32',
+    '1': '#f5c200', '2': '#C0C0C0', '3': '#CD7F32',
+  };
+  const rankKey = (w.Rank || '').toUpperCase().replace(' PLACE','').trim();
+  const rankColor = rankColors[rankKey] || 'white';
+  const rankDisplay = (w.Rank || '').toUpperCase().includes('PLACE') ? w.Rank.toUpperCase() : (w.Rank || '').toUpperCase() + ' PLACE';
+  return `
+    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; width:100%; padding:20px 40px; gap:10px;">
+      <div style="font-family:'Merriweather',serif; font-size:2.2rem; font-weight:900; color:var(--yellow); letter-spacing:4px; text-shadow:0 2px 10px rgba(245,194,0,0.4); animation:pulse 2s ease-in-out infinite;">🏆 CONGRATULATIONS! 🏆</div>
+      <div style="font-family:'Merriweather',serif; font-size:3.2rem; font-weight:900; color:white; line-height:1.1; text-transform:uppercase; text-shadow:0 2px 16px rgba(0,0,0,0.4);">${w.Name || ''}</div>
+      ${w.Section ? `<div style="font-size:1.4rem; color:rgba(255,255,255,0.75); font-weight:600;">${w.Section}</div>` : ''}
+      <div style="background:${rankColor}; color:#0d1e6b; font-family:'Merriweather',serif; font-size:2.2rem; font-weight:900; padding:10px 36px; border-radius:8px; margin:4px 0; letter-spacing:2px; box-shadow:0 4px 20px rgba(0,0,0,0.3);">${rankDisplay}</div>
+      <div style="font-size:1.7rem; font-weight:800; color:white; text-transform:uppercase; letter-spacing:1px;">${w.Event || ''}</div>
+      ${w.Date ? `<div style="font-size:1.3rem; color:rgba(255,255,255,0.7); font-weight:600;">${formatDate(w.Date)}</div>` : ''}
+      ${w.Coach ? `<div style="font-size:1.2rem; color:rgba(255,255,255,0.6); margin-top:6px;">Coach: <span style="color:var(--yellow); font-weight:700;">${w.Coach}</span></div>` : ''}
+    </div>`;
+}
+
+function showWinner(idx) {
+  const el = document.getElementById('winners-slide-container');
+  if (!el || !winnersData.length) return;
+  el.innerHTML = renderWinner(winnersData[idx]);
+}
+
+async function loadWinners() {
+  try {
+    const data = await fetchCSV('winners');
+    if (!data.length) return;
+    winnersData = data;
+    showWinner(0);
+    if (winnersInterval) clearInterval(winnersInterval);
+    if (winnersData.length > 1) {
+      winnersInterval = setInterval(() => {
+        currentWinnerIndex = (currentWinnerIndex + 1) % winnersData.length;
+        showWinner(currentWinnerIndex);
+      }, 8000);
+    }
+  } catch(e) { console.error('Winners load error:', e); }
+}
+
+// ===== EVENTS SLIDE DYNAMIC CARDS =====
+async function loadEventsSlide() {
+  try {
+    const data = await fetchCSV('events');
+    if (!data.length) return;
+    const el = document.getElementById('events-slide-container');
+    if (!el) return;
+    el.innerHTML = data.slice(0, 4).map(row => {
+      const d = new Date(row.date);
+      const day = isNaN(d) ? '--' : d.getDate();
+      const mon = isNaN(d) ? row.date : d.toLocaleString('en', {month:'short'});
+      return `<div style="background:rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; display:flex; gap:14px; align-items:flex-start;">
+        <div style="background:var(--yellow); color:#0d1e6b; border-radius:8px; padding:8px 12px; text-align:center; flex-shrink:0; min-width:46px;">
+          <div style="font-size:1.5rem; font-weight:900; line-height:1; font-family:'Merriweather',serif;">${day}</div>
+          <div style="font-size:0.85rem; font-weight:700; text-transform:uppercase;">${mon}</div>
+        </div>
+        <div>
+          <div style="font-size:1.1rem; font-weight:800; color:var(--yellow); text-transform:uppercase; letter-spacing:0.5px;">${row.tag || row.category || ''}</div>
+          <div style="font-size:1.35rem; font-weight:700; color:white; line-height:1.3;">${row.title || ''}</div>
+          ${row.description ? `<div style="font-size:1.1rem; color:rgba(255,255,255,0.7); margin-top:2px;">${row.description}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) { console.error('Events slide load error:', e); }
+}
 
 async function loadMainAnnouncements() {
   try {
@@ -1704,61 +1829,6 @@ async function loadMainEvents() {
 
 loadMainAnnouncements();
 loadMainEvents();
-
-async function loadWinners() {
-  try {
-    const data = await fetchCSV('winners');
-    const el = document.getElementById('winners-slide-container');
-    if (!el) return;
-    if (!data.length) {
-      el.innerHTML = `<div style="text-align:center;padding:40px;"><div style="font-size:4rem;">🏆</div><div style="font-family:Merriweather,serif;font-size:2.5rem;font-weight:900;color:var(--yellow);">CONGRATULATIONS!</div><div style="font-size:1.5rem;color:rgba(255,255,255,0.5);margin-top:16px;">Walang data sa ngayon.</div></div>`;
-      return;
-    }
-    // Show one winner at a time, auto-cycle if multiple
-    let idx = 0;
-    function showWinner(i) {
-      const w = data[i];
-      el.innerHTML = `<div style="text-align:center;padding:40px 60px;width:100%;">
-        <div style="font-size:5rem;margin-bottom:16px;">🏆</div>
-        <div style="font-family:Merriweather,serif;font-size:3.5rem;font-weight:900;color:var(--yellow);letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;">CONGRATULATIONS!</div>
-        <div style="font-family:Merriweather,serif;font-size:3rem;font-weight:900;color:white;text-transform:uppercase;margin-bottom:12px;">${w.name||''}</div>
-        ${w.grade||w.section ? `<div style="font-size:1.8rem;color:rgba(255,255,255,0.8);margin-bottom:12px;">Grade ${w.grade||''} ${w.section ? '— '+w.section : ''}</div>` : ''}
-        <div style="font-size:2.2rem;font-weight:800;color:var(--yellow);text-transform:uppercase;margin-bottom:8px;">${w.rank||''}</div>
-        <div style="font-size:2rem;color:white;margin-bottom:8px;">${w.event||''}</div>
-        <div style="font-size:1.6rem;color:rgba(255,255,255,0.7);margin-bottom:16px;">${w.date||''}</div>
-        ${w.coach ? `<div style="font-size:1.5rem;color:rgba(255,255,255,0.6);">Coach: ${w.coach}</div>` : ''}
-      </div>`;
-    }
-    showWinner(0);
-    if (data.length > 1) {
-      setInterval(() => { idx = (idx + 1) % data.length; showWinner(idx); }, 8000);
-    }
-  } catch(e) { console.error('Winners load error:', e); }
-}
-
-async function loadEventsSlide() {
-  try {
-    const data = await fetchCSV('events');
-    const el = document.getElementById('events-slide-container');
-    if (!el || !data.length) return;
-    el.innerHTML = data.slice(0,4).map(row => {
-      const d = new Date(row.date);
-      const day = isNaN(d) ? '--' : d.getDate();
-      const mon = isNaN(d) ? row.date : d.toLocaleString('en',{month:'short'});
-      return `<div style="display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.1);">
-        <div style="background:var(--yellow);color:#0d1e6b;border-radius:6px;padding:7px 10px;text-align:center;flex-shrink:0;min-width:50px;">
-          <div style="font-size:1.4rem;font-weight:900;line-height:1;">${day}</div>
-          <div style="font-size:1rem;font-weight:700;text-transform:uppercase;">${mon}</div>
-        </div>
-        <div>
-          <div style="font-size:1.5rem;font-weight:700;color:white;line-height:1.3;">${row.title||''}</div>
-          <div style="font-size:1.2rem;color:rgba(255,255,255,0.7);margin-top:2px;">${row.description||''}</div>
-        </div>
-      </div>`;
-    }).join('');
-  } catch(e) { console.error('Events slide error:', e); }
-}
-
 </script>
-
-<script data-cfasync="false" src
+</body>
+</html>
