@@ -109,7 +109,7 @@
     overflow: hidden;
     display: none;
   }
-  .table-container.active { display: block; }
+  
 
   .table-header {
     background: var(--blue-dark);
@@ -257,21 +257,13 @@
 <!-- PAGE -->
 <div class="page">
   <div class="page-title">Enrollment Data</div>
-  <div class="page-subtitle">Ilayang Yuni Elementary School &nbsp;•&nbsp; School Year 2024–2025 &nbsp;•&nbsp; As of February 2025</div>
-
-  <!-- TABS -->
-  <div class="tabs">
-    <button class="tab-btn active" onclick="showTab('enrollment')">📊 Enrollment</button>
-    <button class="tab-btn" onclick="showTab('transferred-in')">📥 Transferred In</button>
-    <button class="tab-btn" onclick="showTab('transferred-out')">📤 Transferred Out</button>
-    <button class="tab-btn" onclick="showTab('dropout')">❌ Drop Out</button>
-  </div>
+  <div class="page-subtitle">Ilayang Yuni Elementary School &nbsp;•&nbsp; <span id="enrollment-sy"></span></div>
 
   <!-- ENROLLMENT TABLE -->
-  <div class="table-container active" id="enrollment">
+  <div class="table-container" id="enrollment">
     <div class="table-header">
       <h2>📊 Enrollment</h2>
-      <span class="sy-badge">SY 2024–2025</span>
+      <span class="sy-badge"></span>
     </div>
     <table class="enroll-table">
       <thead>
@@ -305,7 +297,7 @@
   <div class="table-container" id="transferred-in">
     <div class="table-header">
       <h2>📥 Transferred In</h2>
-      <span class="sy-badge">SY 2024–2025</span>
+      <span class="sy-badge"></span>
     </div>
     <table class="enroll-table">
       <thead>
@@ -337,7 +329,7 @@
   <div class="table-container" id="transferred-out">
     <div class="table-header">
       <h2>📤 Transferred Out</h2>
-      <span class="sy-badge">SY 2024–2025</span>
+      <span class="sy-badge"></span>
     </div>
     <table class="enroll-table">
       <thead>
@@ -369,7 +361,7 @@
   <div class="table-container" id="dropout">
     <div class="table-header">
       <h2>❌ Drop Out</h2>
-      <span class="sy-badge">SY 2024–2025</span>
+      <span class="sy-badge"></span>
     </div>
     <table class="enroll-table">
       <thead>
@@ -400,13 +392,7 @@
 </div>
 
 <script>
-  function showTab(id) {
-    document.querySelectorAll('.table-container').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    event.target.classList.add('active');
-  }
-</script>
+  </script>
 
 
 <script>
@@ -428,44 +414,83 @@ async function fetchCSV(sheet) {
   return rows.slice(1).filter(r => r.some(c => c)).map(row => Object.fromEntries(headers.map((h,i) => [h, row[i]||''])));
 }
 
-function makeRow(row, mKey, fKey, tKey) {
-  const m = row[mKey]||'—', f = row[fKey]||'—', t = row[tKey]||'—';
-  return `<tr>
-    <td>${row.grade||''}</td>
-    <td class="male">${m}</td>
-    <td class="female">${f}</td>
-    <td class="total">${t}</td>
-  </tr>`;
-}
+function fillTable(tableContainer, data, cols) {
+  const tbody = tableContainer.querySelector('tbody');
+  const tfoot = tableContainer.querySelector('tfoot');
+  if (!tbody) return;
 
-function makeTotals(data, mKey, fKey, tKey) {
-  const m = data.reduce((s,r)=>s+(parseInt(r[mKey])||0),0);
-  const f = data.reduce((s,r)=>s+(parseInt(r[fKey])||0),0);
-  const t = data.reduce((s,r)=>s+(parseInt(r[tKey])||0),0);
-  return `<tr class="total-row"><td>TOTAL</td><td class="male">${m||'—'}</td><td class="female">${f||'—'}</td><td class="total">${t||'—'}</td></tr>`;
+  // Fill rows
+  const grades = ['kinder','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6'];
+  tbody.querySelectorAll('tr').forEach((tr, i) => {
+    const row = data[i];
+    if (!row) return;
+    const tds = tr.querySelectorAll('td');
+    cols.forEach((col, ci) => {
+      if (tds[ci+1]) tds[ci+1].textContent = row[col] || '0';
+    });
+  });
+
+  // Fill totals in tfoot
+  if (tfoot) {
+    const totalTds = tfoot.querySelectorAll('td');
+    cols.forEach((col, ci) => {
+      const sum = data.reduce((s,r) => s + (parseInt(r[col])||0), 0);
+      if (totalTds[ci+1]) totalTds[ci+1].textContent = sum;
+    });
+  }
 }
 
 async function loadEnrollment() {
   try {
     const data = await fetchCSV('enrollment');
-    // Update school year
-    const sy = data[0] && (data[0].school_year || data[0].School_Year || '');
-    if (sy) { const el = document.getElementById('enrollment-sy'); if (el) el.textContent = 'SY ' + sy; }
     if (!data.length) return;
 
-    const tables = [
-      ['beg-enroll', 'beg_male', 'beg_female', 'beg_total'],
-      ['cur-enroll', 'cur_male', 'cur_female', 'cur_total'],
-      ['transfer-in', 'transferin_male', 'transferin_female', 'transferin_total'],
-      ['transfer-out', 'transferout_male', 'transferout_female', 'transferout_total'],
-      ['drop', 'drop_male', 'drop_female', 'drop_total'],
-    ];
+    // Update school year
+    const sy = data[0].school_year || data[0].School_Year || '';
+    if (sy) {
+      document.querySelectorAll('.sy-badge').forEach(el => el.textContent = 'SY ' + sy);
+      const syEl = document.getElementById('enrollment-sy');
+      if (syEl) syEl.textContent = 'SY ' + sy;
+    }
 
-    tables.forEach(([id, mKey, fKey, tKey]) => {
-      const tbody = document.getElementById(id);
-      if (!tbody) return;
-      tbody.innerHTML = data.map(row => makeRow(row, mKey, fKey, tKey)).join('') + makeTotals(data, mKey, fKey, tKey);
-    });
+    // Beg + Cur enrollment (same table, more columns)
+    const begCurTable = document.querySelector('#enrollment table');
+    if (begCurTable) {
+      const tbody = begCurTable.querySelector('tbody');
+      if (tbody) {
+        tbody.querySelectorAll('tr').forEach((tr, i) => {
+          const row = data[i]; if (!row) return;
+          const tds = tr.querySelectorAll('td');
+          if (tds[1]) tds[1].textContent = row.beg_male||'0';
+          if (tds[2]) tds[2].textContent = row.beg_female||'0';
+          if (tds[3]) tds[3].textContent = row.beg_total||'0';
+          if (tds[4]) tds[4].textContent = row.cur_male||'0';
+          if (tds[5]) tds[5].textContent = row.cur_female||'0';
+          if (tds[6]) tds[6].textContent = row.cur_total||'0';
+        });
+        const tfoot = begCurTable.querySelector('tfoot tr');
+        if (tfoot) {
+          const ftds = tfoot.querySelectorAll('td');
+          ['beg_male','beg_female','beg_total','cur_male','cur_female','cur_total'].forEach((col,i) => {
+            const sum = data.reduce((s,r)=>s+(parseInt(r[col])||0),0);
+            if (ftds[i+1]) ftds[i+1].textContent = sum;
+          });
+        }
+      }
+    }
+
+    // Transfer In
+    const tiContainer = document.getElementById('transferred-in');
+    if (tiContainer) fillTable(tiContainer, data, ['transferin_male','transferin_female','transferin_total']);
+
+    // Transfer Out
+    const toContainer = document.getElementById('transferred-out');
+    if (toContainer) fillTable(toContainer, data, ['transferout_male','transferout_female','transferout_total']);
+
+    // Drop Out
+    const doContainer = document.getElementById('dropout');
+    if (doContainer) fillTable(doContainer, data, ['drop_male','drop_female','drop_total']);
+
   } catch(e) {
     console.error('Enrollment load error:', e);
   }
