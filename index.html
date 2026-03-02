@@ -843,7 +843,7 @@
           <div style="background:rgba(255,255,255,0.08); border-radius:12px; padding:18px 22px; display:flex; flex-direction:column; gap:9px;">
             <div style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:var(--yellow); border-bottom:1px solid rgba(245,194,0,0.3); padding-bottom:8px;">📍 Contact Information</div>
             <div style="display:flex; gap:8px; align-items:flex-start;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">ADDRESS</div><div style="font-size:1.8rem; color:white; font-weight:700;">Sitio Central A, Brgy. Ilayang Yuni, Mulanay, Quezon 4312</div></div>
-            <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">EMAIL</div><div id="about-email" style="font-size:1.8rem; color:white; font-weight:700;">108929@deped.gov.ph</div></div>
+            <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">EMAIL</div><div id="about-email" style="font-size:1.8rem; color:white; font-weight:700;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d4e5e4ecede6ed94b0b1a4b1b0fab3bba2faa4bc">[email&#160;protected]</a></div></div>
             <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">CONTACT</div><div id="about-contact" style="font-size:1.8rem; color:white; font-weight:700;">09302613511</div></div>
           </div>
 
@@ -1516,23 +1516,27 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // SLIDESHOW
+let currentSlide = 0;
+let slides = [];
+let dots = [];
+
+function goToSlide(n) {
+  if (!slides.length) return;
+  slides[currentSlide].classList.remove('active');
+  dots[currentSlide].classList.remove('active');
+  currentSlide = (n + slides.length) % slides.length;
+  slides[currentSlide].classList.add('active');
+  dots[currentSlide].classList.add('active');
+}
+
+window.goToSlide = goToSlide;
+
 document.addEventListener('DOMContentLoaded', function() {
-  let currentSlide = 0;
-  const slides = document.querySelectorAll('.hero-slideshow .slide');
-  const dots = document.querySelectorAll('.slide-dots .dot');
-
-  window.goToSlide = function(n) {
-    slides[currentSlide].classList.remove('active');
-    dots[currentSlide].classList.remove('active');
-    currentSlide = (n + slides.length) % slides.length;
-    slides[currentSlide].classList.add('active');
-    dots[currentSlide].classList.add('active');
-  }
-
-  setInterval(() => window.goToSlide(currentSlide + 1), 30000);
+  slides = Array.from(document.querySelectorAll('.hero-slideshow .slide'));
+  dots = Array.from(document.querySelectorAll('.slide-dots .dot'));
+  setInterval(() => goToSlide(currentSlide + 1), 30000);
 });
 
 const SHEET_URLS = {
@@ -1692,8 +1696,6 @@ async function loadSettings() {
 loadEnrollment();
 loadPPAs();
 loadAnnouncements();
-loadWinners();
-loadEventsSlide();
 loadSettings();
 
 
@@ -1815,6 +1817,7 @@ async function loadMainEvents() {
           <div class="event-date-box"><span class="eday">${day}</span><span>${mon}</span></div>
           <h4>${row.title||''}</h4>
         </div>
+
         <div class="event-body">
           <p>${row.description||''}</p>
         </div>
@@ -1825,6 +1828,8 @@ async function loadMainEvents() {
 
 loadMainAnnouncements();
 loadMainEvents();
+loadWinners();
+loadEventsSlide();
 </script>
 </body>
 </html>
