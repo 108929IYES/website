@@ -60,7 +60,7 @@
   nav ul li.active a { color: var(--yellow); border-bottom-color: var(--yellow); }
 
   /* PAGE */
-  .page { max-width: 1000px; margin: 40px auto; padding: 0 24px 60px; }
+  .page { max-width: 100%; margin: 40px auto; padding: 0 32px 60px; }
 
   .page-title {
     font-family: 'Merriweather', serif;
@@ -101,14 +101,25 @@
     border-color: var(--blue);
   }
 
+  /* FLEX WRAPPER */
+  .tables-flex {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+    width: 100%;
+  }
+
   /* TABLE CONTAINER */
   .table-container {
     background: white;
     border-radius: 12px;
     box-shadow: 0 2px 16px rgba(26,47,160,0.08);
     overflow: hidden;
-    display: none;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
+  .table-container table { flex: 1; }
   
 
   .table-header {
@@ -259,6 +270,8 @@
   <div class="page-title">Enrollment Data</div>
   <div class="page-subtitle">Ilayang Yuni Elementary School &nbsp;•&nbsp; <span id="enrollment-sy"></span></div>
 
+  <!-- ALL TABLES IN ONE ROW -->
+  <div class="tables-flex">
   <!-- ENROLLMENT TABLE -->
   <div class="table-container" id="enrollment">
     <div class="table-header">
@@ -290,7 +303,6 @@
         <tr><td>TOTAL</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
       </tfoot>
     </table>
-    <div class="update-note">📅 <strong>Last Updated:</strong> February 27, 2025 &nbsp;•&nbsp; Data provided by the School Registrar</div>
   </div>
 
   <!-- TRANSFERRED IN -->
@@ -322,7 +334,6 @@
         <tr><td>TOTAL</td><td>—</td><td>—</td><td>—</td></tr>
       </tfoot>
     </table>
-    <div class="update-note">📅 <strong>Last Updated:</strong> February 27, 2025 &nbsp;•&nbsp; Data provided by the School Registrar</div>
   </div>
 
   <!-- TRANSFERRED OUT -->
@@ -354,7 +365,6 @@
         <tr><td>TOTAL</td><td>—</td><td>—</td><td>—</td></tr>
       </tfoot>
     </table>
-    <div class="update-note">📅 <strong>Last Updated:</strong> February 27, 2025 &nbsp;•&nbsp; Data provided by the School Registrar</div>
   </div>
 
   <!-- DROP OUT -->
@@ -386,8 +396,9 @@
         <tr><td>TOTAL</td><td>—</td><td>—</td><td>—</td></tr>
       </tfoot>
     </table>
-    <div class="update-note">📅 <strong>Last Updated:</strong> February 27, 2025 &nbsp;•&nbsp; Data provided by the School Registrar</div>
   </div>
+
+  </div><!-- end tables-flex -->
 
 </div>
 
