@@ -1656,7 +1656,8 @@ async function loadSettings() {
     imgKeys.forEach(key => {
       const el = document.getElementById(key + '-container');
       if (el && s[key]) {
-        el.innerHTML = `<img src="${driveUrl(s[key])}" style="width:100%;height:100%;object-fit:contain;">`;
+        const imgUrl = driveUrl(s[key]) || s[key];
+        el.innerHTML = `<img src="${imgUrl}" style="width:100%;height:100%;object-fit:contain;">`;
       }
     });
 
@@ -1678,7 +1679,8 @@ async function loadSettings() {
     if (s['responsable_framework_image']) {
       const el = document.getElementById('responsable_framework-container');
       if (el) {
-        el.innerHTML = `<img src="${driveUrl(s['responsable_framework_image'])}" style="width:100%;height:100%;object-fit:contain;">`;
+        const imgUrl = driveUrl(s['responsable_framework_image']) || s['responsable_framework_image'];
+        el.innerHTML = `<img src="${imgUrl}" style="width:100%;height:100%;object-fit:contain;">`;
       }
     }
 
