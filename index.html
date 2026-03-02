@@ -491,20 +491,20 @@
     position: relative;
     z-index: 2;
     border-radius: 0;
-    overflow: hidden;
+    overflow: visible;
     box-shadow: none;
     background: rgba(255,255,255,0.1);
-    height: 680px;
+    height: 544px;
   }
-  .slide { display: none; position: relative; width: 100%; height: 680px; }
+  .slide { display: none; position: relative; width: 100%; height: 544px; }
   .slide.active { display: block; }
   .slide img {
-    width: 100%; height: 680px;
+    width: 100%; height: 544px;
     object-fit: cover;
     display: block;
   }
   .slide-placeholder {
-    width: 100%; height: 680px;
+    width: 100%; height: 544px;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     gap: 16px;
@@ -521,16 +521,19 @@
     text-align: center;
   }
   .slide-dots {
-    display: flex; justify-content: center; gap: 10px;
-    padding: 14px 0;
-    background: rgba(0,0,0,0.25);
+    display: flex; justify-content: center; gap: 6px;
+    padding: 12px 20px;
+    background: rgba(13,30,107,0.9);
+    flex-wrap: wrap;
+    width: 100%;
   }
   .dot {
-    width: 12px; height: 12px;
+    width: 8px; height: 8px;
     border-radius: 50%;
     background: rgba(255,255,255,0.4);
     cursor: pointer;
     transition: background 0.2s;
+    flex-shrink: 0;
   }
   .dot.active { background: var(--yellow); }
   .responsable-section {
@@ -691,7 +694,7 @@
 
     <!-- A. DEPED VISION, MISSION, CORE VALUES -->
     <div class="slide active">
-      <div class="slide-placeholder" style="background: linear-gradient(135deg, #0d1e6b, #1a2fa0); padding: 32px 40px; flex-direction: column; gap: 20px; justify-content: center; min-height: 680px;">
+      <div class="slide-placeholder" style="background: linear-gradient(135deg, #0d1e6b, #1a2fa0); padding: 32px 40px; flex-direction: column; gap: 20px; justify-content: center; min-height: 544px;">
         
         <!-- Title -->
         <div style="text-align:center; margin-bottom:4px;">
@@ -797,7 +800,7 @@
 
     <!-- 3. ABOUT US -->
     <div class="slide">
-      <div class="slide-placeholder" style="background: linear-gradient(135deg, #0d1e6b, #1a2fa0); padding: 32px 40px; flex-direction: row; gap: 30px; justify-content: center; align-items: center; min-height: 680px;">
+      <div class="slide-placeholder" style="background: linear-gradient(135deg, #0d1e6b, #1a2fa0); padding: 32px 40px; flex-direction: row; gap: 30px; justify-content: center; align-items: center; min-height: 544px;">
         
         <!-- LEFT: Logo + School Name -->
         <div style="flex:0.8; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;">
@@ -867,7 +870,7 @@
     <!-- 5. WINNERS - Dynamic Cards from Google Sheets -->
     <div class="slide">
       <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0); flex-direction:column; gap:0; justify-content:center; align-items:center; padding:0;">
-        <div id="winners-slide-container" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+        <div id="winners-slide-container" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; overflow:hidden; text-align:center;">
           <div style="text-align:center; padding:40px;">
             <div style="font-size:4rem; margin-bottom:8px;">🏆</div>
             <div style="font-family:'Merriweather',serif; font-size:2.5rem; font-weight:900; color:var(--yellow);">CONGRATULATIONS!</div>
@@ -1398,43 +1401,6 @@
     </div>
 
     <!-- Dots -->
-    <div class="slide-dots">
-      <span class="dot active" onclick="goToSlide(0)"></span>
-      <span class="dot" onclick="goToSlide(1)"></span>
-      <span class="dot" onclick="goToSlide(2)"></span>
-      <span class="dot" onclick="goToSlide(3)"></span>
-      <span class="dot" onclick="goToSlide(4)"></span>
-      <span class="dot" onclick="goToSlide(5)"></span>
-      <span class="dot" onclick="goToSlide(6)"></span>
-      <span class="dot" onclick="goToSlide(7)"></span>
-      <span class="dot" onclick="goToSlide(8)"></span>
-      <span class="dot" onclick="goToSlide(9)"></span>
-      <span class="dot" onclick="goToSlide(10)"></span>
-      <span class="dot" onclick="goToSlide(11)"></span>
-      <span class="dot" onclick="goToSlide(12)"></span>
-      <span class="dot" onclick="goToSlide(13)"></span>
-      <span class="dot" onclick="goToSlide(14)"></span>
-      <span class="dot" onclick="goToSlide(15)"></span>
-      <span class="dot" onclick="goToSlide(16)"></span>
-      <span class="dot" onclick="goToSlide(17)"></span>
-      <span class="dot" onclick="goToSlide(18)"></span>
-      <span class="dot" onclick="goToSlide(19)"></span>
-      <span class="dot" onclick="goToSlide(20)"></span>
-      <span class="dot" onclick="goToSlide(21)"></span>
-      <span class="dot" onclick="goToSlide(22)"></span>
-      <span class="dot" onclick="goToSlide(23)"></span>
-      <span class="dot" onclick="goToSlide(24)"></span>
-      <span class="dot" onclick="goToSlide(25)"></span>
-      <span class="dot" onclick="goToSlide(26)"></span>
-      <span class="dot" onclick="goToSlide(27)"></span>
-      <span class="dot" onclick="goToSlide(28)"></span>
-      <span class="dot" onclick="goToSlide(29)"></span>
-      <span class="dot" onclick="goToSlide(30)"></span>
-      <span class="dot" onclick="goToSlide(31)"></span>
-      <span class="dot" onclick="goToSlide(32)"></span>
-      <span class="dot" onclick="goToSlide(33)"></span>
-      <span class="dot" onclick="goToSlide(34)"></span>
-    </div>
   </div>
 </section>
 
