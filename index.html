@@ -793,7 +793,7 @@
     <div class="slide">
       <div class="slide-placeholder" style="background: linear-gradient(135deg, #6a0dad, #c0392b);">
         <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-          <img src="https://raw.githubusercontent.com/IYES-School/assets/main/responsable-framework.png" 
+          <img src="assets/responsable.jpg" 
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                style="width:100%;height:100%;object-fit:contain;">
           <div style="display:none;text-align:center;flex-direction:column;align-items:center;">
@@ -1676,14 +1676,6 @@ async function loadSettings() {
     }
 
     // RESPONSABLE Framework image
-    if (s['responsable_framework_image']) {
-      const el = document.getElementById('responsable_framework-container');
-      if (el) {
-        const imgUrl = driveUrl(s['responsable_framework_image']) || s['responsable_framework_image'];
-        el.innerHTML = `<img src="${imgUrl}" style="width:100%;height:100%;object-fit:contain;">`;
-      }
-    }
-
     // About Us contact info
     if (s['contact_number']) {
       const el = document.getElementById('about-contact');
