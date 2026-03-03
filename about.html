@@ -328,4 +328,34 @@
     <div class="profile-card" style="margin-top:20px;">
       <h2 class="section-title" style="margin-bottom:16px;">📞 Contact Information</h2>
       <div class="profile-item"><span class="profile-label">Contact Number</span><span class="profile-value" id="contact-number">—</span></div>
-      <div class="profile-item" style="border-bottom:none;"><span class="profile-label">Email Address</span><span class="profile-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2b1a1
+      <div class="profile-item" style="border-bottom:none;"><span class="profile-label">Email Address</span><span class="profile-value" id="email-address">—</span></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+async function fetchSettings() {
+  try {
+    const res = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSieM-BANe-E6ILA87jaigqKX1B5pWZmOaJv9dc7iaevGfdxkYK4tzyMS24rdLXqhO6vsGpyRgAKjIU/pub?gid=0&single=true&output=csv');
+    const text = await res.text();
+    const rows = text.trim().split('\n').slice(1);
+    const settings = {};
+    rows.forEach(row => {
+      const cols = row.split(',');
+      if (cols[0]) settings[cols[0].trim()] = cols.slice(1).join(',').trim().replace(/^"|"$/g, '');
+    });
+    if (settings.contact_number) {
+      const el = document.getElementById('contact-number');
+      if (el) el.textContent = settings.contact_number;
+    }
+    if (settings.email_address) {
+      const el = document.getElementById('email-address');
+      if (el) el.textContent = settings.email_address;
+    }
+  } catch(e) { console.error('Settings fetch error:', e); }
+}
+fetchSettings();
+</script>
+</body>
+</html>
