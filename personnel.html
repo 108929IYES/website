@@ -234,8 +234,9 @@ async function fetchCSV() {
 
 function driveUrl(url) {
   if (!url) return '';
-  const m = url.match(/[-\w]{25,}/);
-  return m ? `https://drive.google.com/uc?export=view&id=${m[0]}` : url;
+  const m = url.match(/\/d\/([a-zA-Z0-9_-]{25,})/);
+  if (m) return `https://lh3.googleusercontent.com/d/${m[1]}`;
+  return url;
 }
 
 function photoHtml(row, size) {
