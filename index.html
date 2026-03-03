@@ -1316,6 +1316,16 @@
 
 
 
+    <!-- LIQUIDATION SLIDE -->
+    <div class="slide">
+      <div class="slide-placeholder" style="background:#f4f6fb; padding:28px 40px; flex-direction:column; gap:16px; justify-content:flex-start; align-items:stretch; overflow:auto;">
+        <div id="liq-slide-title" style="font-family:'Merriweather',serif; font-size:1.6rem; font-weight:900; color:#0d1e6b; text-align:center; text-transform:uppercase; letter-spacing:1px;">MOOE LIQUIDATION FOR FISCAL YEAR</div>
+        <div id="liq-slide-container" style="overflow-x:auto;">
+          <div style="color:#6b7280; text-align:center; padding:40px;">Loading...</div>
+        </div>
+      </div>
+    </div>
+
     <!-- 10. PPAs -->
     <div class="slide">
       <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0); padding:32px 60px; flex-direction:column; gap:20px; justify-content:center;">
@@ -1581,6 +1591,70 @@ async function loadEnrollment() {
     document.getElementById('drop').innerHTML = renderEnrollTable(data,'drop_male','drop_female','drop_total');
   } catch(e) { console.error('Enrollment load error:', e); }
 }
+
+// LIQUIDATION SLIDE
+async function loadLiquidationSlide() {
+  const container = document.getElementById('liq-slide-container');
+  if (!container) return;
+  try {
+    const res = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vT0Czxt9mN-Xdu-bz3cSW-vDhJECMV5LAKOhyQ6J-3kK8Lrhe_buOVaDEstgTpo3iL4ADRsAlk0IsyI/pub?gid=0&single=true&output=csv');
+    const text = await res.text();
+    const rows = text.trim().split('\n').map(r => {
+      const result = []; let cur = '', inQ = false;
+      for (let c of r) {
+        if (c==='"') inQ=!inQ;
+        else if (c===',' && !inQ) { result.push(cur.trim()); cur=''; }
+        else cur+=c;
+      }
+      result.push(cur.trim()); return result;
+    });
+    const headers = rows[0].map(h => h.toLowerCase().trim());
+    const data = rows.slice(1).filter(r => r.some(c=>c)).map(row =>
+      Object.fromEntries(headers.map((h,i) => [h, row[i]||'']))
+    );
+    const fy = data[0] && (data[0].fiscal_year || data[0]['fiscal year'] || '');
+    if (fy) document.getElementById('liq-slide-title').textContent = 'MOOE LIQUIDATION FOR FISCAL YEAR ' + fy;
+
+    const MONTHS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+    const MONTH_LABELS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    const dataRows = data.filter(r => (r.particulars||'').toLowerCase() !== 'total');
+
+    let html = `<table style="width:100%;border-collapse:collapse;font-size:0.8rem;">
+      <thead>
+        <tr>
+          <th style="background:#0d1e6b;color:white;padding:6px 10px;text-align:left;border:1px solid rgba(255,255,255,0.15);">PARTICULARS</th>
+          <th style="background:#0d1e6b;color:white;padding:6px 8px;text-align:center;border:1px solid rgba(255,255,255,0.15);">UACS CODE</th>
+          ${MONTH_LABELS.map(m=>`<th style="background:#0d1e6b;color:white;padding:6px 6px;text-align:center;border:1px solid rgba(255,255,255,0.15);">${m}</th>`).join('')}
+          <th style="background:#0d1e6b;color:#f5c200;padding:6px 8px;text-align:center;border:1px solid rgba(255,255,255,0.15);">TOTAL</th>
+        </tr>
+      </thead><tbody>`;
+
+    const grandTotals = new Array(MONTHS.length).fill(0);
+    let grandTotal = 0;
+
+    dataRows.forEach(row => {
+      let rowTotal = 0;
+      const monthCells = MONTHS.map(m => { const v = parseFloat(row[m])||0; rowTotal += v; return v; });
+      monthCells.forEach((v,i) => grandTotals[i] += v);
+      grandTotal += rowTotal;
+      html += `<tr>
+        <td style="padding:4px 10px;border:1px solid #e8edf8;">${row.particulars||''}</td>
+        <td style="padding:4px 8px;border:1px solid #e8edf8;text-align:center;">${row['uacs code']||row.uacs_code||''}</td>
+        ${monthCells.map(v=>`<td style="padding:4px 6px;border:1px solid #e8edf8;text-align:right;font-weight:600;color:#0d1e6b;">${v?v.toLocaleString():''}</td>`).join('')}
+        <td style="padding:4px 8px;border:1px solid #e8edf8;text-align:right;font-weight:800;color:#0d1e6b;background:#e8edf8;">${rowTotal?rowTotal.toLocaleString():''}</td>
+      </tr>`;
+    });
+
+    html += `<tr style="background:#0d1e6b;">
+      <td colspan="2" style="padding:6px 10px;color:white;font-weight:900;">TOTAL</td>
+      ${grandTotals.map(v=>`<td style="padding:6px 6px;text-align:right;color:#f5c200;font-weight:900;">${v?v.toLocaleString():''}</td>`).join('')}
+      <td style="padding:6px 8px;text-align:right;color:#f5c200;font-weight:900;">${grandTotal?grandTotal.toLocaleString():''}</td>
+    </tr></tbody></table>`;
+
+    container.innerHTML = html;
+  } catch(e) { console.error('Liquidation slide error:', e); }
+}
+loadLiquidationSlide();
 
 async function loadPPAs() {
   try {
