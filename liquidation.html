@@ -238,36 +238,114 @@
     <li><a href="links.html">Links</a></li>
   </ul>
 </nav>
-<div class="page-hero">
-  <h2>💰 Liquidation</h2>
-</div>
+<style>
+  .liq-page { max-width:100%; padding:32px 40px 60px; }
+  .liq-title {
+    font-family:'Merriweather',serif; font-size:1.4rem; font-weight:900;
+    color:var(--blue-dark); text-align:center; margin-bottom:24px; text-transform:uppercase; letter-spacing:1px;
+  }
+  .liq-table-wrap { overflow-x:auto; background:white; border-radius:12px; box-shadow:0 2px 16px rgba(26,47,160,0.08); }
+  .liq-table { width:100%; border-collapse:collapse; font-size:0.85rem; }
+  .liq-table th {
+    background:var(--blue-dark); color:white; padding:10px 8px;
+    text-align:center; font-size:0.78rem; font-weight:700; white-space:nowrap; border:1px solid rgba(255,255,255,0.15);
+  }
+  .liq-table th.left { text-align:left; }
+  .liq-table td { padding:8px 10px; border:1px solid var(--blue-light); font-size:0.82rem; }
+  .liq-table td.num { text-align:right; color:var(--blue-dark); font-weight:600; }
+  .liq-table td.total-col { background:var(--blue-xlight); font-weight:800; color:var(--blue-dark); text-align:right; }
+  .liq-table tr:hover td { background:#f0f4ff; }
+  .liq-table tr.total-row td { background:var(--blue-dark); color:white; font-weight:900; font-size:0.88rem; }
+  .liq-table tr.total-row td.num { color:var(--yellow); }
+</style>
 
-<div class="page" style="max-width:960px; margin:0 auto; padding:40px 24px 60px;">
-  <div id="liquidation-container" style="background:white; border-radius:12px; border:2px dashed #e8edf8; padding:60px 40px; text-align:center; color:#6b7280;">
-    <div style="font-size:3rem; margin-bottom:12px;">💰</div>
-    <p style="font-size:0.85rem;">Liquidation Report — Larawan mula Google Drive<br><small>I-upload ang picture at ilagay ang link sa Google Sheets<br>key: liquidation_image_slideshow</small></p>
+<div class="liq-page">
+  <div class="liq-title" id="liq-title">MOOE LIQUIDATION FOR FISCAL YEAR</div>
+  <div class="liq-table-wrap">
+    <div id="liquidation-container"><p style="color:#6b7280;text-align:center;padding:40px;">Loading...</p></div>
   </div>
 </div>
 
-
 <script>
-async function loadImage() {
-  const res = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSieM-BANe-E6ILA87jaigqKX1B5pWZmOaJv9dc7iaevGfdxkYK4tzyMS24rdLXqhO6vsGpyRgAKjIU/pub?gid=0&single=true&output=csv');
-  const text = await res.text();
-  const rows = text.trim().split('\n').map(r => r.split(',').map(c => c.replace(/^"|"$/g,'').trim()));
-  const headers = rows[0];
-  const data = rows.slice(1).map(row => Object.fromEntries(headers.map((h,i)=>[h,row[i]||''])));
-  const s = {};
-  data.forEach(r => { if(r.key) s[r.key] = r.value; });
-  const url = s['liquidation_image_slideshow'];
-  const el = document.getElementById('liquidation-container');
-  if (el && url) {
-    const m = url.match(/[-\w]{25,}/);
-    const imgUrl = m ? `https://drive.google.com/uc?export=view&id=${m[0]}` : url;
-    el.innerHTML = `<img src="${imgUrl}" style="width:100%;border-radius:12px;box-shadow:0 4px 24px rgba(26,47,160,0.12);">`;
+const MONTHS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+const MONTH_LABELS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+async function loadLiquidation() {
+  const container = document.getElementById('liquidation-container');
+  try {
+    const res = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vT0Czxt9mN-Xdu-bz3cSW-vDhJECMV5LAKOhyQ6J-3kK8Lrhe_buOVaDEstgTpo3iL4ADRsAlk0IsyI/pub?gid=0&single=true&output=csv');
+    const text = await res.text();
+    const rows = text.trim().split('\n').map(r => {
+      const result = []; let cur = '', inQ = false;
+      for (let c of r) {
+        if (c==='"') inQ=!inQ;
+        else if (c===',' && !inQ) { result.push(cur.trim()); cur=''; }
+        else cur+=c;
+      }
+      result.push(cur.trim()); return result;
+    });
+    const headers = rows[0].map(h => h.toLowerCase().trim());
+    const data = rows.slice(1).filter(r => r.some(c=>c)).map(row =>
+      Object.fromEntries(headers.map((h,i) => [h, row[i]||'']))
+    );
+
+    // Get fiscal year from first row
+    const fy = data[0] && (data[0].fiscal_year || data[0]['fiscal year'] || '');
+    if (fy) document.getElementById('liq-title').textContent = 'MOOE LIQUIDATION FOR FISCAL YEAR ' + fy;
+
+    // Separate total row
+    const dataRows = data.filter(r => (r.particulars||'').toLowerCase() !== 'total');
+
+    // Build table
+    let html = `<table class="liq-table">
+      <thead>
+        <tr>
+          <th class="left" rowspan="2">PARTICULARS</th>
+          <th rowspan="2">UACS CODE</th>
+          <th colspan="${MONTHS.length}">MONTHLY EXPENDITURES</th>
+          <th rowspan="2">TOTAL</th>
+        </tr>
+        <tr>${MONTH_LABELS.map(m=>`<th>${m}</th>`).join('')}</tr>
+      </thead>
+      <tbody>`;
+
+    const grandTotals = new Array(MONTHS.length).fill(0);
+    let grandTotal = 0;
+
+    dataRows.forEach(row => {
+      let rowTotal = 0;
+      const monthCells = MONTHS.map(m => {
+        const val = parseFloat(row[m]) || 0;
+        rowTotal += val;
+        return val;
+      });
+      monthCells.forEach((v,i) => grandTotals[i] += v);
+      grandTotal += rowTotal;
+
+      html += `<tr>
+        <td>${row.particulars||''}</td>
+        <td style="text-align:center">${row['uacs code']||row.uacs_code||''}</td>
+        ${monthCells.map(v=>`<td class="num">${v ? v.toLocaleString() : ''}</td>`).join('')}
+        <td class="total-col">${rowTotal ? rowTotal.toLocaleString() : ''}</td>
+      </tr>`;
+    });
+
+    // Grand total row
+    html += `<tr class="total-row">
+      <td colspan="2">TOTAL</td>
+      ${grandTotals.map(v=>`<td class="num">${v ? v.toLocaleString() : ''}</td>`).join('')}
+      <td class="num">${grandTotal ? grandTotal.toLocaleString() : ''}</td>
+    </tr>`;
+
+    html += '</tbody></table>';
+    container.innerHTML = html;
+
+  } catch(e) {
+    container.innerHTML = '<p style="color:#c62828;text-align:center;padding:40px;">Hindi ma-load ang data.</p>';
+    console.error(e);
   }
 }
-loadImage();
+loadLiquidation();
 </script>
 </body>
 </html>
