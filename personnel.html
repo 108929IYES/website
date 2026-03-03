@@ -100,6 +100,7 @@
   .card.principal { width: 210px; }
   .card.head { width: 195px; }
   .card.admin-card { width: 185px; }
+  .card.admin-card .card-photo { height: 220px; }
 
   .card-top { padding: 0; overflow: hidden; }
   .card.principal .card-top { background: var(--blue-dark); }
@@ -108,7 +109,7 @@
   .card.admin-card .card-top { background: #4a5568; }
 
   .card-photo {
-    width: 100%; height: 140px;
+    width: 100%; height: 220px;
     border-radius: 0;
     border: none;
     margin: 0;
@@ -116,8 +117,8 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 2.5rem;
   }
-  .card.principal .card-photo { height: 168px; }
-  .card.head .card-photo { height: 154px; }
+  .card.principal .card-photo { height: 260px; }
+  .card.head .card-photo { height: 240px; }
 
   .card-position {
     font-size: 0.72rem; font-weight: 700;
@@ -243,7 +244,7 @@ function driveUrl(url) {
 function photoHtml(row, size) {
   const s = size || 65;
   if (row.photo_url) {
-    return `<img src="${driveUrl(row.photo_url)}" style="width:100%;height:${Math.round(s*1.6)}px;object-fit:contain;object-position:center;display:block;background:#1a2fa0;" onerror="this.src='assets/default-avatar.png'">`;
+    return `<img src="${driveUrl(row.photo_url)}" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" onerror="this.src='assets/default-avatar.png'">`;
   }
   return `<div class="card-photo">👤</div>`;
 }
