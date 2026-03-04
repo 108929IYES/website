@@ -41,20 +41,20 @@
   header {
     background: var(--white);
     border-bottom: 4px solid var(--blue);
-    padding: 8px 40px;
+    padding: 6px 40px;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 20px;
     box-shadow: 0 2px 12px rgba(26,47,160,0.08);
   }
   .logo-wrap img { width: 48px; height: 48px; object-fit: contain; }
   .school-title { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 20px; }
   .school-title h1 {
     font-family: 'Merriweather', serif;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     font-weight: 900;
     color: var(--blue-dark);
-    line-height: 1.2;
+    line-height: 1.1;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
@@ -888,154 +888,96 @@
 
     <!-- 7. ENROLLMENT - All Data Combined -->
     <div class="slide">
-      <div class="slide-placeholder" style="background: linear-gradient(135deg, #0d1e6b, #1a2fa0); padding: 18px 32px; flex-direction: column; gap: 8px; justify-content: center;">
+      <div class="slide-placeholder" style="background: #f0f4ff; padding: 14px 24px; flex-direction: column; gap: 6px; justify-content: center;">
         <!-- Title -->
         <div style="text-align:center; margin-bottom:4px;">
-          <div id="enrollment-sy" style="font-size:1.15rem; font-weight:800; color:var(--yellow); letter-spacing:3px; text-transform:uppercase;">SY 2025–2026</div>
-          <div style="font-family:'Merriweather',serif; font-size:2.6rem; font-weight:900; color:white; margin-top:2px;">📊 Enrollment Data</div>
+          <div id="enrollment-sy" style="font-size:1rem; font-weight:800; color:#1565c0; letter-spacing:2px; text-transform:uppercase;">SY 2025–2026</div>
+          <div style="font-family:'Merriweather',serif; font-size:1.6rem; font-weight:900; color:#0d1e6b; margin-top:2px;">📊 Enrollment Data</div>
         </div>
         <!-- 5 tables in a row -->
-        <div style="display:flex; gap:10px; align-items:stretch; width:100%;">
+        <div style="display:flex; gap:6px; align-items:stretch; width:100%;">
 
           <!-- 1. Beginning Enrollment -->
-          <div style="flex:1;">
-            <div style="font-size:1.1rem; font-weight:800; color:var(--yellow); text-align:center; margin-bottom:5px; letter-spacing:1px; text-transform:uppercase; border-bottom:2px solid rgba(245,194,0,0.4); padding-bottom:4px;">Beginning<br>Enrollment</div>
-            <table style="width:100%; border-collapse:collapse; font-size:1.35rem;">
-              <thead><tr>
-                <th style="text-align:left; padding:8px 10px; color:rgba(255,255,255,0.6); font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th>
-                <th style="padding:8px 6px; color:#64b5f6; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">M</th>
-                <th style="padding:8px 6px; color:#f48fb1; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">F</th>
-                <th style="padding:8px 6px; color:white; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">Tot</th>
+          <div style="flex:1; background:#e3f0ff; border-radius:8px; overflow:hidden;">
+            <div style="background:#1565c0; color:white; font-size:0.85rem; font-weight:800; text-align:center; padding:6px 4px; letter-spacing:1px; text-transform:uppercase;">Beginning<br>Enrollment</div>
+            <table style="width:100%; border-collapse:collapse; font-size:0.82rem;">
+              <thead><tr style="background:#1565c022;">
+                <th style="text-align:left; padding:4px 6px; color:#1565c0; font-size:0.78rem; border-bottom:2px solid #90caf9; white-space:nowrap;">Grade</th>
+                <th style="padding:4px 4px; color:#1565c0; font-size:0.78rem; border-bottom:2px solid #90caf9; text-align:center;">M</th>
+                <th style="padding:4px 4px; color:#1565c0; font-size:0.78rem; border-bottom:2px solid #90caf9; text-align:center;">F</th>
+                <th style="padding:4px 4px; color:#1565c0; font-size:0.78rem; border-bottom:2px solid #90caf9; text-align:center;">Tot</th>
               </tr></thead>
               <tbody id="beg-enroll">
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Kinder</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 1</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 2</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 3</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 4</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 5</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 6</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr style="background:rgba(245,194,0,0.15);"><td style="padding:7px 10px;color:var(--yellow);font-weight:900;font-size:1.8rem;">TOTAL</td><td style="padding:7px 6px;color:#64b5f6;font-weight:900;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;font-weight:900;text-align:center;">—</td><td style="padding:7px 6px;color:var(--yellow);font-weight:900;text-align:center;">—</td></tr>
+                <tr style="border-bottom:1px solid #90caf940;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Kinder</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #90caf940;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 1</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #90caf940;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 2</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #90caf940;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 3</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #90caf940;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 4</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #90caf940;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 5</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #90caf940;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 6</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="background:#bbdefb;"><td style="padding:4px 6px;color:#1565c0;font-weight:900;white-space:nowrap;">TOTAL</td><td style="padding:4px 4px;color:#1565c0;font-weight:900;text-align:center;">—</td><td style="padding:4px 4px;color:#1565c0;font-weight:900;text-align:center;">—</td><td style="padding:4px 4px;color:#1565c0;font-weight:900;text-align:center;">—</td></tr>
               </tbody>
             </table>
           </div>
-
-          <div style="width:1px; background:rgba(245,194,0,0.3); align-self:stretch;"></div>
 
           <!-- 2. Current Enrollment -->
-          <div style="flex:1;">
-            <div style="font-size:1.1rem; font-weight:800; color:var(--yellow); text-align:center; margin-bottom:5px; letter-spacing:1px; text-transform:uppercase; border-bottom:2px solid rgba(245,194,0,0.4); padding-bottom:4px;">Current<br>Enrollment</div>
-            <table style="width:100%; border-collapse:collapse; font-size:1.35rem;">
-              <thead><tr>
-                <th style="text-align:left; padding:8px 10px; color:rgba(255,255,255,0.6); font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th>
-                <th style="padding:8px 6px; color:#64b5f6; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">M</th>
-                <th style="padding:8px 6px; color:#f48fb1; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">F</th>
-                <th style="padding:8px 6px; color:white; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">Tot</th>
+          <div style="flex:1; background:#e8f5e9; border-radius:8px; overflow:hidden;">
+            <div style="background:#2e7d32; color:white; font-size:0.85rem; font-weight:800; text-align:center; padding:6px 4px; letter-spacing:1px; text-transform:uppercase;">Current<br>Enrollment</div>
+            <table style="width:100%; border-collapse:collapse; font-size:0.82rem;">
+              <thead><tr style="background:#2e7d3222;">
+                <th style="text-align:left; padding:4px 6px; color:#2e7d32; font-size:0.78rem; border-bottom:2px solid #a5d6a7; white-space:nowrap;">Grade</th>
+                <th style="padding:4px 4px; color:#2e7d32; font-size:0.78rem; border-bottom:2px solid #a5d6a7; text-align:center;">M</th>
+                <th style="padding:4px 4px; color:#2e7d32; font-size:0.78rem; border-bottom:2px solid #a5d6a7; text-align:center;">F</th>
+                <th style="padding:4px 4px; color:#2e7d32; font-size:0.78rem; border-bottom:2px solid #a5d6a7; text-align:center;">Tot</th>
               </tr></thead>
               <tbody id="cur-enroll">
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Kinder</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 1</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 2</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 3</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 4</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 5</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 6</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr style="background:rgba(245,194,0,0.15);"><td style="padding:7px 10px;color:var(--yellow);font-weight:900;font-size:1.8rem;">TOTAL</td><td style="padding:7px 6px;color:#64b5f6;font-weight:900;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;font-weight:900;text-align:center;">—</td><td style="padding:7px 6px;color:var(--yellow);font-weight:900;text-align:center;">—</td></tr>
+                <tr style="border-bottom:1px solid #a5d6a740;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Kinder</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #a5d6a740;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 1</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #a5d6a740;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 2</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #a5d6a740;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 3</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #a5d6a740;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 4</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #a5d6a740;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 5</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #a5d6a740;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 6</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="background:#c8e6c9;"><td style="padding:4px 6px;color:#2e7d32;font-weight:900;white-space:nowrap;">TOTAL</td><td style="padding:4px 4px;color:#2e7d32;font-weight:900;text-align:center;">—</td><td style="padding:4px 4px;color:#2e7d32;font-weight:900;text-align:center;">—</td><td style="padding:4px 4px;color:#2e7d32;font-weight:900;text-align:center;">—</td></tr>
               </tbody>
             </table>
           </div>
-
-          <div style="width:1px; background:rgba(245,194,0,0.3); align-self:stretch;"></div>
 
           <!-- 3. Transfer In -->
-          <div style="flex:1;">
-            <div style="font-size:1.1rem; font-weight:800; color:var(--yellow); text-align:center; margin-bottom:5px; letter-spacing:1px; text-transform:uppercase; border-bottom:2px solid rgba(245,194,0,0.4); padding-bottom:4px;">Transfer<br>In</div>
-            <table style="width:100%; border-collapse:collapse; font-size:1.35rem;">
-              <thead><tr>
-                <th style="text-align:left; padding:8px 10px; color:rgba(255,255,255,0.6); font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th>
-                <th style="padding:8px 6px; color:#64b5f6; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">M</th>
-                <th style="padding:8px 6px; color:#f48fb1; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">F</th>
-                <th style="padding:8px 6px; color:white; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">Tot</th>
+          <div style="flex:1; background:#fffde7; border-radius:8px; overflow:hidden;">
+            <div style="background:#f57f17; color:white; font-size:0.85rem; font-weight:800; text-align:center; padding:6px 4px; letter-spacing:1px; text-transform:uppercase;">Transfer<br>In</div>
+            <table style="width:100%; border-collapse:collapse; font-size:0.82rem;">
+              <thead><tr style="background:#f57f1722;">
+                <th style="text-align:left; padding:4px 6px; color:#f57f17; font-size:0.78rem; border-bottom:2px solid #fff176; white-space:nowrap;">Grade</th>
+                <th style="padding:4px 4px; color:#f57f17; font-size:0.78rem; border-bottom:2px solid #fff176; text-align:center;">M</th>
+                <th style="padding:4px 4px; color:#f57f17; font-size:0.78rem; border-bottom:2px solid #fff176; text-align:center;">F</th>
+                <th style="padding:4px 4px; color:#f57f17; font-size:0.78rem; border-bottom:2px solid #fff176; text-align:center;">Tot</th>
               </tr></thead>
               <tbody id="transfer-in">
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Kinder</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 1</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 2</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 3</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 4</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 5</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 6</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr style="background:rgba(245,194,0,0.15);"><td style="padding:7px 10px;color:var(--yellow);font-weight:900;font-size:1.8rem;">TOTAL</td><td style="padding:7px 6px;color:#64b5f6;font-weight:900;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;font-weight:900;text-align:center;">—</td><td style="padding:7px 6px;color:var(--yellow);font-weight:900;text-align:center;">—</td></tr>
+                <tr style="border-bottom:1px solid #fff17640;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Kinder</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #fff17640;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 1</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #fff17640;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 2</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #fff17640;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 3</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #fff17640;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 4</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #fff17640;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 5</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #fff17640;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 6</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="background:#fff9c4;"><td style="padding:4px 6px;color:#f57f17;font-weight:900;white-space:nowrap;">TOTAL</td><td style="padding:4px 4px;color:#f57f17;font-weight:900;text-align:center;">—</td><td style="padding:4px 4px;color:#f57f17;font-weight:900;text-align:center;">—</td><td style="padding:4px 4px;color:#f57f17;font-weight:900;text-align:center;">—</td></tr>
               </tbody>
             </table>
           </div>
-
-          <div style="width:1px; background:rgba(245,194,0,0.3); align-self:stretch;"></div>
 
           <!-- 4. Transfer Out -->
-          <div style="flex:1;">
-            <div style="font-size:1.1rem; font-weight:800; color:var(--yellow); text-align:center; margin-bottom:5px; letter-spacing:1px; text-transform:uppercase; border-bottom:2px solid rgba(245,194,0,0.4); padding-bottom:4px;">Transfer<br>Out</div>
-            <table style="width:100%; border-collapse:collapse; font-size:1.35rem;">
-              <thead><tr>
-                <th style="text-align:left; padding:8px 10px; color:rgba(255,255,255,0.6); font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th>
-                <th style="padding:8px 6px; color:#64b5f6; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">M</th>
-                <th style="padding:8px 6px; color:#f48fb1; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">F</th>
-                <th style="padding:8px 6px; color:white; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">Tot</th>
+          <div style="flex:1; background:#fff3e0; border-radius:8px; overflow:hidden;">
+            <div style="background:#e65100; color:white; font-size:0.85rem; font-weight:800; text-align:center; padding:6px 4px; letter-spacing:1px; text-transform:uppercase;">Transfer<br>Out</div>
+            <table style="width:100%; border-collapse:collapse; font-size:0.82rem;">
+              <thead><tr style="background:#e6510022;">
+                <th style="text-align:left; padding:4px 6px; color:#e65100; font-size:0.78rem; border-bottom:2px solid #ffcc80; white-space:nowrap;">Grade</th>
+                <th style="padding:4px 4px; color:#e65100; font-size:0.78rem; border-bottom:2px solid #ffcc80; text-align:center;">M</th>
+                <th style="padding:4px 4px; color:#e65100; font-size:0.78rem; border-bottom:2px solid #ffcc80; text-align:center;">F</th>
+                <th style="padding:4px 4px; color:#e65100; font-size:0.78rem; border-bottom:2px solid #ffcc80; text-align:center;">Tot</th>
               </tr></thead>
               <tbody id="transfer-out">
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Kinder</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 1</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 2</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 3</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 4</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 5</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 6</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr style="background:rgba(245,194,0,0.15);"><td style="padding:7px 10px;color:var(--yellow);font-weight:900;font-size:1.8rem;">TOTAL</td><td style="padding:7px 6px;color:#64b5f6;font-weight:900;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;font-weight:900;text-align:center;">—</td><td style="padding:7px 6px;color:var(--yellow);font-weight:900;text-align:center;">—</td></tr>
+                <tr style="border-bottom:1px solid #ffcc8040;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Kinder</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #ffcc8040;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 1</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #ffcc8040;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 2</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #ffcc8040;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 3</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #ffcc8040;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 4</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #ffcc8040;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 5</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #ffcc8040;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 6</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="background:#ffe0b2;"><td style="padding:4px 6px;color:#e65100;font-weight:900;white-space:nowrap;">TOTAL</td><td style="padding:4px 4px;color:#e65100;font-weight:900;text-align:center;">—</td><td style="padding:4px 4px;color:#e65100;font-weight:900;text-align:center;">—</td><td style="padding:4px 4px;color:#e65100;font-weight:900;text-align:center;">—</td></tr>
               </tbody>
             </table>
           </div>
 
-          <div style="width:1px; background:rgba(245,194,0,0.3); align-self:stretch;"></div>
-
           <!-- 5. Drop -->
-          <div style="flex:1;">
-            <div style="font-size:1.1rem; font-weight:800; color:var(--yellow); text-align:center; margin-bottom:5px; letter-spacing:1px; text-transform:uppercase; border-bottom:2px solid rgba(245,194,0,0.4); padding-bottom:4px;">Drop</div>
-            <table style="width:100%; border-collapse:collapse; font-size:1.35rem;">
-              <thead><tr>
-                <th style="text-align:left; padding:8px 10px; color:rgba(255,255,255,0.6); font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th>
-                <th style="padding:8px 6px; color:#64b5f6; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">M</th>
-                <th style="padding:8px 6px; color:#f48fb1; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">F</th>
-                <th style="padding:8px 6px; color:white; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25); text-align:center;">Tot</th>
+          <div style="flex:1; background:#fce4ec; border-radius:8px; overflow:hidden;">
+            <div style="background:#b71c1c; color:white; font-size:0.85rem; font-weight:800; text-align:center; padding:6px 4px; letter-spacing:1px; text-transform:uppercase;">Drop</div>
+            <table style="width:100%; border-collapse:collapse; font-size:0.82rem;">
+              <thead><tr style="background:#b71c1c22;">
+                <th style="text-align:left; padding:4px 6px; color:#b71c1c; font-size:0.78rem; border-bottom:2px solid #ef9a9a; white-space:nowrap;">Grade</th>
+                <th style="padding:4px 4px; color:#b71c1c; font-size:0.78rem; border-bottom:2px solid #ef9a9a; text-align:center;">M</th>
+                <th style="padding:4px 4px; color:#b71c1c; font-size:0.78rem; border-bottom:2px solid #ef9a9a; text-align:center;">F</th>
+                <th style="padding:4px 4px; color:#b71c1c; font-size:0.78rem; border-bottom:2px solid #ef9a9a; text-align:center;">Tot</th>
               </tr></thead>
               <tbody id="drop">
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Kinder</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 1</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 2</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 3</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 4</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 5</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr><td style="padding:7px 10px;color:white;font-size:1.8rem;">Grade 6</td><td style="padding:7px 6px;color:#64b5f6;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;text-align:center;">—</td><td style="padding:7px 6px;color:white;font-weight:700;text-align:center;">—</td></tr>
-                <tr style="background:rgba(245,194,0,0.15);"><td style="padding:7px 10px;color:var(--yellow);font-weight:900;font-size:1.8rem;">TOTAL</td><td style="padding:7px 6px;color:#64b5f6;font-weight:900;text-align:center;">—</td><td style="padding:7px 6px;color:#f48fb1;font-weight:900;text-align:center;">—</td><td style="padding:7px 6px;color:var(--yellow);font-weight:900;text-align:center;">—</td></tr>
+                <tr style="border-bottom:1px solid #ef9a9a40;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Kinder</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #ef9a9a40;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 1</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #ef9a9a40;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 2</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #ef9a9a40;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 3</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #ef9a9a40;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 4</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #ef9a9a40;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 5</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="border-bottom:1px solid #ef9a9a40;"><td style="padding:3px 6px;color:#333;white-space:nowrap;">Grade 6</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#555;text-align:center;">—</td><td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">—</td></tr><tr style="background:#ffcdd2;"><td style="padding:4px 6px;color:#b71c1c;font-weight:900;white-space:nowrap;">TOTAL</td><td style="padding:4px 4px;color:#b71c1c;font-weight:900;text-align:center;">—</td><td style="padding:4px 4px;color:#b71c1c;font-weight:900;text-align:center;">—</td><td style="padding:4px 4px;color:#b71c1c;font-weight:900;text-align:center;">—</td></tr>
               </tbody>
             </table>
           </div>
 
         </div>
-      </div>
-    </div>
-
-    <!-- 9. SCHOOL PERSONNEL - Image from GitHub -->
-    <div class="slide">
-      <div class="slide-placeholder" style="background: linear-gradient(135deg, #1565c0, #1976d2);">
-        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-          <img src="assets/personnel.png"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-               style="max-width:100%;max-height:520px;object-fit:contain;">
-          <div style="display:none;text-align:center;flex-direction:column;align-items:center;">
-            <div style="font-size:8rem; margin-bottom:16px;">👩‍🏫</div>
-            <div style="font-family:'Merriweather',serif; font-size:3.8rem; font-weight:900; color:white;">School Personnel</div>
-            <div style="font-size:1.8rem; color:rgba(255,255,255,0.85); margin-top:8px;">Organizational Chart</div>
-          </div>
         </div>
       </div>
     </div>
@@ -1548,25 +1490,33 @@ async function fetchCSV(sheet) {
 
 const grades = ['Kinder','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6'];
 
-function renderEnrollTable(data, mKey, fKey, tKey) {
+const TABLE_COLORS = {
+  'beg-enroll':   {h:'#1565c0', b:'#bbdefb', br:'#90caf940'},
+  'cur-enroll':   {h:'#2e7d32', b:'#c8e6c9', br:'#a5d6a740'},
+  'transfer-in':  {h:'#f57f17', b:'#fff9c4', br:'#fff17640'},
+  'transfer-out': {h:'#e65100', b:'#ffe0b2', br:'#ffcc8040'},
+  'drop':         {h:'#b71c1c', b:'#ffcdd2', br:'#ef9a9a40'},
+};
+function renderEnrollTable(data, mKey, fKey, tKey, tbodyId) {
+  const col = TABLE_COLORS[tbodyId] || {h:'#333', b:'#eee', br:'#ccc'};
   const rows = grades.map((g, i) => {
     const r = data[i] || {};
     const m = r[mKey] || '—', f = r[fKey] || '—', t = r[tKey] || '—';
-    return `<tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
-      <td style="padding:5px 10px;color:white;">${g}</td>
-      <td style="padding:5px 10px;color:#64b5f6;text-align:center;">${m}</td>
-      <td style="padding:5px 10px;color:#f48fb1;text-align:center;">${f}</td>
-      <td style="padding:5px 10px;color:white;font-weight:700;text-align:center;">${t}</td>
+    return `<tr style="border-bottom:1px solid ${col.br};">
+      <td style="padding:3px 6px;color:#333;white-space:nowrap;">${g}</td>
+      <td style="padding:3px 4px;color:#555;text-align:center;">${m}</td>
+      <td style="padding:3px 4px;color:#555;text-align:center;">${f}</td>
+      <td style="padding:3px 4px;color:#333;font-weight:700;text-align:center;">${t}</td>
     </tr>`;
   });
   const totM = data.reduce((s,r)=>s+(parseFloat(r[mKey])||0),0)||'—';
   const totF = data.reduce((s,r)=>s+(parseFloat(r[fKey])||0),0)||'—';
   const totT = data.reduce((s,r)=>s+(parseFloat(r[tKey])||0),0)||'—';
-  rows.push(`<tr style="background:rgba(245,194,0,0.15);">
-    <td style="padding:5px 10px;color:var(--yellow);font-weight:900;">TOTAL</td>
-    <td style="padding:5px 10px;color:#64b5f6;font-weight:900;text-align:center;">${totM}</td>
-    <td style="padding:5px 10px;color:#f48fb1;font-weight:900;text-align:center;">${totF}</td>
-    <td style="padding:5px 10px;color:var(--yellow);font-weight:900;text-align:center;">${totT}</td>
+  rows.push(`<tr style="background:${col.b};">
+    <td style="padding:4px 6px;color:${col.h};font-weight:900;white-space:nowrap;">TOTAL</td>
+    <td style="padding:4px 4px;color:${col.h};font-weight:900;text-align:center;">${totM}</td>
+    <td style="padding:4px 4px;color:${col.h};font-weight:900;text-align:center;">${totF}</td>
+    <td style="padding:4px 4px;color:${col.h};font-weight:900;text-align:center;">${totT}</td>
   </tr>`);
   return rows.join('');
 }
@@ -1581,11 +1531,11 @@ async function loadEnrollment() {
       const syEl = document.getElementById('enrollment-sy');
       if (syEl) syEl.textContent = 'SY ' + sy;
     }
-    document.getElementById('beg-enroll').innerHTML = renderEnrollTable(data,'beg_male','beg_female','beg_total');
-    document.getElementById('cur-enroll').innerHTML = renderEnrollTable(data,'cur_male','cur_female','cur_total');
-    document.getElementById('transfer-in').innerHTML = renderEnrollTable(data,'transferin_male','transferin_female','transferin_total');
-    document.getElementById('transfer-out').innerHTML = renderEnrollTable(data,'transferout_male','transferout_female','transferout_total');
-    document.getElementById('drop').innerHTML = renderEnrollTable(data,'drop_male','drop_female','drop_total');
+    document.getElementById('beg-enroll').innerHTML = renderEnrollTable(data,'beg_male','beg_female','beg_total','beg-enroll');
+    document.getElementById('cur-enroll').innerHTML = renderEnrollTable(data,'cur_male','cur_female','cur_total','cur-enroll');
+    document.getElementById('transfer-in').innerHTML = renderEnrollTable(data,'transferin_male','transferin_female','transferin_total','transfer-in');
+    document.getElementById('transfer-out').innerHTML = renderEnrollTable(data,'transferout_male','transferout_female','transferout_total','transfer-out');
+    document.getElementById('drop').innerHTML = renderEnrollTable(data,'drop_male','drop_female','drop_total','drop');
   } catch(e) { console.error('Enrollment load error:', e); }
 }
 
