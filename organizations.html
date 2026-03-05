@@ -96,26 +96,21 @@
   </div>
 
   <div id="tab-spta" class="org-panel active">
-    <div class="img-placeholder">
-      <div class="icon">👨‍👩‍👧‍👦</div>
-      <p>SPTA — Larawan mula Google Drive<br><small>I-upload ang picture at ilagay ang link sa Google Sheets</small></p>
-    </div>
+    <div style="color:#6b7280;text-align:center;padding:40px;">Loading...</div>
   </div>
-
   <div id="tab-selg" class="org-panel">
-    <div class="img-placeholder">
-      <div class="icon">🎓</div>
-      <p>SELG — Larawan mula Google Drive<br><small>I-upload ang picture at ilagay ang link sa Google Sheets</small></p>
-    </div>
+    <div style="color:#6b7280;text-align:center;padding:40px;">Loading...</div>
   </div>
-
   <div id="tab-teachers" class="org-panel">
-    <div class="img-placeholder">
-      <div class="icon">👩‍🏫</div>
-      <p>Teachers Club — Larawan mula Google Drive<br><small>I-upload ang picture at ilagay ang link sa Google Sheets</small></p>
-    </div>
+    <div style="color:#6b7280;text-align:center;padding:40px;">Loading...</div>
   </div>
 </div>
+
+<style>
+  .org-chart { display:flex; flex-direction:column; align-items:center; gap:0; }
+  .org-row { display:flex; justify-content:center; gap:16px; margin-bottom:0; }
+  .connector-v { width:2px; height:24px; background:#2a45c8; }
+</style>
 
 <script>
 function showTab(tab) {
@@ -124,12 +119,95 @@ function showTab(tab) {
   document.getElementById('tab-' + tab).classList.add('active');
   event.target.classList.add('active');
 }
-</script>
 
-<script>
-document.getElementById('tab-spta').innerHTML = '<img src="assets/spta.png" class="org-img" onerror="this.style.display='none'">';
-document.getElementById('tab-selg').innerHTML = '<img src="assets/selg.png" class="org-img" onerror="this.style.display='none'">';
-document.getElementById('tab-teachers').innerHTML = '<img src="assets/teachers-club.png" class="org-img" onerror="this.style.display='none'">';
+function driveUrl(url) {
+  if (!url) return '';
+  const m = url.match(/\/d\/([a-zA-Z0-9_-]{25,})/);
+  if (m) return 'https://lh3.googleusercontent.com/d/' + m[1] + '=w300';
+  return url;
+}
+
+async function fetchSheetData(url) {
+  const res = await fetch(url);
+  const text = await res.text();
+  const rows = text.trim().split('\n').map(r => {
+    const result = []; let cur = '', inQ = false;
+    for (let c of r) {
+      if (c === '"') inQ = !inQ;
+      else if (c === ',' && !inQ) { result.push(cur.trim()); cur = ''; }
+      else cur += c;
+    }
+    result.push(cur.trim()); return result;
+  });
+  const headers = rows[0];
+  return rows.slice(1).filter(r => r.some(c => c)).map(row => Object.fromEntries(headers.map((h,i) => [h, row[i]||''])));
+}
+
+function photoHtml(row) {
+  if (row.photo_url) {
+    return `<img src="${driveUrl(row.photo_url)}" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" onerror="this.style.display='none'">`;
+  }
+  return `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;background:rgba(26,47,160,0.08);">👤</div>`;
+}
+
+function makeOrgCard(row, isLarge) {
+  const photoW = isLarge ? 210 : 180;
+  const photoH = isLarge ? 260 : 220;
+  const nameFontSize = isLarge ? '0.85rem' : '0.75rem';
+  const bg = isLarge ? 'var(--blue-dark)' : 'var(--blue)';
+  return `<div style="display:flex;flex-direction:column;align-items:center;">
+    <div style="width:${photoW}px;height:${photoH}px;overflow:hidden;background:${bg};border-radius:10px 10px 0 0;box-shadow:0 2px 10px rgba(26,47,160,0.10);border:2px solid var(--blue-light);border-bottom:none;">${photoHtml(row)}</div>
+    <div style="padding:9px 12px 11px;text-align:center;width:max-content;min-width:${photoW}px;max-width:320px;background:white;border-radius:0 0 10px 10px;box-shadow:0 2px 10px rgba(26,47,160,0.10);border:2px solid var(--blue-light);border-top:none;">
+      <div style="font-family:'Merriweather',serif;font-size:${nameFontSize};font-weight:700;color:var(--blue-dark);line-height:1.3;margin-bottom:5px;white-space:nowrap;">${row.name||''}</div>
+      <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:var(--blue);white-space:nowrap;">${row.position||''}</div>
+    </div>
+  </div>`;
+}
+
+function makeOrgRow(cards, connector) {
+  return `${connector ? '<div class="connector-v"></div>' : ''}
+  <div class="org-row">${cards.join('')}</div>`;
+}
+
+function chunkArray(arr, size) {
+  const chunks = [];
+  for (let i = 0; i < arr.length; i += size) chunks.push(arr.slice(i, i + size));
+  return chunks;
+}
+
+function buildOrgHTML(data) {
+  const valid = data.filter(r => r.name && r.name.trim());
+  const president = valid.slice(0, 1);
+  const vp = valid.slice(1, 2);
+  const adviser = valid.filter(r => /adviser/i.test(r.position));
+  const officers = valid.slice(2).filter(r => !/adviser/i.test(r.position));
+
+  let html = '<div class="org-chart">';
+  if (president.length) html += makeOrgRow(president.map(r => makeOrgCard(r, true)), false);
+  if (vp.length) html += makeOrgRow(vp.map(r => makeOrgCard(r, false)), true);
+  chunkArray(officers, 4).forEach(chunk => {
+    html += makeOrgRow(chunk.map(r => makeOrgCard(r, false)), true);
+  });
+  if (adviser.length) html += makeOrgRow(adviser.map(r => makeOrgCard(r, false)), true);
+  html += '</div>';
+  return html;
+}
+
+async function loadOrg(containerId, sheetUrl) {
+  const container = document.getElementById(containerId);
+  try {
+    const data = await fetchSheetData(sheetUrl);
+    if (!data.length) { container.innerHTML = '<p style="color:#6b7280;text-align:center;padding:40px;">Walang data.</p>'; return; }
+    container.innerHTML = buildOrgHTML(data);
+  } catch(e) {
+    container.innerHTML = '<p style="color:#c62828;text-align:center;padding:40px;">Hindi ma-load ang data.</p>';
+    console.error(e);
+  }
+}
+
+loadOrg('tab-spta', 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRSPY_QNzh4q_Lb3CS5Sz4zv6OG9L0I1c5jycD4C6rqPfaL89O980kyjZIknJq5dVbC-wuWB_CIXdG0/pub?gid=0&single=true&output=csv');
+loadOrg('tab-selg', 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTOAMZaFwJWN5SARqtQLnKzJWn7dYVfBx0a4jfSRB6cYgRVu4qjJ0CqtzGMkx6lNXidUaoxjaDm7TBW/pub?gid=0&single=true&output=csv');
+loadOrg('tab-teachers', 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTGf-aqL7WXYtJd5Q_PjXQWOTx8xePueMmAgB8eqtv7VtcYIPEFvlPyKPFKg1QBFAjJyWLXcH4sTuKO/pub?gid=0&single=true&output=csv');
 </script>
 </body>
 </html>
