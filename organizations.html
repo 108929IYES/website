@@ -175,39 +175,50 @@ function chunkArray(arr, size) {
   return chunks;
 }
 
-function buildOrgHTML(data) {
+function buildOrgHTML(data, layout) {
   const valid = data.filter(r => r.name && r.name.trim());
   const president = valid.slice(0, 1);
   const vp = valid.slice(1, 2);
   const adviser = valid.filter(r => /adviser/i.test(r.position));
   const officers = valid.slice(2).filter(r => !/adviser/i.test(r.position));
 
+  const chunkSizes = layout || [4];
   let html = '<div class="org-chart">';
   if (president.length) html += makeOrgRow(president.map(r => makeOrgCard(r, true)), false);
   if (vp.length) html += makeOrgRow(vp.map(r => makeOrgCard(r, false)), true);
-  chunkArray(officers, 4).forEach(chunk => {
+
+  let offset = 0;
+  for (const size of chunkSizes) {
+    const chunk = officers.slice(offset, offset + size);
+    if (chunk.length) html += makeOrgRow(chunk.map(r => makeOrgCard(r, false)), true);
+    offset += size;
+  }
+  // remaining officers not covered by layout
+  const remaining = officers.slice(offset);
+  chunkArray(remaining, 4).forEach(chunk => {
     html += makeOrgRow(chunk.map(r => makeOrgCard(r, false)), true);
   });
+
   if (adviser.length) html += makeOrgRow(adviser.map(r => makeOrgCard(r, false)), true);
   html += '</div>';
   return html;
 }
 
-async function loadOrg(containerId, sheetUrl) {
+async function loadOrg(containerId, sheetUrl, layout) {
   const container = document.getElementById(containerId);
   try {
     const data = await fetchSheetData(sheetUrl);
     if (!data.length) { container.innerHTML = '<p style="color:#6b7280;text-align:center;padding:40px;">Walang data.</p>'; return; }
-    container.innerHTML = buildOrgHTML(data);
+    container.innerHTML = buildOrgHTML(data, layout);
   } catch(e) {
     container.innerHTML = '<p style="color:#c62828;text-align:center;padding:40px;">Hindi ma-load ang data.</p>';
     console.error(e);
   }
 }
 
-loadOrg('tab-spta', 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRSPY_QNzh4q_Lb3CS5Sz4zv6OG9L0I1c5jycD4C6rqPfaL89O980kyjZIknJq5dVbC-wuWB_CIXdG0/pub?gid=0&single=true&output=csv');
-loadOrg('tab-selg', 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTOAMZaFwJWN5SARqtQLnKzJWn7dYVfBx0a4jfSRB6cYgRVu4qjJ0CqtzGMkx6lNXidUaoxjaDm7TBW/pub?gid=0&single=true&output=csv');
-loadOrg('tab-teachers', 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTGf-aqL7WXYtJd5Q_PjXQWOTx8xePueMmAgB8eqtv7VtcYIPEFvlPyKPFKg1QBFAjJyWLXcH4sTuKO/pub?gid=0&single=true&output=csv');
+loadOrg('tab-spta', 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRSPY_QNzh4q_Lb3CS5Sz4zv6OG9L0I1c5jycD4C6rqPfaL89O980kyjZIknJq5dVbC-wuWB_CIXdG0/pub?gid=0&single=true&output=csv', null);
+loadOrg('tab-selg', 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTOAMZaFwJWN5SARqtQLnKzJWn7dYVfBx0a4jfSRB6cYgRVu4qjJ0CqtzGMkx6lNXidUaoxjaDm7TBW/pub?gid=0&single=true&output=csv', [5,4]);
+loadOrg('tab-teachers', 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTGf-aqL7WXYtJd5Q_PjXQWOTx8xePueMmAgB8eqtv7VtcYIPEFvlPyKPFKg1QBFAjJyWLXcH4sTuKO/pub?gid=0&single=true&output=csv', null);
 </script>
 </body>
 </html>
