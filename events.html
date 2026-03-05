@@ -151,62 +151,41 @@
   <h2>📅 Events & Activities</h2>
 </div>
 
-<div class="page">
-  <h2 class="section-title">Mga Aktibidad ng Paaralan</h2>
-
-  <!-- Events will be loaded from Google Sheets -->
-  <div id="events-container" class="events-list"></div>
+<div style="width:100%;padding:0;margin:0;">
+  <div id="events-container" style="width:100%;text-align:center;padding:40px;color:#6b7280;">Loading...</div>
 </div>
 
-
 <script>
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTcahFgkkHP_K5x8dFXCxj77xXNDmZDnmprNTY5xgGytr0WcY6bdlrKNHYpGfjkB7aP0ypydeWbf7ip/pub?gid=0&single=true&output=csv';
-
-async function fetchCSV(sheet) {
-  const res = await fetch(SHEET_URL);
-  const text = await res.text();
-  const rows = text.trim().split('\n').map(r => {
-    const result = [];
-    let cur = '', inQ = false;
-    for (let c of r) {
-      if (c === '"') inQ = !inQ;
-      else if (c === ',' && !inQ) { result.push(cur.trim()); cur = ''; }
-      else cur += c;
-    }
-    result.push(cur.trim());
-    return result;
-  });
-  const headers = rows[0];
-  return rows.slice(1).filter(r => r.some(c => c)).map(row => Object.fromEntries(headers.map((h,i) => [h, row[i]||''])));
+function driveThumbUrl(url) {
+  if (!url) return '';
+  const m = url.match(/\/d\/([a-zA-Z0-9_-]{25,})/);
+  if (m) return 'https://lh3.googleusercontent.com/d/' + m[1] + '=w1600';
+  const m2 = url.match(/[-\w]{25,}/);
+  return m2 ? 'https://drive.google.com/uc?export=view&id=' + m2[0] : url;
 }
 
 async function loadEvents() {
   const container = document.getElementById('events-container');
-  if (!container) return;
-  container.innerHTML = '<p style="color:#6b7280;text-align:center;padding:40px;grid-column:1/-1;">Loading...</p>';
   try {
-    const data = await fetchCSV('events');
-    if (!data.length) { container.innerHTML = '<p style="color:#6b7280;text-align:center;padding:40px;grid-column:1/-1;">Walang events sa ngayon.</p>'; return; }
-    container.innerHTML = data.map(row => {
-      const d = new Date(row.date);
-      const day = isNaN(d) ? '--' : d.getDate();
-      const month = isNaN(d) ? row.date : d.toLocaleString('en',{month:'short'});
-      return `<div class="event-card">
-        <div class="event-date-badge">
-          <span class="day">${day}</span>
-          <span class="month">${month}</span>
-        </div>
-        <div class="event-body">
-          <div class="event-title">${row.title||''}</div>
-          ${row.description ? `<div class="event-desc">${row.description}</div>` : ''}
-        </div>
-      </div>`;
-    }).join('');
+    const res = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTcahFgkkHP_K5x8dFXCxj77xXNDmZDnmprNTY5xgGytr0WcY6bdlrKNHYpGfjkB7aP0ypydeWbf7ip/pub?gid=0&single=true&output=csv');
+    const text = await res.text();
+    const rows = text.trim().split('\n');
+    const headers = rows[0].split(',').map(h => h.trim());
+    const data = rows.slice(1).filter(r => r.trim()).map(r => {
+      const cols = r.split(',').map(c => c.replace(/^"|"$/g,'').trim());
+      return Object.fromEntries(headers.map((h,i) => [h, cols[i]||'']));
+    });
+    const row = data.find(r => r.photo_url);
+    if (!row) {
+      container.innerHTML = '<p style="color:#6b7280;text-align:center;padding:40px;">Walang larawan sa ngayon.</p>';
+      return;
+    }
+    const imgUrl = driveThumbUrl(row.photo_url);
+    container.innerHTML = `<img src="${imgUrl}" alt="Events & Activities" style="width:100%;display:block;border:none;" onerror="this.style.display='none'">`;
   } catch(e) {
-    container.innerHTML = '<p style="color:#c62828;text-align:center;padding:40px;grid-column:1/-1;">Hindi ma-load ang data. Subukan muli.</p>';
+    container.innerHTML = '<p style="color:#c62828;text-align:center;padding:40px;">Hindi ma-load ang data. Subukan muli.</p>';
   }
 }
-
 loadEvents();
 </script>
 </body>
