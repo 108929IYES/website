@@ -1947,7 +1947,7 @@ function slideCard(row, extraLine) {
     : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1rem;">👤</div>`;
   return `<div style="display:flex;flex-direction:column;align-items:center;flex:0 0 auto;">
     <div style="width:60px;aspect-ratio:5/7;overflow:hidden;background:rgba(255,255,255,0.15);border-radius:5px 5px 0 0;flex-shrink:0;">${photoHtml}</div>
-    <div style="padding:2px 3px;text-align:center;width:90px;background:rgba(255,255,255,0.08);border-radius:0 0 5px 5px;flex-shrink:0;">
+    <div style="padding:2px 3px;text-align:center;width:110px;background:rgba(255,255,255,0.08);border-radius:0 0 5px 5px;flex-shrink:0;">
       <div style="font-size:0.6rem;font-weight:700;color:white;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${row.name||''}</div>
       <div style="font-size:0.55rem;color:var(--yellow);font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${row.position||''}</div>
       ${extraLine ? `<div style="font-size:0.5rem;color:rgba(255,255,255,0.7);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${extraLine}</div>` : ''}
@@ -1962,7 +1962,7 @@ function slideCardLarge(row, extraLine) {
     : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">👤</div>`;
   return `<div style="display:flex;flex-direction:column;align-items:center;flex:0 0 auto;">
     <div style="width:90px;aspect-ratio:5/7;overflow:hidden;background:rgba(255,255,255,0.15);border-radius:6px 6px 0 0;flex-shrink:0;">${photoHtml}</div>
-    <div style="padding:4px 5px;text-align:center;width:130px;background:rgba(255,255,255,0.1);border-radius:0 0 6px 6px;flex-shrink:0;">
+    <div style="padding:4px 5px;text-align:center;width:160px;background:rgba(255,255,255,0.1);border-radius:0 0 6px 6px;flex-shrink:0;">
       <div style="font-size:0.72rem;font-weight:700;color:white;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${row.name||''}</div>
       <div style="font-size:0.65rem;color:var(--yellow);font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${row.position||''}</div>
       ${extraLine ? `<div style="font-size:0.58rem;color:rgba(255,255,255,0.75);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${extraLine}</div>` : ''}
@@ -1990,11 +1990,13 @@ async function fetchSheetCSV(url) {
   return rows.slice(1).filter(r => r.some(c => c)).map(row => Object.fromEntries(headers.map((h,i) => [h.trim(), row[i]||''])));
 }
 
-function spreadRow(cards) {
+function spreadRow(cards, noGap) {
+  const gap = noGap ? '0' : '10px';
+  const mb = noGap ? '0' : '6px';
   if (cards.length === 1) {
-    return `<div style="display:flex;justify-content:center;width:100%;margin:0;">${cards[0]}</div>`;
+    return `<div style="display:flex;justify-content:center;width:100%;margin-bottom:${mb};">${cards[0]}</div>`;
   }
-  return `<div style="display:flex;justify-content:center;gap:10px;width:100%;margin:0;">${cards.join('')}</div>`;
+  return `<div style="display:flex;justify-content:center;gap:${gap};width:100%;margin-bottom:${mb};">${cards.join('')}</div>`;
 }
 
 // ===== DIVISION TOP MANAGEMENT =====
@@ -2009,8 +2011,8 @@ async function loadDivisionTop() {
     const chiefs = valid.slice(4, 6);
     let html = '';
     if (sds.length) html += spreadRow(sds.map(r => slideCardLarge(r, '')));
-    if (asds.length) html += spreadRow(asds.map(r => slideCard(r, '')));
-    if (chiefs.length) html += spreadRow(chiefs.map(r => slideCard(r, '')));
+    if (asds.length) html += spreadRow(asds.map(r => slideCardLarge(r, '')));
+    if (chiefs.length) html += spreadRow(chiefs.map(r => slideCardLarge(r, '')));
     el.innerHTML = html;
   } catch(e) { console.error('Division top error:', e); }
 }
@@ -2052,10 +2054,10 @@ async function loadPersonnelSlide() {
     }
 
     let html = '';
-    if (principal.length) html += spreadRow(principal.map(r => pCard(r, true)));
-    if (head.length) html += spreadRow(head.map(r => pCard(r, false)));
-    if (line3.length) html += spreadRow(line3.map(r => pCard(r, false)));
-    if (line4.length) html += spreadRow(line4.map(r => pCard(r, false)));
+    if (principal.length) html += spreadRow(principal.map(r => pCard(r, true)), true);
+    if (head.length) html += spreadRow(head.map(r => pCard(r, false)), true);
+    if (line3.length) html += spreadRow(line3.map(r => pCard(r, false)), true);
+    if (line4.length) html += spreadRow(line4.map(r => pCard(r, false)), true);
     el.innerHTML = html;
   } catch(e) { console.error('Personnel slide error:', e); }
 }
