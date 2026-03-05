@@ -170,6 +170,38 @@
     .org-row { flex-wrap: wrap; }
     .card { width: 140px !important; }
   }
+
+  /* TABS */
+  .tab-bar {
+    display: flex; gap: 0; border-bottom: 3px solid var(--blue);
+    margin-bottom: 32px; flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 12px 24px; font-size: 0.82rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    background: white; color: var(--gray);
+    border: 2px solid var(--blue-light); border-bottom: none;
+    cursor: pointer; border-radius: 8px 8px 0 0;
+    transition: background 0.2s, color 0.2s;
+    margin-right: 4px;
+  }
+  .tab-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+  .tab-btn:hover:not(.active) { background: var(--blue-light); color: var(--blue-dark); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .section-heading {
+    text-align: center; margin-bottom: 28px;
+  }
+  .section-heading .line1 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.3rem; font-weight: 900; color: var(--blue-dark);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .section-heading .line2 {
+    font-size: 0.85rem; font-weight: 700; color: var(--blue);
+    text-transform: uppercase; letter-spacing: 2px; margin-top: 4px;
+  }
 </style>
 </head>
 <body>
@@ -207,19 +239,58 @@
 </nav>
 
 <div class="page">
-  <div class="page-title">School Personnel</div>
+  <div class="page-title" style="text-transform:uppercase;letter-spacing:2px;">Personnel</div>
 
-  <div class="org-chart" id="personnel-container">
-    <div style="color:#6b7280;text-align:center;padding:40px;">Loading...</div>
+  <!-- TAB BAR -->
+  <div class="tab-bar" style="margin-top:24px;">
+    <button class="tab-btn active" onclick="switchTab('division')">Division Officials</button>
+    <button class="tab-btn" onclick="switchTab('district')">District Officials</button>
+    <button class="tab-btn" onclick="switchTab('personnel')">School Personnel</button>
+  </div>
+
+  <!-- TAB: DIVISION -->
+  <div class="tab-panel active" id="tab-division">
+    <div class="section-heading">
+      <div class="line1">Division of Quezon</div>
+      <div class="line2">Top Management</div>
+    </div>
+    <div class="org-chart" id="division-container">
+      <div style="color:#6b7280;text-align:center;padding:40px;">Loading...</div>
+    </div>
+  </div>
+
+  <!-- TAB: DISTRICT -->
+  <div class="tab-panel" id="tab-district">
+    <div class="section-heading">
+      <div class="line1">Mulanay District 2</div>
+      <div class="line2">School Heads</div>
+    </div>
+    <div class="org-chart" id="district-container">
+      <div style="color:#6b7280;text-align:center;padding:40px;">Loading...</div>
+    </div>
+  </div>
+
+  <!-- TAB: PERSONNEL -->
+  <div class="tab-panel" id="tab-personnel">
+    <div class="org-chart" id="personnel-container">
+      <div style="color:#6b7280;text-align:center;padding:40px;">Loading...</div>
+    </div>
   </div>
 </div>
 
 
 <script>
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTsazmsH513VVHt4PxV6TH1vWjUdO23C9YgfaBu_2VJIZ5WDgzkPtkeJtVeBhnSeEckz6Qantg2swAX/pub?gid=0&single=true&output=csv';
+// ===== TAB SWITCHING =====
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
 
-async function fetchCSV() {
-  const res = await fetch(SHEET_URL);
+// ===== SHARED HELPERS =====
+async function fetchSheetData(url) {
+  const res = await fetch(url);
   const text = await res.text();
   const rows = text.trim().split('\n').map(r => {
     const result = []; let cur = '', inQ = false;
@@ -241,41 +312,84 @@ function driveUrl(url) {
   return url;
 }
 
-function photoHtml(row, size) {
-  const s = size || 65;
+function photoHtml(row) {
   if (row.photo_url) {
     return `<img src="${driveUrl(row.photo_url)}" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" onerror="this.src='assets/default-avatar.png'">`;
   }
-  return `<div class="card-photo">👤</div>`;
+  return `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;">👤</div>`;
 }
 
-function makeCard(row, type) {
-  const isTeacher = type === 'teacher';
+function makeCard(row, type, extraLine) {
   const cardClass = type === 'principal' ? 'principal' : type === 'head' ? 'head' : type === 'admin' ? 'admin-card' : 'teacher';
-  const photoSize = type === 'principal' ? 82 : type === 'head' ? 74 : 65;
+  const isTeacher = type === 'teacher';
   return `<div class="card ${cardClass}">
-    <div class="card-top">${photoHtml(row, photoSize)}</div>
+    <div class="card-top">${photoHtml(row)}</div>
     <div class="card-body">
       <div class="card-name">${row.name||''}</div>
       <div class="card-position">${row.position||''}</div>
+      ${extraLine ? `<div class="card-section">${extraLine}</div>` : ''}
       ${isTeacher && row.grade ? `<span class="badge">${row.grade}</span>` : ''}
       ${isTeacher && row.section ? `<div class="card-section">${row.section}</div>` : ''}
     </div>
   </div>`;
 }
 
-function makeRow(cards, connector = true) {
+function makeRow(cards, connector) {
   return `${connector ? '<div class="connector-v"></div>' : ''}
   <div class="org-row">${cards.join('')}</div>`;
 }
 
+function chunkArray(arr, size) {
+  const chunks = [];
+  for (let i = 0; i < arr.length; i += size) chunks.push(arr.slice(i, i + size));
+  return chunks;
+}
+
+// ===== DIVISION TOP MANAGEMENT =====
+async function loadDivision() {
+  const container = document.getElementById('division-container');
+  try {
+    const data = await fetchSheetData('https://docs.google.com/spreadsheets/d/e/2PACX-1vSmMjv6iYxzyoMej_5ki7hSnFgOEmOH0lCtZaOmcnJWu_m3Zzft5jvmo9YfH6NrAEspt6I2dIm6cPFz/pub?gid=0&single=true&output=csv');
+    const valid = data.filter(r => r.name);
+    const sds = valid.slice(0, 1);
+    const asds = valid.slice(1, 4);
+    const chiefs = valid.slice(4, 6);
+    let html = '';
+    if (sds.length) html += `<div class="org-row">${sds.map(r => makeCard(r, 'principal', '')).join('')}</div>`;
+    if (asds.length) html += makeRow(asds.map(r => makeCard(r, 'head', '')), true);
+    if (chiefs.length) html += makeRow(chiefs.map(r => makeCard(r, 'teacher', '')), true);
+    container.innerHTML = html;
+  } catch(e) {
+    container.innerHTML = '<p style="color:#c62828;text-align:center;padding:40px;">Hindi ma-load ang data.</p>';
+  }
+}
+
+// ===== DISTRICT 2 SCHOOL HEADS =====
+async function loadDistrict() {
+  const container = document.getElementById('district-container');
+  try {
+    const data = await fetchSheetData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRKOKh4G_935FBpvUgA7Qc2r7VHLmptzx4CBiTNTDTcDDmadKk20gJWSKBEFPceOF0VMDNDubDiuttd/pub?gid=0&single=true&output=csv');
+    const valid = data.filter(r => r.name);
+    const psds = valid.slice(0, 1);
+    const rest = valid.slice(1);
+    let html = '';
+    if (psds.length) html += `<div class="org-row">${psds.map(r => makeCard(r, 'principal', r.school||'')).join('')}</div>`;
+    chunkArray(rest, 4).forEach((chunk, i) => {
+      html += makeRow(chunk.map(r => makeCard(r, 'teacher', r.school||'')), true);
+    });
+    container.innerHTML = html;
+  } catch(e) {
+    container.innerHTML = '<p style="color:#c62828;text-align:center;padding:40px;">Hindi ma-load ang data.</p>';
+  }
+}
+
+// ===== IYES PERSONNEL =====
 async function loadPersonnel() {
   const container = document.getElementById('personnel-container');
   try {
-    const data = await fetchCSV();
+    const data = await fetchSheetData('https://docs.google.com/spreadsheets/d/e/2PACX-1vTsazmsH513VVHt4PxV6TH1vWjUdO23C9YgfaBu_2VJIZ5WDgzkPtkeJtVeBhnSeEckz6Qantg2swAX/pub?gid=0&single=true&output=csv');
     if (!data.length) { container.innerHTML = '<p style="color:#6b7280;text-align:center;padding:40px;">Walang data.</p>'; return; }
 
-    // Classify rows
     const principal = data.filter(r => r.name && /principal/i.test(r.position));
     const headTeacher = data.filter(r => r.name && /head teacher/i.test(r.position));
     const gradeOrder = ['KINDER','GRADE 1','GRADE 2','GRADE 3','GRADE 4','GRADE 5','GRADE 6'];
@@ -287,32 +401,18 @@ async function loadPersonnel() {
       if (!r.name) return;
       if (/principal/i.test(r.position) || /head teacher/i.test(r.position)) return;
       const g = (r.grade||'').toUpperCase().trim();
-      if (gradeGroups[g] !== undefined) {
-        gradeGroups[g].push(r);
-      } else {
-        admin.push(r);
-      }
+      if (gradeGroups[g] !== undefined) gradeGroups[g].push(r);
+      else admin.push(r);
     });
 
     let html = '';
-
-    // Principal
-    if (principal.length) html += `<div class="org-row">${principal.map(r => makeCard(r, 'principal')).join('')}</div>`;
-
-    // Head Teacher
-    if (headTeacher.length) html += makeRow(headTeacher.map(r => makeCard(r, 'head')));
-
-    // Kinder to Grade 6
+    if (principal.length) html += `<div class="org-row">${principal.map(r => makeCard(r, 'principal', '')).join('')}</div>`;
+    if (headTeacher.length) html += makeRow(headTeacher.map(r => makeCard(r, 'head', '')), true);
     gradeOrder.forEach(g => {
       const members = gradeGroups[g];
-      if (members.length) html += makeRow(members.map(r => makeCard(r, 'teacher')));
+      if (members.length) html += makeRow(members.map(r => makeCard(r, 'teacher', '')), true);
     });
-
-    // Admin Staff
-    if (admin.length) {
-      html += `<div class="admin-row">${admin.map(r => makeCard(r, 'admin')).join('')}</div>`;
-    }
-
+    if (admin.length) html += `<div class="admin-row">${admin.map(r => makeCard(r, 'admin', '')).join('')}</div>`;
     container.innerHTML = html;
   } catch(e) {
     container.innerHTML = '<p style="color:#c62828;text-align:center;padding:40px;">Hindi ma-load ang data.</p>';
@@ -320,6 +420,8 @@ async function loadPersonnel() {
   }
 }
 
+loadDivision();
+loadDistrict();
 loadPersonnel();
 </script>
 </body>
