@@ -72,23 +72,19 @@
   <h2>🔗 Links</h2>
 </div>
 
-<style>
-  .links-table { width:100%; border-collapse:collapse; background:white; border-radius:12px; overflow:hidden; box-shadow:0 2px 16px rgba(26,47,160,0.08); }
-  .links-table thead tr { background:var(--blue-dark); color:white; }
-  .links-table th { padding:14px 20px; text-align:left; font-size:1rem; font-weight:700; letter-spacing:0.5px; }
-  .links-table td { padding:14px 20px; font-size:1rem; border-bottom:1px solid var(--blue-light); }
-  .links-table tr:last-child td { border-bottom:none; }
-  .links-table tr:hover td { background:var(--blue-xlight); }
-  .links-table td a { color:var(--blue); font-weight:600; text-decoration:none; word-break:break-all; }
-  .links-table td a:hover { text-decoration:underline; }
-  .page { max-width:100%; padding:40px 48px 60px; }
-</style>
-
-<div class="page">
-  <div id="links-container"><p style="color:#6b7280;text-align:center;padding:40px;">Loading...</p></div>
+<div style="width:100%;padding:0;margin:0;">
+  <div id="links-container" style="width:100%;text-align:center;padding:40px;color:#6b7280;">Loading...</div>
 </div>
 
 <script>
+function driveThumbUrl(url) {
+  if (!url) return '';
+  const m = url.match(/\/d\/([a-zA-Z0-9_-]{25,})/);
+  if (m) return 'https://lh3.googleusercontent.com/d/' + m[1] + '=w1600';
+  const m2 = url.match(/[-\w]{25,}/);
+  return m2 ? 'https://drive.google.com/uc?export=view&id=' + m2[0] : url;
+}
+
 async function loadLinks() {
   const container = document.getElementById('links-container');
   try {
@@ -100,17 +96,13 @@ async function loadLinks() {
       const cols = r.split(',').map(c => c.replace(/^"|"$/g,'').trim());
       return Object.fromEntries(headers.map((h,i) => [h, cols[i]||'']));
     });
-    if (!data.length || !data[0].name) {
-      container.innerHTML = '<p style="color:#6b7280;text-align:center;padding:40px;">Walang links sa ngayon.</p>';
+    const row = data.find(r => r.photo_url);
+    if (!row) {
+      container.innerHTML = '<p style="color:#6b7280;text-align:center;padding:40px;">Walang larawan sa ngayon.</p>';
       return;
     }
-    container.innerHTML = `<table class="links-table">
-      <thead><tr><th>Name</th><th>Link</th></tr></thead>
-      <tbody>${data.map(row => `<tr>
-        <td>${row.name||''}</td>
-        <td><a href="${row.link||'#'}" target="_blank">${row.link||''}</a></td>
-      </tr>`).join('')}</tbody>
-    </table>`;
+    const imgUrl = driveThumbUrl(row.photo_url);
+    container.innerHTML = `<img src="${imgUrl}" alt="Links" style="width:100%;display:block;border:none;" onerror="this.style.display='none'">`;
   } catch(e) {
     container.innerHTML = '<p style="color:#c62828;text-align:center;padding:40px;">Hindi ma-load ang data. Subukan muli.</p>';
   }
