@@ -1562,7 +1562,7 @@ window.goToSlide = goToSlide;
 document.addEventListener('DOMContentLoaded', function() {
   slides = Array.from(document.querySelectorAll('.hero-slideshow .slide'));
   dots = Array.from(document.querySelectorAll('.slide-dots .dot'));
-  setInterval(() => goToSlide(currentSlide + 1), 30000);
+  setInterval(() => goToSlide(currentSlide + 1), 5000);
 });
 
 const SHEET_URLS = {
@@ -1953,7 +1953,7 @@ function driveThumbUrl(url) {
 function slideCard(row, extraLine) {
   const photo = row.photo_url ? driveThumbUrl(row.photo_url) : '';
   const photoHtml = photo
-    ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center top;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:1.4rem;">👤</div>`
+    ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center center;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:1.4rem;">👤</div>`
     : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">👤</div>`;
   return `<div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;align-items:center;min-width:0;">
     <div style="width:100%;height:70px;overflow:hidden;background:rgba(255,255,255,0.08);">${photoHtml}</div>
@@ -1968,7 +1968,7 @@ function slideCard(row, extraLine) {
 function slideCardLarge(row, extraLine) {
   const photo = row.photo_url ? driveThumbUrl(row.photo_url) : '';
   const photoHtml = photo
-    ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center top;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:2rem;">👤</div>`
+    ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center center;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:2rem;">👤</div>`
     : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;">👤</div>`;
   return `<div style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;align-items:center;width:160px;flex-shrink:0;">
     <div style="width:100%;height:110px;overflow:hidden;background:rgba(255,255,255,0.08);">${photoHtml}</div>
@@ -2000,6 +2000,13 @@ async function fetchSheetCSV(url) {
   return rows.slice(1).filter(r => r.some(c => c)).map(row => Object.fromEntries(headers.map((h,i) => [h.trim(), row[i]||''])));
 }
 
+function spreadRow(cards) {
+  if (cards.length === 1) {
+    return `<div style="display:flex;justify-content:center;width:100%;">${cards[0]}</div>`;
+  }
+  return `<div style="display:flex;justify-content:space-between;width:100%;gap:4px;">${cards.join('')}</div>`;
+}
+
 // ===== DIVISION TOP MANAGEMENT =====
 async function loadDivisionTop() {
   try {
@@ -2011,9 +2018,9 @@ async function loadDivisionTop() {
     const asds = valid.slice(1, 4);
     const chiefs = valid.slice(4, 6);
     let html = '';
-    if (sds.length) html += renderRow(sds.map(r => slideCardLarge(r, '')), 8);
-    if (asds.length) html += renderRow(asds.map(r => slideCard(r, '')), 8);
-    if (chiefs.length) html += renderRow(chiefs.map(r => slideCard(r, '')), 8);
+    if (sds.length) html += spreadRow(sds.map(r => slideCardLarge(r, '')));
+    if (asds.length) html += spreadRow(asds.map(r => slideCard(r, '')));
+    if (chiefs.length) html += spreadRow(chiefs.map(r => slideCard(r, '')));
     el.innerHTML = html;
   } catch(e) { console.error('Division top error:', e); }
 }
@@ -2026,14 +2033,12 @@ async function loadDistrict2() {
     if (!el || !data.length) return;
     const valid = data.filter(r => r.name);
     const psds = valid.slice(0, 1);
-    const heads1 = valid.slice(1, 7);
-    const heads2 = valid.slice(7, 12);
-    const heads3 = valid.slice(12, 17);
+    const heads1 = valid.slice(1, 9);
+    const heads2 = valid.slice(9, 17);
     let html = '';
-    if (psds.length) html += renderRow(psds.map(r => slideCardLarge(r, r.school||'')), 8);
-    if (heads1.length) html += renderRow(heads1.map(r => slideCard(r, r.school||'')), 6);
-    if (heads2.length) html += renderRow(heads2.map(r => slideCard(r, r.school||'')), 6);
-    if (heads3.length) html += renderRow(heads3.map(r => slideCard(r, r.school||'')), 6);
+    if (psds.length) html += spreadRow(psds.map(r => slideCardLarge(r, r.school||'')));
+    if (heads1.length) html += spreadRow(heads1.map(r => slideCard(r, r.school||'')));
+    if (heads2.length) html += spreadRow(heads2.map(r => slideCard(r, r.school||'')));
     el.innerHTML = html;
   } catch(e) { console.error('District2 error:', e); }
 }
@@ -2047,31 +2052,20 @@ async function loadPersonnelSlide() {
     const valid = data.filter(r => r.name);
     const principal = valid.filter(r => /principal/i.test(r.position));
     const head = valid.filter(r => /head teacher/i.test(r.position));
-    const gradeOrder = ['KINDER','GRADE 1','GRADE 2','GRADE 3','GRADE 4','GRADE 5','GRADE 6'];
-    const byGrade = {};
-    gradeOrder.forEach(g => byGrade[g] = []);
-    const admin = [];
-    valid.forEach(r => {
-      if (/principal/i.test(r.position) || /head teacher/i.test(r.position)) return;
-      const g = (r.grade||'').toUpperCase().trim();
-      if (byGrade[g] !== undefined) byGrade[g].push(r);
-      else admin.push(r);
-    });
-    const kTo2 = [...byGrade['KINDER'],...byGrade['GRADE 1'],...byGrade['GRADE 2']];
-    const g3To5 = [...byGrade['GRADE 3'],...byGrade['GRADE 4'],...byGrade['GRADE 5']];
-    const g6Admin = [...byGrade['GRADE 6'],...admin];
+    const rest = valid.filter(r => !/principal/i.test(r.position) && !/head teacher/i.test(r.position));
+    const line3 = rest.slice(0, 10);
+    const line4 = rest.slice(10, 20);
 
-    function pCard(r) {
+    function pCard(r, large) {
       const gs = [r.grade, r.section].filter(Boolean).join(' - ');
-      return slideCard(r, gs);
+      return large ? slideCardLarge(r, gs) : slideCard(r, gs);
     }
 
     let html = '';
-    if (principal.length) html += renderRow(principal.map(r => slideCardLarge(r, '')), 8);
-    if (head.length) html += renderRow(head.map(r => slideCard(r, '')), 8);
-    if (kTo2.length) html += renderRow(kTo2.map(r => pCard(r)), 5);
-    if (g3To5.length) html += renderRow(g3To5.map(r => pCard(r)), 5);
-    if (g6Admin.length) html += renderRow(g6Admin.map(r => pCard(r)), 5);
+    if (principal.length) html += spreadRow(principal.map(r => pCard(r, true)));
+    if (head.length) html += spreadRow(head.map(r => pCard(r, false)));
+    if (line3.length) html += spreadRow(line3.map(r => pCard(r, false)));
+    if (line4.length) html += spreadRow(line4.map(r => pCard(r, false)));
     el.innerHTML = html;
   } catch(e) { console.error('Personnel slide error:', e); }
 }
@@ -2083,17 +2077,15 @@ async function loadSptaSlide() {
     const el = document.getElementById('spta-slide-inner');
     if (!el || !data.length) return;
     const valid = data.filter(r => r.name);
-    const line3 = valid.slice(0,1);
-    const line4 = valid.slice(1,2);
-    const line5 = valid.slice(2,8).filter(r=>r.name);
-    const line6 = valid.slice(8,14).filter(r=>r.name);
-    const line7 = valid.slice(14,20).filter(r=>r.name);
+    const president = valid.slice(0, 1);
+    const vp = valid.slice(1, 2);
+    const officers = valid.slice(2, 12).filter(r => r.name);
+    const remaining = valid.slice(12).filter(r => r.name);
     let html = '';
-    if (line3.length) html += renderRow(line3.map(r => slideCardLarge(r,'')), 8);
-    if (line4.length) html += renderRow(line4.map(r => slideCard(r,'')), 8);
-    if (line5.length) html += renderRow(line5.map(r => slideCard(r,'')), 6);
-    if (line6.length) html += renderRow(line6.map(r => slideCard(r,'')), 6);
-    if (line7.length) html += renderRow(line7.map(r => slideCard(r,'')), 6);
+    if (president.length) html += spreadRow(president.map(r => slideCardLarge(r, '')));
+    if (vp.length) html += spreadRow(vp.map(r => slideCard(r, '')));
+    if (officers.length) html += spreadRow(officers.map(r => slideCard(r, '')));
+    if (remaining.length) html += spreadRow(remaining.map(r => slideCard(r, '')));
     el.innerHTML = html;
   } catch(e) { console.error('SPTA slide error:', e); }
 }
@@ -2105,17 +2097,15 @@ async function loadSelgSlide() {
     const el = document.getElementById('selg-slide-inner');
     if (!el || !data.length) return;
     const valid = data.filter(r => r.name);
-    const president = valid.slice(0,1);
-    const vp = valid.slice(1,2);
-    const officers = valid.slice(2,7).filter(r=>r.name);
-    const reps = valid.slice(7,11).filter(r=>r.name);
-    const adviser = valid.slice(11,12).filter(r=>r.name);
+    const president = valid.slice(0, 1);
+    const vp = valid.slice(1, 2);
+    const adviser = valid.filter(r => /adviser/i.test(r.position));
+    const officers = valid.slice(2).filter(r => !(/adviser/i.test(r.position)));
     let html = '';
-    if (president.length) html += renderRow(president.map(r => slideCardLarge(r,'')), 8);
-    if (vp.length) html += renderRow(vp.map(r => slideCard(r,'')), 8);
-    if (officers.length) html += renderRow(officers.map(r => slideCard(r,'')), 6);
-    if (reps.length) html += renderRow(reps.map(r => slideCard(r,'')), 6);
-    if (adviser.length) html += renderRow(adviser.map(r => slideCard(r,'')), 6);
+    if (president.length) html += spreadRow(president.map(r => slideCardLarge(r, '')));
+    if (vp.length) html += spreadRow(vp.map(r => slideCard(r, '')));
+    if (officers.length) html += spreadRow(officers.map(r => slideCard(r, '')));
+    if (adviser.length) html += spreadRow(adviser.map(r => slideCard(r, '')));
     el.innerHTML = html;
   } catch(e) { console.error('SELG slide error:', e); }
 }
@@ -2127,17 +2117,15 @@ async function loadClubSlide() {
     const el = document.getElementById('club-slide-inner');
     if (!el || !data.length) return;
     const valid = data.filter(r => r.name);
-    const president = valid.slice(0,1);
-    const vp = valid.slice(1,2);
-    const officers = valid.slice(2,7).filter(r=>r.name);
-    const other = valid.slice(7,12).filter(r=>r.name);
-    const adviser = valid.slice(12,13).filter(r=>r.name);
+    const president = valid.slice(0, 1);
+    const vp = valid.slice(1, 2);
+    const adviser = valid.filter(r => /adviser/i.test(r.position));
+    const officers = valid.slice(2).filter(r => !(/adviser/i.test(r.position)));
     let html = '';
-    if (president.length) html += renderRow(president.map(r => slideCardLarge(r,'')), 8);
-    if (vp.length) html += renderRow(vp.map(r => slideCard(r,'')), 8);
-    if (officers.length) html += renderRow(officers.map(r => slideCard(r,'')), 6);
-    if (other.length) html += renderRow(other.map(r => slideCard(r,'')), 6);
-    if (adviser.length) html += renderRow(adviser.map(r => slideCard(r,'')), 6);
+    if (president.length) html += spreadRow(president.map(r => slideCardLarge(r, '')));
+    if (vp.length) html += spreadRow(vp.map(r => slideCard(r, '')));
+    if (officers.length) html += spreadRow(officers.map(r => slideCard(r, '')));
+    if (adviser.length) html += spreadRow(adviser.map(r => slideCard(r, '')));
     el.innerHTML = html;
   } catch(e) { console.error('Club slide error:', e); }
 }
