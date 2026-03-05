@@ -89,7 +89,7 @@
     background: white;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(26,47,160,0.10);
-    overflow: hidden;
+    overflow: visible;
     border: 2px solid var(--blue-light);
     transition: transform 0.2s, box-shadow 0.2s;
     text-align: center;
@@ -102,7 +102,7 @@
   .card.admin-card { width: 185px; }
   .card.admin-card .card-photo { height: 220px; }
 
-  .card-top { padding: 0; overflow: hidden; }
+  .card-top { padding: 0; overflow: hidden; border-radius: 8px 8px 0 0; }
   .card.principal .card-top { background: var(--blue-dark); }
   .card.head .card-top { background: var(--blue-mid); }
   .card.teacher .card-top { background: var(--blue); }
@@ -123,18 +123,18 @@
   .card-position {
     font-size: 0.72rem; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.7px;
-    color: var(--blue);
+    color: var(--blue); white-space: nowrap;
   }
 
-  .card-body { padding: 9px 10px 11px; }
+  .card-body { padding: 9px 10px 11px; overflow: visible; }
   .card-name {
     font-family: 'Merriweather', serif;
     font-size: 0.72rem; font-weight: 700;
     color: var(--blue-dark); line-height: 1.3; margin-bottom: 5px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    white-space: nowrap; overflow: visible;
   }
-  .card.principal .card-name { font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .card.head .card-name { font-size: 0.78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card.principal .card-name { font-size: 0.85rem; white-space: nowrap; overflow: visible; }
+  .card.head .card-name { font-size: 0.78rem; white-space: nowrap; overflow: visible; }
 
   .badge {
     display: inline-block;
