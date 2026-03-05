@@ -1947,7 +1947,7 @@ function slideCard(row, extraLine) {
     : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1rem;">👤</div>`;
   return `<div style="display:flex;flex-direction:column;align-items:center;flex:0 0 auto;">
     <div style="width:60px;aspect-ratio:5/7;overflow:hidden;background:rgba(255,255,255,0.15);border-radius:5px 5px 0 0;flex-shrink:0;">${photoHtml}</div>
-    <div style="padding:2px 3px;text-align:center;width:110px;background:rgba(255,255,255,0.08);border-radius:0 0 5px 5px;flex-shrink:0;">
+    <div style="padding:2px 4px;text-align:center;width:140px;background:rgba(255,255,255,0.08);border-radius:0 0 5px 5px;flex-shrink:0;">
       <div style="font-size:0.6rem;font-weight:700;color:white;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${row.name||''}</div>
       <div style="font-size:0.55rem;color:var(--yellow);font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${row.position||''}</div>
       ${extraLine ? `<div style="font-size:0.5rem;color:rgba(255,255,255,0.7);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${extraLine}</div>` : ''}
@@ -1962,7 +1962,7 @@ function slideCardLarge(row, extraLine) {
     : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">👤</div>`;
   return `<div style="display:flex;flex-direction:column;align-items:center;flex:0 0 auto;">
     <div style="width:90px;aspect-ratio:5/7;overflow:hidden;background:rgba(255,255,255,0.15);border-radius:6px 6px 0 0;flex-shrink:0;">${photoHtml}</div>
-    <div style="padding:4px 5px;text-align:center;width:160px;background:rgba(255,255,255,0.1);border-radius:0 0 6px 6px;flex-shrink:0;">
+    <div style="padding:4px 6px;text-align:center;width:200px;background:rgba(255,255,255,0.1);border-radius:0 0 6px 6px;flex-shrink:0;">
       <div style="font-size:0.72rem;font-weight:700;color:white;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${row.name||''}</div>
       <div style="font-size:0.65rem;color:var(--yellow);font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${row.position||''}</div>
       ${extraLine ? `<div style="font-size:0.58rem;color:rgba(255,255,255,0.75);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${extraLine}</div>` : ''}
@@ -2029,8 +2029,8 @@ async function loadDistrict2() {
     const heads2 = valid.slice(9, 17);
     let html = '';
     if (psds.length) html += spreadRow(psds.map(r => slideCardLarge(r, r.school||'')));
-    if (heads1.length) html += spreadRow(heads1.map(r => slideCard(r, r.school||'')));
-    if (heads2.length) html += spreadRow(heads2.map(r => slideCard(r, r.school||'')));
+    if (heads1.length) html += spreadRow(heads1.map(r => slideCardLarge(r, r.school||'')));
+    if (heads2.length) html += spreadRow(heads2.map(r => slideCardLarge(r, r.school||'')));
     el.innerHTML = html;
   } catch(e) { console.error('District2 error:', e); }
 }
