@@ -693,6 +693,8 @@
     <!-- 0. WELCOME SLIDE -->
     <div class="slide active">
       <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b 0%,#1a2fa0 55%,#2a45c8 100%); flex-direction:row; gap:0; justify-content:center; align-items:center; position:relative; overflow:hidden; padding:0;">
+        <div style="position:absolute;top:0;left:0;width:100%;height:6px;background:white;z-index:3;"></div>
+        <div style="position:absolute;bottom:0;left:0;width:100%;height:6px;background:white;z-index:3;"></div>
         <div style="position:absolute;top:0;right:0;width:40%;height:100%;background:repeating-linear-gradient(-55deg,transparent,transparent 18px,rgba(255,255,255,0.025) 18px,rgba(255,255,255,0.025) 36px);"></div>
         <!-- LEFT: Logo full height -->
         <div style="flex:0 0 auto;height:100%;display:flex;align-items:center;justify-content:center;padding:16px 0 16px 40px;">
@@ -701,7 +703,7 @@
         <!-- Spacer -->
         <div style="flex:0 0 60px;"></div>
         <!-- Divider -->
-        <div style="width:3px;height:70%;background:rgba(245,194,0,0.5);border-radius:2px;flex-shrink:0;"></div>
+        <div style="width:3px;height:70%;background:rgba(255,255,255,0.5);border-radius:2px;flex-shrink:0;"></div>
         <!-- Spacer -->
         <div style="flex:0 0 60px;"></div>
         <!-- RIGHT: Text -->
@@ -898,15 +900,11 @@
       </div>
     </div>
 
-    <!-- 7. EVENTS & ACTIVITIES - Dynamic Cards -->
+    <!-- 7. EVENTS & ACTIVITIES - Full photo -->
     <div class="slide">
-      <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0); padding:16px 32px; flex-direction:column; gap:12px; justify-content:center;">
-        <div style="text-align:center; margin-bottom:8px;">
-          <div style="font-size:0.9rem; font-weight:800; color:var(--yellow); letter-spacing:2px; text-transform:uppercase;">Ilayang Yuni Elementary School</div>
-          <div style="font-family:'Merriweather',serif; font-size:2rem; font-weight:900; color:white; margin-top:4px;">📅 Events &amp; Activities</div>
-        </div>
-        <div id="events-slide-container" style="display:flex; flex-direction:column; gap:8px;">
-          <div style="color:rgba(255,255,255,0.5); font-size:1.5rem; font-style:italic;">Naglo-load...</div>
+      <div style="width:100%;height:100%;background:#000;overflow:hidden;position:relative;">
+        <div id="events-slide-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+          <div style="color:rgba(255,255,255,0.5);font-size:1.5rem;">Naglo-load...</div>
         </div>
       </div>
     </div>
@@ -1052,11 +1050,11 @@
     <!-- DIVISION TOP MANAGEMENT - Dynamic -->
     <div class="slide" id="slide-division-top">
       <div style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0);width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;padding:0 8px 4px;">
-        <div style="text-align:center;margin-bottom:6px;flex-shrink:0;">
+        <div style="text-align:center;margin-bottom:2px;flex-shrink:0;">
           <div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">DIVISION OF QUEZON</div>
           <div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">TOP MANAGEMENT</div>
         </div>
-        <div id="division-top-container" style="flex:1;display:flex;flex-direction:column;gap:4px;justify-content:flex-start;overflow:hidden;">
+        <div id="division-top-container" style="flex:1;display:flex;flex-direction:column;gap:4px;justify-content:space-evenly;">
           <div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div>
         </div>
       </div>
@@ -1065,11 +1063,11 @@
     <!-- MULANAY DISTRICT 2 SCHOOL HEADS - Dynamic -->
     <div class="slide" id="slide-district2">
       <div style="background:linear-gradient(135deg,#1a2fa0,#2a45c8);width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;padding:0 8px 4px;">
-        <div style="text-align:center;margin-bottom:6px;flex-shrink:0;">
+        <div style="text-align:center;margin-bottom:2px;flex-shrink:0;">
           <div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">MULANAY DISTRICT 2</div>
           <div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">SCHOOL HEADS</div>
         </div>
-        <div id="district2-container" style="flex:1;display:flex;flex-direction:column;gap:4px;justify-content:flex-start;overflow:hidden;">
+        <div id="district2-container" style="flex:1;display:flex;flex-direction:column;gap:4px;justify-content:space-evenly;">
           <div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div>
         </div>
       </div>
@@ -1079,12 +1077,12 @@
     <div class="slide" id="slide-personnel">
       <div style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0);width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;padding:0 8px 4px;">
         <!-- Title -->
-        <div style="text-align:center;margin-bottom:6px;flex-shrink:0;">
+        <div style="text-align:center;margin-bottom:2px;flex-shrink:0;">
           <div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;line-height:1.2;">ILAYANG YUNI ELEMENTARY SCHOOL</div>
           <div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">TEACHING AND NON-TEACHING PERSONNEL</div>
         </div>
         <!-- Cards Container -->
-        <div id="personnel-slide-container" style="flex:1;display:flex;flex-direction:column;gap:4px;justify-content:flex-start;overflow:hidden;">
+        <div id="personnel-slide-container" style="flex:1;display:flex;flex-direction:column;gap:4px;justify-content:space-evenly;">
           <div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div>
         </div>
       </div>
@@ -1389,11 +1387,11 @@
     <!-- 19. SPTA - Dynamic -->
     <div class="slide" id="slide-spta">
       <div style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0);width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;padding:0 8px 4px;">
-        <div style="text-align:center;margin-bottom:6px;flex-shrink:0;">
+        <div style="text-align:center;margin-bottom:2px;flex-shrink:0;">
           <div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">ILAYANG YUNI ELEMENTARY SCHOOL</div>
           <div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">SCHOOL PARENT-TEACHER ASSOCIATION</div>
         </div>
-        <div id="spta-slide-inner" style="flex:1;display:flex;flex-direction:column;gap:4px;justify-content:flex-start;overflow:hidden;">
+        <div id="spta-slide-inner" style="flex:1;display:flex;flex-direction:column;gap:4px;justify-content:space-evenly;">
           <div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div>
         </div>
       </div>
@@ -1402,11 +1400,11 @@
     <!-- 20. SELG - Dynamic -->
     <div class="slide" id="slide-selg">
       <div style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0);width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;padding:0 8px 4px;">
-        <div style="text-align:center;margin-bottom:6px;flex-shrink:0;">
+        <div style="text-align:center;margin-bottom:2px;flex-shrink:0;">
           <div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">ILAYANG YUNI ELEMENTARY SCHOOL</div>
           <div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">SUPREME ELEMENTARY LEARNERS GOVERNMENT</div>
         </div>
-        <div id="selg-slide-inner" style="flex:1;display:flex;flex-direction:column;gap:4px;justify-content:flex-start;overflow:hidden;">
+        <div id="selg-slide-inner" style="flex:1;display:flex;flex-direction:column;gap:4px;justify-content:space-evenly;">
           <div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div>
         </div>
       </div>
@@ -1415,28 +1413,21 @@
     <!-- 21. TEACHERS CLUB - Dynamic -->
     <div class="slide" id="slide-club">
       <div style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0);width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;padding:0 8px 4px;">
-        <div style="text-align:center;margin-bottom:6px;flex-shrink:0;">
+        <div style="text-align:center;margin-bottom:2px;flex-shrink:0;">
           <div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">ILAYANG YUNI ELEMENTARY SCHOOL</div>
           <div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">TEACHERS' CLUB</div>
         </div>
-        <div id="club-slide-inner" style="flex:1;display:flex;flex-direction:column;gap:4px;justify-content:flex-start;overflow:hidden;">
+        <div id="club-slide-inner" style="flex:1;display:flex;flex-direction:column;gap:4px;justify-content:space-evenly;">
           <div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div>
         </div>
       </div>
     </div>
 
-    <!-- 22. LINKS - Image from GitHub -->
+    <!-- 22. LINKS - Full photo -->
     <div class="slide">
-      <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0); flex-direction:column; gap:10px; justify-content:center; align-items:center;">
-        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-          <img src="assets/links.png"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-               style="max-width:100%;max-height:520px;object-fit:contain;">
-          <div style="display:none;text-align:center;flex-direction:column;align-items:center;">
-            <div style="font-size:3.8rem; margin-bottom:12px;">🔗</div>
-            <div style="font-family:'Merriweather',serif; font-size:2.2rem; font-weight:900; color:white;">Links</div>
-            <div style="font-size:1.4rem; color:rgba(255,255,255,0.7); margin-top:8px;">Mga Kapaki-pakinabang na Link</div>
-          </div>
+      <div style="width:100%;height:100%;background:#000;overflow:hidden;position:relative;">
+        <div id="links-slide-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+          <div style="color:rgba(255,255,255,0.5);font-size:1.5rem;">Naglo-load...</div>
         </div>
       </div>
     </div>
@@ -1863,29 +1854,30 @@ async function loadWinners() {
   } catch(e) { console.error('Winners load error:', e); }
 }
 
-// ===== EVENTS SLIDE DYNAMIC CARDS =====
+// ===== EVENTS SLIDE - Full photo =====
 async function loadEventsSlide() {
   try {
-    const data = await fetchCSV('events');
-    if (!data.length) return;
+    const data = await fetchSheetCSV('https://docs.google.com/spreadsheets/d/e/2PACX-1vTcahFgkkHP_K5x8dFXCxj77xXNDmZDnmprNTY5xgGytr0WcY6bdlrKNHYpGfjkB7aP0ypydeWbf7ip/pub?gid=0&single=true&output=csv');
     const el = document.getElementById('events-slide-container');
-    if (!el) return;
-    el.innerHTML = data.slice(0, 4).map(row => {
-      const d = new Date(row.date);
-      const day = isNaN(d) ? '--' : d.getDate();
-      const mon = isNaN(d) ? row.date : d.toLocaleString('en', {month:'short'});
-      return `<div style="display:flex;gap:18px;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.12);">
-        <div style="background:var(--yellow); color:#0d1e6b; border-radius:10px; padding:10px 14px; text-align:center; flex-shrink:0; min-width:60px;">
-          <div style="font-size:2rem; font-weight:900; line-height:1; font-family:'Merriweather',serif;">${day}</div>
-          <div style="font-size:1.1rem; font-weight:800; text-transform:uppercase;">${mon}</div>
-        </div>
-        <div>
-          <div style="font-size:2rem; font-weight:700; color:white; line-height:1.3;">${row.title||''}</div>
-          ${row.description ? `<div style="font-size:1.4rem; color:rgba(255,255,255,0.7); margin-top:4px;">${row.description}</div>` : ''}
-        </div>
-      </div>`;
-    }).join('');
-  } catch(e) { console.error('Events slide load error:', e); }
+    if (!el || !data.length) return;
+    const row = data.find(r => r.photo_url);
+    if (!row) return;
+    const url = driveThumbUrl(row.photo_url).replace('=w200','=w1600');
+    el.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover;object-position:center center;">`;
+  } catch(e) { console.error('Events slide error:', e); }
+}
+
+// ===== LINKS SLIDE - Full photo =====
+async function loadLinksSlide() {
+  try {
+    const data = await fetchSheetCSV('https://docs.google.com/spreadsheets/d/e/2PACX-1vRCisp-y68BU0-E1JSfLwZ64KymhaPibM02ozwyKq4fObnm2Tx0kEafSbG456Woh-Ytsjvjf117aSEp/pub?gid=0&single=true&output=csv');
+    const el = document.getElementById('links-slide-container');
+    if (!el || !data.length) return;
+    const row = data.find(r => r.photo_url);
+    if (!row) return;
+    const url = driveThumbUrl(row.photo_url).replace('=w200','=w1600');
+    el.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover;object-position:center center;">`;
+  } catch(e) { console.error('Links slide error:', e); }
 }
 
 async function loadMainAnnouncements() {
@@ -1951,16 +1943,14 @@ function driveThumbUrl(url) {
 function slideCard(row, extraLine) {
   const photo = row.photo_url ? driveThumbUrl(row.photo_url) : '';
   const photoHtml = photo
-    ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center center;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:1.4rem;">👤</div>`
-    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">👤</div>`;
-  return `<div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;align-items:center;min-width:0;flex:1;">
-    <div style="width:100%;padding-top:140%;position:relative;overflow:hidden;background:rgba(255,255,255,0.08);">
-      <div style="position:absolute;top:0;left:0;width:100%;height:100%;">${photoHtml}</div>
-    </div>
-    <div style="padding:3px 4px;text-align:center;width:100%;">
-      <div style="font-size:0.55rem;font-weight:700;color:white;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${row.name||''}</div>
-      <div style="font-size:0.5rem;color:var(--yellow);font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${row.position||''}</div>
-      ${extraLine ? `<div style="font-size:0.45rem;color:rgba(255,255,255,0.7);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${extraLine}</div>` : ''}
+    ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:1rem;">👤</div>`
+    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1rem;">👤</div>`;
+  return `<div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;align-items:center;flex:0 0 auto;">
+    <div style="width:60px;aspect-ratio:5/7;overflow:hidden;background:rgba(255,255,255,0.08);flex-shrink:0;">${photoHtml}</div>
+    <div style="padding:2px 3px;text-align:center;width:60px;flex-shrink:0;">
+      <div style="font-size:0.48rem;font-weight:700;color:white;line-height:1.2;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${row.name||''}</div>
+      <div style="font-size:0.44rem;color:var(--yellow);font-weight:600;line-height:1.2;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${row.position||''}</div>
+      ${extraLine ? `<div style="font-size:0.4rem;color:rgba(255,255,255,0.7);line-height:1.2;overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;">${extraLine}</div>` : ''}
     </div>
   </div>`;
 }
@@ -1968,16 +1958,14 @@ function slideCard(row, extraLine) {
 function slideCardLarge(row, extraLine) {
   const photo = row.photo_url ? driveThumbUrl(row.photo_url) : '';
   const photoHtml = photo
-    ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center center;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:2rem;">👤</div>`
-    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;">👤</div>`;
-  return `<div style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;align-items:center;width:120px;flex-shrink:0;">
-    <div style="width:100%;padding-top:140%;position:relative;overflow:hidden;background:rgba(255,255,255,0.08);">
-      <div style="position:absolute;top:0;left:0;width:100%;height:100%;">${photoHtml}</div>
-    </div>
-    <div style="padding:5px 6px;text-align:center;width:100%;">
-      <div style="font-size:0.65rem;font-weight:700;color:white;line-height:1.3;">${row.name||''}</div>
-      <div style="font-size:0.58rem;color:var(--yellow);font-weight:600;line-height:1.3;">${row.position||''}</div>
-      ${extraLine ? `<div style="font-size:0.52rem;color:rgba(255,255,255,0.75);line-height:1.3;">${extraLine}</div>` : ''}
+    ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:1.5rem;">👤</div>`
+    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">👤</div>`;
+  return `<div style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;align-items:center;flex:0 0 auto;">
+    <div style="width:90px;aspect-ratio:5/7;overflow:hidden;background:rgba(255,255,255,0.08);flex-shrink:0;">${photoHtml}</div>
+    <div style="padding:4px 5px;text-align:center;width:90px;flex-shrink:0;">
+      <div style="font-size:0.58rem;font-weight:700;color:white;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${row.name||''}</div>
+      <div style="font-size:0.52rem;color:var(--yellow);font-weight:600;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${row.position||''}</div>
+      ${extraLine ? `<div style="font-size:0.46rem;color:rgba(255,255,255,0.75);line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;">${extraLine}</div>` : ''}
     </div>
   </div>`;
 }
@@ -2006,7 +1994,7 @@ function spreadRow(cards) {
   if (cards.length === 1) {
     return `<div style="display:flex;justify-content:center;width:100%;">${cards[0]}</div>`;
   }
-  return `<div style="display:flex;justify-content:space-between;width:100%;gap:4px;">${cards.join('')}</div>`;
+  return `<div style="display:flex;justify-content:space-evenly;width:100%;">${cards.join('')}</div>`;
 }
 
 // ===== DIVISION TOP MANAGEMENT =====
@@ -2138,6 +2126,7 @@ loadPersonnelSlide();
 loadSptaSlide();
 loadSelgSlide();
 loadClubSlide();
+loadLinksSlide();
 </script>
 </body>
 </html>
