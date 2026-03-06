@@ -1751,7 +1751,8 @@ async function loadSettings() {
       const el = document.getElementById(key + '-container');
       if (el && s[key]) {
         const imgUrl = driveUrl(s[key]) || s[key];
-        el.innerHTML = `<img src="${imgUrl}" style="width:100%;height:100%;object-fit:contain;">`;
+        const isPersonnel = key === 'personnel_image_slideshow';
+        el.innerHTML = `<img src="${imgUrl}" style="width:${isPersonnel?'90%':'100%'};height:${isPersonnel?'90%':'100%'};object-fit:contain;">`;
       }
     });
 
@@ -1863,7 +1864,7 @@ async function loadEventsSlide() {
     const row = data.find(r => r.photo_url);
     if (!row) return;
     const url = driveThumbUrl(row.photo_url).replace('=w200','=w1600');
-    el.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover;object-position:center center;">`;
+    el.innerHTML = `<img src="${url}" style="width:80%;height:80%;object-fit:cover;object-position:center center;">`;
   } catch(e) { console.error('Events slide error:', e); }
 }
 
@@ -1958,14 +1959,14 @@ function slideCard(row, extraLine) {
 function slideCardLarge(row, extraLine) {
   const photo = row.photo_url ? driveThumbUrl(row.photo_url) : '';
   const photoHtml = photo
-    ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:1.5rem;">👤</div>`
-    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">👤</div>`;
+    ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:1.2rem;">👤</div>`
+    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">👤</div>`;
   return `<div style="display:flex;flex-direction:column;align-items:center;flex:0 0 auto;">
-    <div style="width:90px;aspect-ratio:5/7;overflow:hidden;background:rgba(255,255,255,0.15);border-radius:6px 6px 0 0;flex-shrink:0;">${photoHtml}</div>
-    <div style="padding:4px 5px;text-align:center;width:180px;background:rgba(255,255,255,0.1);border-radius:0 0 6px 6px;flex-shrink:0;">
-      <div style="font-size:0.68rem;font-weight:700;color:white;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${row.name||''}</div>
-      <div style="font-size:0.6rem;color:var(--yellow);font-weight:600;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${row.position||''}</div>
-      ${extraLine ? `<div style="font-size:0.54rem;color:rgba(255,255,255,0.75);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${extraLine}</div>` : ''}
+    <div style="width:72px;aspect-ratio:5/7;overflow:hidden;background:rgba(255,255,255,0.15);border-radius:5px 5px 0 0;flex-shrink:0;">${photoHtml}</div>
+    <div style="padding:3px 4px;text-align:center;width:144px;background:rgba(255,255,255,0.1);border-radius:0 0 5px 5px;flex-shrink:0;">
+      <div style="font-size:0.54rem;font-weight:700;color:white;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${row.name||''}</div>
+      <div style="font-size:0.48rem;color:var(--yellow);font-weight:600;line-height:1.2;white-space:normal;word-break:break-word;overflow-wrap:break-word;">${row.position||''}</div>
+      ${extraLine ? `<div style="font-size:0.43rem;color:rgba(255,255,255,0.75);line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${extraLine}</div>` : ''}
     </div>
   </div>`;
 }
