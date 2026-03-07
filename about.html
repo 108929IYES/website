@@ -234,13 +234,35 @@
   }
   .cv-desc { font-size: 0.72rem; color: var(--gray); line-height: 1.5; }
 
-  @media (max-width: 768px) {
-    .profile-grid { grid-template-columns: 1fr; }
-    .profile-item { border-right: none; }
-    .vm-grid { grid-template-columns: 1fr; }
-    .core-values-grid { grid-template-columns: repeat(2, 1fr); }
-    header { padding: 14px 20px; }
-    nav ul { padding: 0; }
+  /* PROFILE TABLE */
+  .profile-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .profile-table td {
+    padding: 9px 16px;
+    border: 1px solid var(--blue-light);
+    vertical-align: middle;
+  }
+  .profile-table tr:hover td { background: var(--blue-xlight); }
+  .profile-table td.profile-label {
+    font-weight: 700;
+    color: var(--gray);
+    background: #f8faff;
+    width: 22%;
+    white-space: nowrap;
+  }
+  .profile-table td.profile-value {
+    font-weight: 700;
+    color: var(--blue-dark);
+    width: 28%;
+  }
+
+  @media(max-width:768px) {
+    .profile-table, .profile-table tbody, .profile-table tr, .profile-table td { display: block; width: 100%; }
+    .profile-table td.profile-label { background: var(--blue-xlight); border-bottom: none; }
+    .profile-table td.profile-value { border-top: none; margin-bottom: 4px; }
   }
 </style>
 </head>
@@ -292,43 +314,38 @@
       <div>
         <div class="profile-card">
           <h2 class="section-title" style="margin-bottom:16px;">📋 School Profile</h2>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0;">
-
-            <!-- LEFT COLUMN -->
-            <div style="border-right:2px solid var(--blue-light); padding-right:0;">
-              <div class="profile-item"><span class="profile-label">School ID</span><span class="profile-value">108929</span></div>
-              <div class="profile-item"><span class="profile-label">School Name</span><span class="profile-value">Ilayang Yuni ES</span></div>
-              <div class="profile-item"><span class="profile-label">Short Name</span><span class="profile-value">IYES</span></div>
-              <div class="profile-item"><span class="profile-label">Date Established</span><span class="profile-value">Jan, 1967</span></div>
-              <div class="profile-item"><span class="profile-label">General Classification</span><span class="profile-value">Public</span></div>
-              <div class="profile-item"><span class="profile-label">General Curricular Offerings</span><span class="profile-value">Elementary</span></div>
-            </div>
-
-            <!-- RIGHT COLUMN -->
-            <div style="padding-left:0;">
-              <div class="profile-item"><span class="profile-label">Elementary Classification</span><span class="profile-value">Complete Elementary</span></div>
-              <div class="profile-item"><span class="profile-label">Class Organization</span><span class="profile-value">Monograde</span></div>
-              <div class="profile-item"><span class="profile-label">Curricular Offering Classification</span><span class="profile-value">Kinder &amp; Grade 1-6</span></div>
-              <div class="profile-item"><span class="profile-label">School Sub-classification</span><span class="profile-value">DepEd Managed</span></div>
-              <div class="profile-item"><span class="profile-label">School Type</span><span class="profile-value">School with no Annexes</span></div>
-              <div class="profile-item"><span class="profile-label">Curricular Offering Sub-classification</span><span class="profile-value">Regular School</span></div>
-            </div>
-
-          </div>
+          <table class="profile-table">
+            <tbody>
+              <tr><td class="profile-label">School ID</td><td class="profile-value">108929</td><td class="profile-label">Elementary Classification</td><td class="profile-value">Complete Elementary</td></tr>
+              <tr><td class="profile-label">School Name</td><td class="profile-value">Ilayang Yuni ES</td><td class="profile-label">Class Organization</td><td class="profile-value">Monograde</td></tr>
+              <tr><td class="profile-label">Short Name</td><td class="profile-value">IYES</td><td class="profile-label">Curricular Offering Classification</td><td class="profile-value">Kinder &amp; Grade 1-6</td></tr>
+              <tr><td class="profile-label">Date Established</td><td class="profile-value">Jan, 1967</td><td class="profile-label">School Sub-classification</td><td class="profile-value">DepEd Managed</td></tr>
+              <tr><td class="profile-label">General Classification</td><td class="profile-value">Public</td><td class="profile-label">School Type</td><td class="profile-value">School with no Annexes</td></tr>
+              <tr><td class="profile-label">General Curricular Offerings</td><td class="profile-value">Elementary</td><td class="profile-label">Curricular Offering Sub-classification</td><td class="profile-value">Regular School</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
     <!-- Address Information - Full Width -->
     <div class="profile-card" style="margin-top:20px;">
       <h2 class="section-title" style="margin-bottom:16px;">📍 Address Information</h2>
-      <div class="profile-item" style="border-bottom:none;"><span class="profile-label">Address</span><span class="profile-value">Sitio Central A, Brgy. Ilayang Yuni, Mulanay, Quezon 4312</span></div>
+      <table class="profile-table">
+        <tbody>
+          <tr><td class="profile-label">Address</td><td class="profile-value" colspan="3">Sitio Central A, Brgy. Ilayang Yuni, Mulanay, Quezon 4312</td></tr>
+        </tbody>
+      </table>
     </div>
 
     <!-- Contact Information - Full Width -->
     <div class="profile-card" style="margin-top:20px;">
       <h2 class="section-title" style="margin-bottom:16px;">📞 Contact Information</h2>
-      <div class="profile-item"><span class="profile-label">Contact Number</span><span class="profile-value" id="contact-number">—</span></div>
-      <div class="profile-item" style="border-bottom:none;"><span class="profile-label">Email Address</span><span class="profile-value" id="email-address">—</span></div>
+      <table class="profile-table">
+        <tbody>
+          <tr><td class="profile-label">Contact Number</td><td class="profile-value" id="contact-number" colspan="3">—</td></tr>
+          <tr><td class="profile-label">Email Address</td><td class="profile-value" id="email-address" colspan="3">—</td></tr>
+        </tbody>
+      </table>
     </div>
 
   </div>

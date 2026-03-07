@@ -60,7 +60,7 @@
   nav ul li.active a { color: var(--yellow); border-bottom-color: var(--yellow); }
 
   /* PAGE */
-  .page { max-width: 100%; margin: 40px auto; padding: 0 32px 60px; }
+  .page { max-width: 100%; margin: 24px auto; padding: 0 16px 60px; }
 
   .page-title {
     font-family: 'Merriweather', serif;
@@ -216,17 +216,116 @@
   .enroll-table tbody td.female { color: #b5316a; font-weight: 600; }
   .enroll-table tbody td.total { font-weight: 700; color: var(--blue-dark); background: var(--blue-xlight); }
 
-  /* UPDATE NOTE */
-  .update-note {
-    margin-top: 16px;
-    padding: 10px 16px;
-    background: var(--blue-light);
-    border-left: 3px solid var(--blue);
-    border-radius: 0 6px 6px 0;
-    font-size: 0.8rem;
-    color: var(--blue-dark);
+  /* COMBINED TABLE */
+  .combined-table-wrap {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(26,47,160,0.08);
+    overflow-x: auto;
   }
-  .update-note strong { font-weight: 700; }
+  .combined-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.72rem;
+    table-layout: fixed;
+  }
+  .combined-table thead tr:first-child th {
+    padding: 7px 4px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .combined-table thead tr:nth-child(2) th {
+    padding: 5px 4px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.65rem;
+    white-space: nowrap;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .combined-table th.grade-col { background: var(--blue-dark); color: white; text-align: left; padding-left: 10px; width: 90px; }
+
+  /* Header colors */
+  .beg-header, .beg-sub { background: #1a6bb5; color: white; }
+  .cur-header, .cur-sub { background: #2d7d46; color: white; }
+  .tin-header, .tin-sub { background: #9a6700; color: white; }
+  .tout-header, .tout-sub { background: #c05c00; color: white; }
+  .drop-header, .drop-sub { background: #b71c1c; color: white; }
+
+  /* Body rows */
+  .combined-table tbody tr { border-bottom: 1px solid var(--blue-light); transition: filter 0.15s; }
+  .combined-table tbody tr:hover { filter: brightness(0.95); }
+  .combined-table tbody td {
+    padding: 5px 4px;
+    text-align: center;
+    border-right: 1px solid rgba(0,0,0,0.06);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .combined-table tbody td:first-child {
+    text-align: left;
+    padding-left: 10px;
+    font-weight: 700;
+    color: var(--blue-dark);
+    background: #f8faff;
+    border-right: 2px solid var(--blue-light);
+    white-space: nowrap;
+  }
+
+  /* Cell colors - light versions */
+  .combined-table tbody td.beg { background: #e8f1fb; color: #0d3d6e; font-weight: 600; }
+  .combined-table tbody td.cur { background: #e8f5ec; color: #1b4d2e; font-weight: 600; }
+  .combined-table tbody td.tin { background: #fef9e0; color: #6b4700; font-weight: 600; }
+  .combined-table tbody td.tout { background: #fff0e0; color: #7a3700; font-weight: 600; }
+  .combined-table tbody td.drop { background: #fde8e8; color: #7f1010; font-weight: 600; }
+  .combined-table tbody td.total-col { font-weight: 800; filter: brightness(0.93); }
+
+  /* Footer total row */
+  .combined-table tfoot tr td {
+    padding: 7px 4px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 0.72rem;
+    border-right: 1px solid rgba(255,255,255,0.15);
+    white-space: nowrap;
+  }
+  .combined-table tfoot tr td:first-child {
+    background: var(--blue-dark);
+    color: white;
+    text-align: left;
+    padding-left: 10px;
+    font-family: 'Merriweather', serif;
+    border-right: 2px solid rgba(255,255,255,0.2);
+  }
+  .combined-table tfoot td.beg { background: #1a6bb5; color: white; }
+  .combined-table tfoot td.cur { background: #2d7d46; color: white; }
+  .combined-table tfoot td.tin { background: #9a6700; color: white; }
+  .combined-table tfoot td.tout { background: #c05c00; color: white; }
+  .combined-table tfoot td.drop { background: #b71c1c; color: white; }
+
+  /* COLOR LEGEND */
+  .color-legend {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .legend-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
 </style>
 </head>
 <body>
@@ -270,136 +369,54 @@
   <div class="page-title">Enrollment Data</div>
   <div class="page-subtitle">Ilayang Yuni Elementary School &nbsp;•&nbsp; <span id="enrollment-sy"></span></div>
 
-  <!-- ALL TABLES IN ONE ROW -->
-  <div class="tables-flex">
-  <!-- ENROLLMENT TABLE -->
-  <div class="table-container" id="enrollment">
-    <div class="table-header">
-      <h2>📊 Enrollment</h2>
-      <span class="sy-badge"></span>
-    </div>
-    <table class="enroll-table">
+  <div class="color-legend">
+    <span class="legend-tag" style="background:#e8f1fb;color:#0d3d6e;"><span class="legend-dot" style="background:#1a6bb5;"></span>Beginning Enrollment</span>
+    <span class="legend-tag" style="background:#e8f5ec;color:#1b4d2e;"><span class="legend-dot" style="background:#2d7d46;"></span>Current Enrollment</span>
+    <span class="legend-tag" style="background:#fef9e0;color:#6b4700;"><span class="legend-dot" style="background:#9a6700;"></span>Transferred In</span>
+    <span class="legend-tag" style="background:#fff0e0;color:#7a3700;"><span class="legend-dot" style="background:#c05c00;"></span>Transferred Out</span>
+    <span class="legend-tag" style="background:#fde8e8;color:#7f1010;"><span class="legend-dot" style="background:#b71c1c;"></span>Drop Out</span>
+  </div>
+
+  <div class="combined-table-wrap">
+    <table class="combined-table" id="combined-enrollment">
       <thead>
         <tr>
-          <th rowspan="2">Grade Level</th>
-          <th colspan="3">Beginning Enrollment</th>
-          <th colspan="3">Current Enrollment</th>
+          <th rowspan="2" class="grade-col">Grade Level</th>
+          <th colspan="3" class="beg-header">Beginning Enrollment</th>
+          <th colspan="3" class="cur-header">Current Enrollment</th>
+          <th colspan="3" class="tin-header">Transferred In</th>
+          <th colspan="3" class="tout-header">Transferred Out</th>
+          <th colspan="3" class="drop-header">Drop Out</th>
         </tr>
         <tr>
-          <th>Male</th><th>Female</th><th>Total</th>
-          <th>Male</th><th>Female</th><th>Total</th>
+          <th class="beg-sub">M</th><th class="beg-sub">F</th><th class="beg-sub">T</th>
+          <th class="cur-sub">M</th><th class="cur-sub">F</th><th class="cur-sub">T</th>
+          <th class="tin-sub">M</th><th class="tin-sub">F</th><th class="tin-sub">T</th>
+          <th class="tout-sub">M</th><th class="tout-sub">F</th><th class="tout-sub">T</th>
+          <th class="drop-sub">M</th><th class="drop-sub">F</th><th class="drop-sub">T</th>
         </tr>
       </thead>
-      <tbody>
-        <tr><td>Kinder</td><td class="male">—</td><td class="female">—</td><td class="total">—</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 1</td><td class="male">—</td><td class="female">—</td><td class="total">—</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 2</td><td class="male">—</td><td class="female">—</td><td class="total">—</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 3</td><td class="male">—</td><td class="female">—</td><td class="total">—</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 4</td><td class="male">—</td><td class="female">—</td><td class="total">—</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 5</td><td class="male">—</td><td class="female">—</td><td class="total">—</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 6</td><td class="male">—</td><td class="female">—</td><td class="total">—</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
+      <tbody id="enrollment-tbody">
+        <tr><td>Kinder</td><td class="beg">—</td><td class="beg">—</td><td class="beg total-col">—</td><td class="cur">—</td><td class="cur">—</td><td class="cur total-col">—</td><td class="tin">—</td><td class="tin">—</td><td class="tin total-col">—</td><td class="tout">—</td><td class="tout">—</td><td class="tout total-col">—</td><td class="drop">—</td><td class="drop">—</td><td class="drop total-col">—</td></tr>
+        <tr><td>Grade 1</td><td class="beg">—</td><td class="beg">—</td><td class="beg total-col">—</td><td class="cur">—</td><td class="cur">—</td><td class="cur total-col">—</td><td class="tin">—</td><td class="tin">—</td><td class="tin total-col">—</td><td class="tout">—</td><td class="tout">—</td><td class="tout total-col">—</td><td class="drop">—</td><td class="drop">—</td><td class="drop total-col">—</td></tr>
+        <tr><td>Grade 2</td><td class="beg">—</td><td class="beg">—</td><td class="beg total-col">—</td><td class="cur">—</td><td class="cur">—</td><td class="cur total-col">—</td><td class="tin">—</td><td class="tin">—</td><td class="tin total-col">—</td><td class="tout">—</td><td class="tout">—</td><td class="tout total-col">—</td><td class="drop">—</td><td class="drop">—</td><td class="drop total-col">—</td></tr>
+        <tr><td>Grade 3</td><td class="beg">—</td><td class="beg">—</td><td class="beg total-col">—</td><td class="cur">—</td><td class="cur">—</td><td class="cur total-col">—</td><td class="tin">—</td><td class="tin">—</td><td class="tin total-col">—</td><td class="tout">—</td><td class="tout">—</td><td class="tout total-col">—</td><td class="drop">—</td><td class="drop">—</td><td class="drop total-col">—</td></tr>
+        <tr><td>Grade 4</td><td class="beg">—</td><td class="beg">—</td><td class="beg total-col">—</td><td class="cur">—</td><td class="cur">—</td><td class="cur total-col">—</td><td class="tin">—</td><td class="tin">—</td><td class="tin total-col">—</td><td class="tout">—</td><td class="tout">—</td><td class="tout total-col">—</td><td class="drop">—</td><td class="drop">—</td><td class="drop total-col">—</td></tr>
+        <tr><td>Grade 5</td><td class="beg">—</td><td class="beg">—</td><td class="beg total-col">—</td><td class="cur">—</td><td class="cur">—</td><td class="cur total-col">—</td><td class="tin">—</td><td class="tin">—</td><td class="tin total-col">—</td><td class="tout">—</td><td class="tout">—</td><td class="tout total-col">—</td><td class="drop">—</td><td class="drop">—</td><td class="drop total-col">—</td></tr>
+        <tr><td>Grade 6</td><td class="beg">—</td><td class="beg">—</td><td class="beg total-col">—</td><td class="cur">—</td><td class="cur">—</td><td class="cur total-col">—</td><td class="tin">—</td><td class="tin">—</td><td class="tin total-col">—</td><td class="tout">—</td><td class="tout">—</td><td class="tout total-col">—</td><td class="drop">—</td><td class="drop">—</td><td class="drop total-col">—</td></tr>
       </tbody>
       <tfoot>
-        <tr><td>TOTAL</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr id="total-row">
+          <td>TOTAL</td>
+          <td class="beg">—</td><td class="beg">—</td><td class="beg">—</td>
+          <td class="cur">—</td><td class="cur">—</td><td class="cur">—</td>
+          <td class="tin">—</td><td class="tin">—</td><td class="tin">—</td>
+          <td class="tout">—</td><td class="tout">—</td><td class="tout">—</td>
+          <td class="drop">—</td><td class="drop">—</td><td class="drop">—</td>
+        </tr>
       </tfoot>
     </table>
   </div>
-
-  <!-- TRANSFERRED IN -->
-  <div class="table-container" id="transferred-in">
-    <div class="table-header">
-      <h2>📥 Transferred In</h2>
-      <span class="sy-badge"></span>
-    </div>
-    <table class="enroll-table">
-      <thead>
-        <tr>
-          <th rowspan="2">Grade Level</th>
-          <th colspan="3">Transferred In</th>
-        </tr>
-        <tr>
-          <th>Male</th><th>Female</th><th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Kinder</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 1</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 2</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 3</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 4</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 5</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 6</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-      </tbody>
-      <tfoot>
-        <tr><td>TOTAL</td><td>—</td><td>—</td><td>—</td></tr>
-      </tfoot>
-    </table>
-  </div>
-
-  <!-- TRANSFERRED OUT -->
-  <div class="table-container" id="transferred-out">
-    <div class="table-header">
-      <h2>📤 Transferred Out</h2>
-      <span class="sy-badge"></span>
-    </div>
-    <table class="enroll-table">
-      <thead>
-        <tr>
-          <th rowspan="2">Grade Level</th>
-          <th colspan="3">Transferred Out</th>
-        </tr>
-        <tr>
-          <th>Male</th><th>Female</th><th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Kinder</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 1</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 2</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 3</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 4</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 5</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 6</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-      </tbody>
-      <tfoot>
-        <tr><td>TOTAL</td><td>—</td><td>—</td><td>—</td></tr>
-      </tfoot>
-    </table>
-  </div>
-
-  <!-- DROP OUT -->
-  <div class="table-container" id="dropout">
-    <div class="table-header">
-      <h2>❌ Drop Out</h2>
-      <span class="sy-badge"></span>
-    </div>
-    <table class="enroll-table">
-      <thead>
-        <tr>
-          <th rowspan="2">Grade Level</th>
-          <th colspan="3">Drop Out</th>
-        </tr>
-        <tr>
-          <th>Male</th><th>Female</th><th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Kinder</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 1</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 2</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 3</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 4</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 5</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-        <tr><td>Grade 6</td><td class="male">—</td><td class="female">—</td><td class="total">—</td></tr>
-      </tbody>
-      <tfoot>
-        <tr><td>TOTAL</td><td>—</td><td>—</td><td>—</td></tr>
-      </tfoot>
-    </table>
-  </div>
-
-  </div><!-- end tables-flex -->
-
 </div>
 
 <script>
@@ -459,48 +476,39 @@ async function loadEnrollment() {
     // Update school year
     const sy = data[0].school_year || data[0].School_Year || '';
     if (sy) {
-      document.querySelectorAll('.sy-badge').forEach(el => el.textContent = 'SY ' + sy);
       const syEl = document.getElementById('enrollment-sy');
       if (syEl) syEl.textContent = 'SY ' + sy;
     }
 
-    // Beg + Cur enrollment (same table, more columns)
-    const begCurTable = document.querySelector('#enrollment table');
-    if (begCurTable) {
-      const tbody = begCurTable.querySelector('tbody');
-      if (tbody) {
-        tbody.querySelectorAll('tr').forEach((tr, i) => {
-          const row = data[i]; if (!row) return;
-          const tds = tr.querySelectorAll('td');
-          if (tds[1]) tds[1].textContent = row.beg_male||'0';
-          if (tds[2]) tds[2].textContent = row.beg_female||'0';
-          if (tds[3]) tds[3].textContent = row.beg_total||'0';
-          if (tds[4]) tds[4].textContent = row.cur_male||'0';
-          if (tds[5]) tds[5].textContent = row.cur_female||'0';
-          if (tds[6]) tds[6].textContent = row.cur_total||'0';
+    const cols = [
+      'beg_male','beg_female','beg_total',
+      'cur_male','cur_female','cur_total',
+      'transferin_male','transferin_female','transferin_total',
+      'transferout_male','transferout_female','transferout_total',
+      'drop_male','drop_female','drop_total'
+    ];
+
+    // Fill body rows
+    const tbody = document.getElementById('enrollment-tbody');
+    if (tbody) {
+      tbody.querySelectorAll('tr').forEach((tr, i) => {
+        const row = data[i]; if (!row) return;
+        const tds = tr.querySelectorAll('td');
+        cols.forEach((col, ci) => {
+          if (tds[ci+1]) tds[ci+1].textContent = row[col] || '0';
         });
-        const tfoot = begCurTable.querySelector('tfoot tr');
-        if (tfoot) {
-          const ftds = tfoot.querySelectorAll('td');
-          ['beg_male','beg_female','beg_total','cur_male','cur_female','cur_total'].forEach((col,i) => {
-            const sum = data.reduce((s,r)=>s+(parseInt(r[col])||0),0);
-            if (ftds[i+1]) ftds[i+1].textContent = sum;
-          });
-        }
-      }
+      });
     }
 
-    // Transfer In
-    const tiContainer = document.getElementById('transferred-in');
-    if (tiContainer) fillTable(tiContainer, data, ['transferin_male','transferin_female','transferin_total']);
-
-    // Transfer Out
-    const toContainer = document.getElementById('transferred-out');
-    if (toContainer) fillTable(toContainer, data, ['transferout_male','transferout_female','transferout_total']);
-
-    // Drop Out
-    const doContainer = document.getElementById('dropout');
-    if (doContainer) fillTable(doContainer, data, ['drop_male','drop_female','drop_total']);
+    // Fill totals row
+    const totalRow = document.getElementById('total-row');
+    if (totalRow) {
+      const ftds = totalRow.querySelectorAll('td');
+      cols.forEach((col, ci) => {
+        const sum = data.reduce((s,r) => s + (parseInt(r[col])||0), 0);
+        if (ftds[ci+1]) ftds[ci+1].textContent = sum;
+      });
+    }
 
   } catch(e) {
     console.error('Enrollment load error:', e);
