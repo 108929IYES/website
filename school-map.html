@@ -3,64 +3,317 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>School Map - Ilayang Yuni Elementary School</title>
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>Interactive School Map - Ilayang Yuni Elementary School</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&family=Baloo+2:wght@600;700;800&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
 <style>
-  :root { --blue:#1a2fa0; --blue-dark:#0d1e6b; --blue-light:#e8edf8; --blue-xlight:#f4f6fb; --yellow:#f5c200; }
+  :root {
+    --blue: #1a2fa0;
+    --blue-dark: #0d1e6b;
+    --blue-mid: #2952c4;
+    --blue-light: #e8edf8;
+    --blue-xlight: #f4f6fb;
+    --yellow: #f5c200;
+    --white: #ffffff;
+    --off-white: #f0f4ff;
+    --light-blue: #dce8ff;
+    --shadow: 0 8px 32px rgba(13,30,107,0.18);
+  }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Source Sans 3',sans-serif; background:var(--blue-xlight); }
+  body { font-family:'Source Sans 3', sans-serif; background: var(--blue-xlight); }
 
-  .topbar { background:#0d1e6b; color:rgba(255,255,255,0.8); font-size:0.78rem; padding:6px 40px; display:flex; justify-content:center; align-items:center; }
-  header { background:white; border-bottom:4px solid #1a2fa0; padding:16px 40px; display:flex; align-items:center; gap:20px; box-shadow:0 2px 12px rgba(26,47,160,0.08); }
+  /* TOP BAR */
+  .topbar { background: var(--blue-dark); color: rgba(255,255,255,0.8); font-size:0.78rem; padding:6px 40px; display:flex; justify-content:center; align-items:center; }
+
+  /* HEADER */
+  header { background: white; border-bottom: 4px solid var(--blue); padding: 16px 40px; display:flex; align-items:center; gap:20px; box-shadow: 0 2px 12px rgba(26,47,160,0.08); }
   .logo-wrap img { width:90px; height:90px; object-fit:contain; }
-  .school-title h1 { font-family:'Merriweather',serif; font-size:1.35rem; font-weight:900; color:#0d1e6b; text-transform:uppercase; letter-spacing:0.5px; }
-  .school-title .tagline-main { font-size:0.9rem; color:#1a2fa0; font-weight:700; margin-top:5px; font-style:italic; }
+  .school-title h1 { font-family:'Merriweather',serif; font-size:1.35rem; font-weight:900; color: var(--blue-dark); text-transform:uppercase; letter-spacing:0.5px; }
+  .school-title .tagline-main { font-size:0.9rem; color: var(--blue); font-weight:700; margin-top:5px; font-style:italic; }
   .school-title .dep-tag { font-size:0.78rem; color:#6b7280; font-weight:400; margin-top:2px; display:block; }
 
-  nav { background:var(--blue); padding:0 40px; }
+  /* NAV */
+  nav { background: var(--blue); padding: 0 40px; }
   nav ul { display:flex; list-style:none; overflow-x:auto; }
   nav ul li a { display:block; color:rgba(255,255,255,0.85); text-decoration:none; padding:13px; font-size:0.78rem; font-weight:600; text-transform:uppercase; border-bottom:3px solid transparent; white-space:nowrap; }
-  nav ul li.active a { color:var(--yellow); border-bottom-color:var(--yellow); }
+  nav ul li.active a { color: var(--yellow); border-bottom-color: var(--yellow); }
 
-  .page-hero { background:linear-gradient(135deg,var(--blue-dark),var(--blue)); padding:36px 40px; text-align:center; }
+  /* PAGE HERO */
+  .page-hero { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); padding: 36px 40px; text-align:center; }
   .page-hero h2 { font-family:'Merriweather',serif; font-size:1.6rem; font-weight:900; color:white; margin-bottom:6px; }
   .page-hero p { font-size:0.88rem; color:rgba(255,255,255,0.75); font-style:italic; }
 
-  .page { max-width:1200px; margin:0 auto; padding:36px 24px 60px; }
+  /* PAGE CONTENT */
+  .page-wrap { display:flex; flex-direction:column; align-items:center; padding: 28px 16px 60px; }
 
-  .card { background:white; border-radius:16px; box-shadow:0 4px 24px rgba(26,47,160,0.10); border:2px solid var(--blue-light); overflow:hidden; margin-bottom:24px; }
-  .card-header { background:var(--blue-dark); padding:13px 22px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  /* INTERACTIVE MAP SECTION */
+  #loading { color:#5577bb; font-size:0.95rem; margin:10px 0 16px; text-align:center; min-height:22px; }
+
+  #map-container {
+    position: relative;
+    display: inline-block;
+    margin: 18px auto 10px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow), 0 0 0 4px rgba(255,255,255,0.7);
+    max-width: 95vw;
+  }
+  #map-img {
+    display: block;
+    width: min(900px, 95vw);
+    height: auto;
+    user-select: none;
+  }
+  .pin {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--blue-dark);
+    border: 2.5px solid var(--white);
+    color: var(--white);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.18s, background 0.18s, box-shadow 0.18s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    z-index: 5;
+    line-height: 1;
+  }
+  .pin:hover {
+    transform: translate(-50%, -50%) scale(1.35);
+    background: var(--white);
+    color: var(--blue-dark);
+    box-shadow: 0 4px 18px rgba(255,255,255,0.6);
+    z-index: 10;
+  }
+
+  /* CARD */
+  .card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(26,47,160,0.10);
+    border: 2px solid var(--blue-light);
+    overflow: hidden;
+    margin-bottom: 24px;
+    width: min(900px, 95vw);
+  }
+  .card-header {
+    background: var(--blue-dark);
+    padding: 13px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
   .card-header h3 { font-family:'Merriweather',serif; font-size:0.95rem; font-weight:900; color:white; }
   .card-header span { font-size:0.75rem; color:rgba(255,255,255,0.65); }
 
-  .map-container { position:relative; overflow:hidden; background:#0d1e6b; cursor:zoom-in; }
-  .map-container img { width:100%; display:block; transition:transform 0.4s ease; transform-origin:var(--ox,50%) var(--oy,50%); }
-  .map-container.zoomed { cursor:zoom-out; }
-  .map-container.zoomed img { transform:scale(2.2); }
-  .zoom-badge { position:absolute; bottom:14px; right:14px; background:rgba(13,30,107,0.88); color:white; font-size:0.7rem; font-weight:700; padding:6px 14px; border-radius:20px; border:1px solid rgba(245,194,0,0.5); pointer-events:none; }
+  /* LEGEND */
+  #legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 4px;
+    padding: 16px 20px;
+  }
 
-  .map-actions { display:flex; gap:12px; padding:14px 20px; flex-wrap:wrap; background:var(--blue-xlight); border-top:1px solid var(--blue-light); }
-  .btn { display:inline-flex; align-items:center; gap:8px; padding:10px 22px; border-radius:8px; font-weight:700; font-size:0.85rem; text-decoration:none; border:none; cursor:pointer; transition:all 0.2s; }
-  .btn-primary { background:var(--blue); color:white; } .btn-primary:hover { background:#2a45c8; }
-  .btn-yellow { background:var(--yellow); color:#1a1a2e; } .btn-yellow:hover { background:#e6b400; }
+  /* GOOGLE MAP */
+  .gmap-embed { width:100%; height:450px; border:none; display:block; }
 
-  .legend-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:4px; padding:16px 20px; }
-  .legend-item { display:flex; align-items:center; gap:10px; padding:6px 8px; border-radius:6px; transition:background 0.15s; }
-  .legend-item:hover { background:var(--blue-xlight); }
-  .legend-num { width:26px; height:26px; border-radius:50%; background:var(--blue-dark); color:white; font-size:0.65rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; border:2px solid white; box-shadow:0 1px 6px rgba(0,0,0,0.25); }
-  .legend-text { font-size:0.78rem; font-weight:600; color:#2d3748; line-height:1.3; }
+  /* MODALS OVERLAY */
+  #modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,25,50,0.72);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.22s;
+  }
+  #modal-overlay.active { display: flex; }
 
-  .gmap-embed { width:100%; height:380px; border:none; display:block; }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  @keyframes slideUp { from { transform: translateY(40px) scale(0.97); opacity:0; } to { transform: translateY(0) scale(1); opacity:1; } }
 
-  @media(max-width:768px){ header { padding:12px 16px; } .legend-grid { grid-template-columns:1fr 1fr; } }
+  /* FACILITY MODAL */
+  #modal {
+    background: var(--white);
+    border-radius: 12px;
+    max-width: 800px;
+    width: 90vw;
+    height: 90vh;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    animation: slideUp 0.28s cubic-bezier(.22,.68,0,1.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  #modal-header {
+    background: linear-gradient(90deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+    padding: 18px 52px 18px 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  #modal-num {
+    background: var(--white);
+    color: var(--blue-dark);
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.3rem;
+    font-weight: 800;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  #modal-title {
+    color: var(--white);
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  #modal-body {
+    padding: 20px 22px 22px;
+    background: var(--off-white);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #modal-photo-wrap {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--light-blue);
+    margin-bottom: 12px;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #modal-photo { width:100%; height:100%; object-fit:contain; display:block; }
+  #modal-no-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 32px;
+    color: var(--blue-mid);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+  #modal-no-photo svg { opacity: 0.45; }
+  #close-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(255,255,255,0.18);
+    border: none;
+    color: var(--white);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    font-weight: 700;
+  }
+  #close-btn:hover { background: rgba(255,255,255,0.32); }
+  #back-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, var(--blue-dark), var(--blue-mid));
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    flex-shrink: 0;
+  }
+  #back-btn:hover { opacity: 0.88; }
+
+  /* TEACHER MODAL */
+  #teacher-overlay {
+    display: none;
+    flex-direction: column;
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    animation: slideUp 0.28s cubic-bezier(.22,.68,0,1.2);
+    width: 280px;
+    flex-shrink: 0;
+    align-self: center;
+  }
+  #teacher-overlay.active { display: flex; }
+  #teacher-photo-wrap {
+    overflow: hidden;
+    background: var(--light-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #teacher-photo { width:100%; height:auto; display:block; object-fit:cover; object-position:top center; }
+  #teacher-no-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 32px;
+    color: var(--blue-mid);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+  #teacher-info {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+    padding: 18px 16px;
+    text-align: center;
+  }
+  #teacher-name { color:white; font-family:'Baloo 2',cursive; font-size:1.1rem; font-weight:800; line-height:1.3; margin-bottom:4px; }
+  #teacher-position { color:rgba(255,255,255,0.8); font-size:0.82rem; font-weight:500; font-style:italic; }
+
+  @media(max-width:768px) {
+    header { padding:12px 16px; }
+    nav { padding: 0 8px; }
+    .page-hero { padding: 24px 16px; }
+    #modal-overlay { align-items: flex-end; padding-bottom: 0; }
+    #modal { width:100vw; max-width:100vw; border-radius:16px 16px 0 0; height:92dvh; }
+    #teacher-overlay { display:none !important; }
+  }
 </style>
 </head>
 <body>
 
+<!-- TOP BAR -->
 <div class="topbar">
   <span>Department of Education &nbsp;|&nbsp; Region IV-A CALABARZON &nbsp;|&nbsp; Division of Quezon &nbsp;|&nbsp; Mulanay District 2</span>
 </div>
 
+<!-- HEADER -->
 <header>
   <div class="logo-wrap">
     <img src="assets/logo.png" alt="IYES Logo">
@@ -72,6 +325,7 @@
   </div>
 </header>
 
+<!-- NAV -->
 <nav>
   <ul>
     <li><a href="index.html">Home</a></li>
@@ -89,79 +343,30 @@
   </ul>
 </nav>
 
+<!-- PAGE HERO -->
 <div class="page-hero">
-  <h2>🗺️ School Map</h2>
-  <p>Sitio Central A, Brgy. Ilayang Yuni, Mulanay, Quezon 4312</p>
+  <h2>🗺️ Interactive School Map</h2>
+  <p>Iclick ang numero upang makita ang larawan ng pasilidad.</p>
 </div>
 
-<div class="page">
+<!-- PAGE CONTENT -->
+<div class="page-wrap">
 
-  <!-- MAP IMAGE -->
-  <div class="card">
-    <div class="card-header">
-      <h3>📍 Ilayang Yuni Elementary School — School Map</h3>
-      <span>🔍 I-click ang mapa para mag-zoom</span>
-    </div>
-    <div class="map-container" id="mapWrap" onclick="toggleZoom(event)">
-      <img src="assets/school-map.png" alt="IYES School Map" id="mapImg">
-      <div class="zoom-badge">🔍 Click to Zoom</div>
-    </div>
-    <div class="map-actions">
+  <div id="loading">Loading map data...</div>
 
-      <button class="btn btn-primary" onclick="openFullscreen()">
-        🔲 Buong Screen
-      </button>
-    </div>
+  <!-- INTERACTIVE MAP -->
+  <div id="map-container">
+    <img id="map-img" src="map.jpg" alt="School Map" draggable="false">
+    <!-- Pins inserted by JS -->
   </div>
 
   <!-- LEGEND -->
   <div class="card">
     <div class="card-header">
-      <h3>📋 Mga Pasilidad at Silid-Aralan</h3>
-      <span>40 na lokasyon ang nakalagay sa mapa</span>
+      <h3>📋 Mga Pasilidad ng Paaralan</h3>
+      <span id="legend-count"></span>
     </div>
-    <div class="legend-grid">
-      <div class="legend-item"><div class="legend-num">1</div><span class="legend-text">Handwashing Facility 1</span></div>
-      <div class="legend-item"><div class="legend-num">2</div><span class="legend-text">Gate 1</span></div>
-      <div class="legend-item"><div class="legend-num">3</div><span class="legend-text">Canteen</span></div>
-      <div class="legend-item"><div class="legend-num">4</div><span class="legend-text">Court</span></div>
-      <div class="legend-item"><div class="legend-num">5</div><span class="legend-text">Triage 1</span></div>
-      <div class="legend-item"><div class="legend-num">6</div><span class="legend-text">Gate 2</span></div>
-      <div class="legend-item"><div class="legend-num">7</div><span class="legend-text">Triage 2</span></div>
-      <div class="legend-item"><div class="legend-num">8</div><span class="legend-text">Stage</span></div>
-      <div class="legend-item"><div class="legend-num">9</div><span class="legend-text">Grade 6 — Matatag</span></div>
-      <div class="legend-item"><div class="legend-num">10</div><span class="legend-text">Grade 6 — Masigasig</span></div>
-      <div class="legend-item"><div class="legend-num">11</div><span class="legend-text">Reading Center 1</span></div>
-      <div class="legend-item"><div class="legend-num">12</div><span class="legend-text">Water Pump House</span></div>
-      <div class="legend-item"><div class="legend-num">13</div><span class="legend-text">Conference Room</span></div>
-      <div class="legend-item"><div class="legend-num">14</div><span class="legend-text">Office of the Principal</span></div>
-      <div class="legend-item"><div class="legend-num">15</div><span class="legend-text">Grade 1 — Masigasig</span></div>
-      <div class="legend-item"><div class="legend-num">16</div><span class="legend-text">Handwashing Facility 2</span></div>
-      <div class="legend-item"><div class="legend-num">17</div><span class="legend-text">Grade 4 — Matatag</span></div>
-      <div class="legend-item"><div class="legend-num">18</div><span class="legend-text">Grade 4 — Masigasig</span></div>
-      <div class="legend-item"><div class="legend-num">19</div><span class="legend-text">Grade 3 — Masigasig</span></div>
-      <div class="legend-item"><div class="legend-num">20</div><span class="legend-text">Grade 4 — Masikap</span></div>
-      <div class="legend-item"><div class="legend-num">21</div><span class="legend-text">Common CR 1</span></div>
-      <div class="legend-item"><div class="legend-num">22</div><span class="legend-text">Kinder — Masigasig</span></div>
-      <div class="legend-item"><div class="legend-num">23</div><span class="legend-text">Grade 3 — Matatag</span></div>
-      <div class="legend-item"><div class="legend-num">24</div><span class="legend-text">Kinder — Matatag</span></div>
-      <div class="legend-item"><div class="legend-num">25</div><span class="legend-text">Reading Center 2</span></div>
-      <div class="legend-item"><div class="legend-num">26</div><span class="legend-text">Grade 1 — Matatag</span></div>
-      <div class="legend-item"><div class="legend-num">27</div><span class="legend-text">Grade 2 — Masikap</span></div>
-      <div class="legend-item"><div class="legend-num">28</div><span class="legend-text">Grade 2 — Masigasig</span></div>
-      <div class="legend-item"><div class="legend-num">29</div><span class="legend-text">Grade 5 — Matatag</span></div>
-      <div class="legend-item"><div class="legend-num">30</div><span class="legend-text">Grade 5 — Masigasig</span></div>
-      <div class="legend-item"><div class="legend-num">31</div><span class="legend-text">Common CR 2</span></div>
-      <div class="legend-item"><div class="legend-num">32</div><span class="legend-text">Reading Center 3</span></div>
-      <div class="legend-item"><div class="legend-num">33</div><span class="legend-text">ARAL Room 1</span></div>
-      <div class="legend-item"><div class="legend-num">34</div><span class="legend-text">For Condemnation Classroom 1</span></div>
-      <div class="legend-item"><div class="legend-num">35</div><span class="legend-text">ARAL Room 2</span></div>
-      <div class="legend-item"><div class="legend-num">36</div><span class="legend-text">For Condemnation Classroom 3</span></div>
-      <div class="legend-item"><div class="legend-num">37</div><span class="legend-text">For Condemnation Classroom 4</span></div>
-      <div class="legend-item"><div class="legend-num">38</div><span class="legend-text">Grade 2 — Matatag</span></div>
-      <div class="legend-item"><div class="legend-num">39</div><span class="legend-text">Flagpole</span></div>
-      <div class="legend-item"><div class="legend-num">40</div><span class="legend-text">You Are Here</span></div>
-    </div>
+    <div id="legend-grid"></div>
   </div>
 
   <!-- GOOGLE MAP -->
@@ -175,29 +380,189 @@
     </iframe>
   </div>
 
+</div><!-- end .page-wrap -->
+
+<!-- MODALS -->
+<div id="modal-overlay">
+  <div id="modal">
+    <div id="modal-header">
+      <div id="modal-num">1</div>
+      <div id="modal-title">Facility Name</div>
+      <button id="close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modal-body">
+      <div id="modal-photo-wrap">
+        <img id="modal-photo" src="" alt="" style="display:none;">
+        <div id="modal-no-photo">
+          <svg width="48" height="48" fill="none" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" stroke="#7aa5c9" stroke-width="1.5"/><circle cx="8.5" cy="10.5" r="1.5" fill="#7aa5c9"/><path d="M3 17l5-5 4 4 3-3 6 4" stroke="#7aa5c9" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>Walang photo pa</span>
+        </div>
+      </div>
+      <button id="back-btn" onclick="closeModal()">← Bumalik sa Map</button>
+    </div>
+  </div>
+
+  <!-- TEACHER MODAL -->
+  <div id="teacher-overlay">
+    <div id="teacher-photo-wrap">
+      <img id="teacher-photo" src="" alt="" style="display:none;">
+      <div id="teacher-no-photo">
+        <svg width="48" height="48" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" stroke="#7aa5c9" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#7aa5c9" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Walang photo</span>
+      </div>
+    </div>
+    <div id="teacher-info">
+      <div id="teacher-name"></div>
+      <div id="teacher-position"></div>
+    </div>
+  </div>
 </div>
 
 <script>
-  const wrap = document.getElementById('mapWrap');
+const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQz24qU-yFBFqNRV_CaRGKL92rLLp_M-mBnw9qkC1IMJR5DoF7MZ-RNkDbM3Ut60C56VzTVte04DFP7/pub?gid=0&single=true&output=csv";
 
-  function toggleZoom(e) {
-    if (wrap.classList.contains('zoomed')) {
-      wrap.classList.remove('zoomed');
+const PIN_POSITIONS = {
+  1: [43.87, 77.25], 2: [42.88, 71.42], 3: [53.35, 64.46], 4: [60.36, 55.77],
+  5: [64.31, 62.22], 6: [78, 69.18], 7: [88.14, 56.39], 8: [79.65, 49.93],
+  9: [90.7, 43.97], 10: [88.06, 38.13], 11: [90.62, 35.27], 12: [89.71, 30.8],
+  13: [86.41, 27.2], 14: [83.28, 27.2], 15: [78.08, 27.32], 16: [74.13, 21.49],
+  17: [82.62, 8.82], 18: [74.87, 8.82], 19: [65.39, 8.69], 20: [54.17, 8.94],
+  21: [44.85, 5.84], 22: [43.95, 10.31], 23: [42.96, 14.41], 24: [42.22, 18.88],
+  25: [51.95, 16.89], 26: [68.35, 27.45], 27: [60.77, 27.08], 28: [53.27, 27.45],
+  29: [45.43, 27.45], 30: [38.92, 26.95], 31: [32.57, 27.95], 32: [46.17, 36.51],
+  33: [17.48, 45.33], 34: [15.91, 50.3], 35: [12.86, 58.75], 36: [10.47, 64.34],
+  37: [4.29, 76.13], 38: [16.9, 72.41], 39: [30.26, 56.64], 40: [41.14, 65.95],
+};
+
+let facilities = {};
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const data = {};
+  for (let i = 1; i < lines.length; i++) {
+    const cols = lines[i].split(',');
+    const num = parseInt(cols[0]);
+    const name = cols[1] ? cols[1].trim().replace(/^"|"$/g, '') : '';
+    const photo = cols[2] ? cols[2].trim().replace(/^"|"$/g, '') : '';
+    const teacher = cols[3] ? cols[3].trim().replace(/^"|"$/g, '') : '';
+    const position = cols[4] ? cols[4].trim().replace(/^"|"$/g, '') : '';
+    const teacher_url = cols[5] ? cols[5].trim().replace(/^"|"$/g, '') : '';
+    if (num) data[num] = { name, photo, teacher, position, teacher_url };
+  }
+  return data;
+}
+
+function driveUrl(url) {
+  const m = url.match(/[-\w]{25,}/);
+  return m ? `https://drive.google.com/thumbnail?id=${m[0]}&sz=w800` : url;
+}
+
+function buildPins() {
+  const container = document.getElementById('map-container');
+  for (const [num, pos] of Object.entries(PIN_POSITIONS)) {
+    const pin = document.createElement('div');
+    pin.className = 'pin';
+    pin.textContent = num;
+    pin.style.left = pos[0] + '%';
+    pin.style.top = pos[1] + '%';
+    pin.title = facilities[num]?.name || 'Facility ' + num;
+    pin.onclick = () => openModal(parseInt(num));
+    container.appendChild(pin);
+  }
+}
+
+function openModal(num) {
+  const f = facilities[num] || { name: 'Facility ' + num, photo: '', teacher: '', position: '', teacher_url: '' };
+  document.getElementById('modal-num').textContent = num;
+  document.getElementById('modal-title').textContent = f.name;
+
+  const img = document.getElementById('modal-photo');
+  const noPhoto = document.getElementById('modal-no-photo');
+  if (f.photo && f.photo.length > 5) {
+    img.src = driveUrl(f.photo);
+    img.style.display = 'block';
+    noPhoto.style.display = 'none';
+    img.onerror = () => { img.style.display = 'none'; noPhoto.style.display = 'flex'; };
+  } else {
+    img.style.display = 'none';
+    noPhoto.style.display = 'flex';
+  }
+
+  // Teacher panel
+  const teacherOverlay = document.getElementById('teacher-overlay');
+  const hasTeacher = f.teacher && f.teacher.length > 1;
+  if (hasTeacher) {
+    const tPhoto = document.getElementById('teacher-photo');
+    const tNoPhoto = document.getElementById('teacher-no-photo');
+    document.getElementById('teacher-name').textContent = f.teacher;
+    document.getElementById('teacher-position').textContent = f.position || '';
+    if (f.teacher_url && f.teacher_url.length > 5) {
+      tPhoto.src = driveUrl(f.teacher_url);
+      tPhoto.style.display = 'block';
+      tNoPhoto.style.display = 'none';
+      tPhoto.onerror = () => { tPhoto.style.display = 'none'; tNoPhoto.style.display = 'flex'; };
     } else {
-      const img = document.getElementById('mapImg');
-      const rect = img.getBoundingClientRect();
-      wrap.style.setProperty('--ox', ((e.clientX - rect.left) / rect.width * 100).toFixed(1) + '%');
-      wrap.style.setProperty('--oy', ((e.clientY - rect.top) / rect.height * 100).toFixed(1) + '%');
-      wrap.classList.add('zoomed');
+      tPhoto.style.display = 'none';
+      tNoPhoto.style.display = 'flex';
     }
+    teacherOverlay.classList.add('active');
+  } else {
+    teacherOverlay.classList.remove('active');
   }
 
-  function openFullscreen() {
-    if (wrap.requestFullscreen) wrap.requestFullscreen();
-    else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
-  }
+  document.getElementById('modal-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('active');
+  document.getElementById('teacher-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// Load CSV — pins + legend
+fetch(CSV_URL)
+  .then(r => r.text())
+  .then(text => {
+    facilities = parseCSV(text);
+    document.getElementById('loading').textContent = '';
+    buildPins();
+
+    // Build legend
+    const rows = text.trim().split('\n').map(r => {
+      const cols = []; let cur = ''; let inQ = false;
+      for (let ch of r) {
+        if (ch === '"') inQ = !inQ;
+        else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+        else cur += ch;
+      }
+      cols.push(cur.trim());
+      return cols;
+    });
+    const headers = rows[0].map(h => h.toLowerCase());
+    const numIdx = headers.findIndex(h => h.includes('num') || h === 'id' || h === 'no');
+    const nameIdx = headers.findIndex(h => h.includes('name') || h.includes('facilit'));
+    const grid = document.getElementById('legend-grid');
+    const count = document.getElementById('legend-count');
+    const items = rows.slice(1).filter(r => r[numIdx] && r[nameIdx]);
+    count.textContent = items.length + ' na lokasyon ang nakalagay sa mapa';
+    grid.innerHTML = items.map(r =>
+      `<div style="display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:6px;">
+        <div style="width:26px;height:26px;border-radius:50%;background:#0d1e6b;color:white;font-size:0.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid white;box-shadow:0 1px 6px rgba(0,0,0,0.25);">${r[numIdx]}</div>
+        <span style="font-size:0.78rem;font-weight:600;color:#2d3748;line-height:1.3;">${r[nameIdx]}</span>
+      </div>`
+    ).join('');
+  })
+  .catch(() => {
+    document.getElementById('loading').textContent = '⚠️ Hindi ma-load ang data. I-check ang CSV URL.';
+    buildPins();
+  });
 </script>
-
 
 </body>
 </html>
