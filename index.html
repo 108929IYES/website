@@ -1755,6 +1755,12 @@ function annFormatDate(dateStr) {
   return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
+function applySuperscript(text) {
+  return text.replace(/(\d+)(ST|ND|RD|TH)(|(?=[^A-Z]))/gi, function(match, num, suffix) {
+    return num + '<sup style="font-size:0.55em;vertical-align:super;line-height:0;">' + suffix.toLowerCase() + '</sup>';
+  });
+}
+
 function renderAnnouncement(idx) {
   const el = document.getElementById('ann-slide-container');
   if (!el || !annData.length) return;
@@ -1762,10 +1768,12 @@ function renderAnnouncement(idx) {
   const days = annDaysUntil(row.date);
   const countdownText = annCountdownText(days);
   const formattedDate = annFormatDate(row.date);
+  const titleHtml = applySuperscript(row.title || '');
   el.innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;text-align:center;padding:40px 60px;gap:0;">
-      <div style="font-size:1.8rem;font-weight:800;color:var(--yellow);letter-spacing:3px;text-transform:uppercase;margin-bottom:32px;">${countdownText}</div>
-      <div style="font-family:'Merriweather',serif;font-size:4.2rem;font-weight:900;color:white;line-height:1.15;text-transform:uppercase;margin-bottom:0;">${row.title||''}</div>
+      <div style="font-family:'Merriweather',serif;font-size:1.4rem;font-weight:900;color:white;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;">📢 Announcements</div>
+      <div style="font-size:3rem;font-weight:800;color:var(--yellow);letter-spacing:3px;text-transform:uppercase;margin-bottom:28px;">${countdownText}</div>
+      <div style="font-family:'Merriweather',serif;font-size:4.2rem;font-weight:900;color:white;line-height:1.15;text-transform:uppercase;margin-bottom:0;">${titleHtml}</div>
       <div style="font-size:1.6rem;font-weight:600;color:rgba(255,255,255,0.7);margin-top:6px;">${formattedDate}</div>
     </div>`;
 }
