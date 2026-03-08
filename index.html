@@ -1544,10 +1544,26 @@ function goToSlide(n) {
 
 window.goToSlide = goToSlide;
 
+let slideshowTimer = null;
+let slideDelays = {}; // key: slide index, value: ms
+
+function getSlideDelay(idx) {
+  return slideDelays[idx] !== undefined ? slideDelays[idx] : 25000;
+}
+
+function scheduleNextSlide() {
+  if (slideshowTimer) clearTimeout(slideshowTimer);
+  const delay = getSlideDelay(currentSlide);
+  slideshowTimer = setTimeout(() => {
+    goToSlide(currentSlide + 1);
+    scheduleNextSlide();
+  }, delay);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   slides = Array.from(document.querySelectorAll('.hero-slideshow .slide'));
   dots = Array.from(document.querySelectorAll('.slide-dots .dot'));
-  setInterval(() => goToSlide(currentSlide + 1), 25000);
+  scheduleNextSlide();
 });
 
 const SHEET_URLS = {
@@ -1791,8 +1807,17 @@ async function loadAnnouncements() {
       return !isNaN(d) && d >= today;
     });
     if (!annData.length) {
-      el.innerHTML = '<div style="color:rgba(255,255,255,0.4);font-size:1.5rem;font-style:italic;">Walang upcoming announcements.</div>';
+      el.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;text-align:center;padding:40px 60px;gap:0;">
+          <div style="font-family:'Merriweather',serif;font-size:1.4rem;font-weight:900;color:white;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;">📢 Announcements</div>
+          <div style="font-size:3rem;font-weight:800;color:var(--yellow);letter-spacing:3px;text-transform:uppercase;">NO UPCOMING EVENTS</div>
+        </div>`;
       return;
+    }
+    // Set dynamic slide duration: 5 sec per announcement
+    const annSlideIndex = Array.from(document.querySelectorAll('.hero-slideshow .slide')).findIndex(el => el.querySelector('#ann-slide-container'));
+    if (annSlideIndex !== -1) {
+      slideDelays[annSlideIndex] = annData.length * 5000;
     }
     renderAnnouncement(0);
     if (annInterval) clearInterval(annInterval);
@@ -1800,7 +1825,7 @@ async function loadAnnouncements() {
       annInterval = setInterval(() => {
         currentAnnIndex = (currentAnnIndex + 1) % annData.length;
         renderAnnouncement(currentAnnIndex);
-      }, 8000);
+      }, 5000);
     }
   } catch(e) { console.error('Announcements load error:', e); }
 }
