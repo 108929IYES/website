@@ -1551,7 +1551,7 @@ window.goToSlide = goToSlide;
 document.addEventListener('DOMContentLoaded', function() {
   slides = Array.from(document.querySelectorAll('.hero-slideshow .slide'));
   dots = Array.from(document.querySelectorAll('.slide-dots .dot'));
-  setInterval(() => goToSlide(currentSlide + 1), 5000);
+  setInterval(() => goToSlide(currentSlide + 1), 25000);
 });
 
 const SHEET_URLS = {
