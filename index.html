@@ -130,7 +130,6 @@
     background: radial-gradient(circle, rgba(245,194,0,0.08) 0%, transparent 70%);
     border-radius: 50%;
   }
-  /* Diagonal stripe accent */
   .hero-stripe {
     position: absolute;
     top: 0; right: 0;
@@ -484,8 +483,6 @@
     opacity: 0.45;
   }
 
-
-
   /* SLIDESHOW */
   .hero-slideshow {
     width: 100%;
@@ -580,7 +577,6 @@
     color: var(--gray);
   }
 
-  /* Colors per pillar */
   .r-res .letter { color: #e53935; }
   .r-res { border-top: 4px solid #e53935; padding-top: 8px; }
   .r-pon .letter { color: #43a047; }
@@ -632,6 +628,20 @@
     transition: background 0.2s;
   }
   .responsable-learn-more:hover { background: var(--blue-mid); }
+
+  /* WELCOME SLIDE GUEST ANIMATION */
+  #welcome-main-text {
+    transition: transform 0.8s cubic-bezier(0.4,0,0.2,1);
+  }
+  #welcome-guest-area {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.4,0,0.2,1);
+  }
+  #welcome-guest-area.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
   @media (max-width: 768px) {
     header { padding: 14px 20px; }
@@ -690,29 +700,45 @@
 <section class="hero" style="padding: 0; min-height: auto;">
   <div class="hero-slideshow" style="width:100%; border-radius:0;">
 
-    <!-- 0. WELCOME SLIDE -->
-    <div class="slide active">
-      <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b 0%,#1a2fa0 55%,#2a45c8 100%); flex-direction:row; gap:0; justify-content:center; align-items:center; position:relative; overflow:hidden; padding:0;">
+    <!-- ============================================================ -->
+    <!-- 0. WELCOME SLIDE — dynamic guests                            -->
+    <!-- ============================================================ -->
+    <div class="slide active" id="slide-welcome">
+      <div style="background:linear-gradient(135deg,#0d1e6b 0%,#1a2fa0 55%,#2a45c8 100%); width:100%; height:100%; display:flex; flex-direction:row; gap:0; justify-content:center; align-items:center; position:relative; overflow:hidden;">
+        <!-- top/bottom white bars -->
         <div style="position:absolute;top:0;left:0;width:100%;height:6px;background:white;z-index:3;"></div>
         <div style="position:absolute;bottom:0;left:0;width:100%;height:6px;background:white;z-index:3;"></div>
+        <!-- stripe accent -->
         <div style="position:absolute;top:0;right:0;width:40%;height:100%;background:repeating-linear-gradient(-55deg,transparent,transparent 18px,rgba(255,255,255,0.025) 18px,rgba(255,255,255,0.025) 36px);"></div>
-        <!-- LEFT: Logo full height -->
-        <div style="flex:0 0 auto;height:100%;display:flex;align-items:center;justify-content:center;padding:16px 0 16px 40px;">
+
+        <!-- LEFT: Logo -->
+        <div style="flex:0 0 auto;height:100%;display:flex;align-items:center;justify-content:center;padding:16px 0 16px 40px;position:relative;z-index:2;">
           <img src="assets/logo.png" alt="IYES Logo" style="height:100%;max-height:648px;width:auto;object-fit:contain;filter:drop-shadow(0 4px 32px rgba(0,0,0,0.4));animation:float 4s ease-in-out infinite;">
         </div>
-        <!-- Spacer -->
-        <div style="flex:0 0 60px;"></div>
-        <!-- Divider -->
-        <div style="width:3px;height:70%;background:rgba(255,255,255,0.5);border-radius:2px;flex-shrink:0;"></div>
-        <!-- Spacer -->
-        <div style="flex:0 0 60px;"></div>
-        <!-- RIGHT: Text -->
-        <div style="flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding-right:60px;gap:10px;">
-          <div style="font-size:1.1rem;font-weight:800;color:var(--yellow);letter-spacing:4px;text-transform:uppercase;">WELCOME TO</div>
-          <div style="font-family:'Merriweather',serif;font-size:4.2rem;font-weight:900;color:white;line-height:1.05;text-transform:uppercase;text-shadow:0 2px 16px rgba(0,0,0,0.4);">ILAYANG YUNI</div>
-          <div style="font-family:'Merriweather',serif;font-size:2.6rem;font-weight:900;color:rgba(255,255,255,0.9);line-height:1.1;text-transform:uppercase;">ELEMENTARY SCHOOL</div>
-          <div style="width:80px;height:4px;background:var(--yellow);border-radius:2px;margin:4px 0;"></div>
-          <div style="font-size:1.1rem;color:rgba(255,255,255,0.75);font-style:italic;letter-spacing:0.5px;">"Sa Ilayang Yuni, Lahat RESPONSABLE"</div>
+
+        <!-- Spacer + Divider -->
+        <div style="flex:0 0 60px;position:relative;z-index:2;"></div>
+        <div style="width:3px;height:70%;background:rgba(255,255,255,0.5);border-radius:2px;flex-shrink:0;position:relative;z-index:2;"></div>
+        <div style="flex:0 0 60px;position:relative;z-index:2;"></div>
+
+        <!-- RIGHT: Text Area -->
+        <div style="flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding-right:60px;gap:10px;position:relative;z-index:2;overflow:hidden;">
+
+          <!-- Main welcome text -->
+          <div id="welcome-main-text" style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:1.1rem;font-weight:800;color:var(--yellow);letter-spacing:4px;text-transform:uppercase;">WELCOME TO</div>
+            <div style="font-family:'Merriweather',serif;font-size:4.2rem;font-weight:900;color:white;line-height:1.05;text-transform:uppercase;text-shadow:0 2px 16px rgba(0,0,0,0.4);">ILAYANG YUNI</div>
+            <div style="font-family:'Merriweather',serif;font-size:2.6rem;font-weight:900;color:rgba(255,255,255,0.9);line-height:1.1;text-transform:uppercase;">ELEMENTARY SCHOOL</div>
+            <div style="width:80px;height:4px;background:var(--yellow);border-radius:2px;margin:4px 0;"></div>
+            <div style="font-size:1.1rem;color:rgba(255,255,255,0.75);font-style:italic;letter-spacing:0.5px;">"Sa Ilayang Yuni, Lahat RESPONSABLE"</div>
+          </div>
+
+          <!-- Guest area (hidden initially) -->
+          <div id="welcome-guest-area">
+            <div id="welcome-guest-name" style="font-family:'Merriweather',serif;font-size:3rem;font-weight:900;color:var(--yellow);line-height:1.1;text-transform:uppercase;text-shadow:0 2px 16px rgba(0,0,0,0.4);margin-top:10px;"></div>
+            <div id="welcome-guest-position" style="font-size:1.4rem;font-weight:700;color:rgba(255,255,255,0.85);line-height:1.4;margin-top:6px;"></div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -720,15 +746,10 @@
     <!-- A. DEPED VISION, MISSION, CORE VALUES -->
     <div class="slide">
       <div class="slide-placeholder" style="background: linear-gradient(135deg, #0d1e6b, #1a2fa0); padding: 16px 32px; flex-direction: column; gap: 12px; justify-content: center; min-height: 544px;">
-        
-        <!-- Title -->
         <div style="text-align:center; margin-bottom:4px;">
           <div style="font-size:1.15rem; font-weight:800; color:var(--yellow); letter-spacing:3px; text-transform:uppercase;">Department of Education Philippines</div>
         </div>
-
-        <!-- 3 columns: Vision | Mission | Core Values -->
         <div style="display:flex; gap:0; align-items:stretch; width:100%;">
-          
           <!-- VISION -->
           <div style="flex:1; padding: 20px 30px 20px 0; border-right: 2px solid rgba(245,194,0,0.35); display:flex; flex-direction:column; gap:10px;">
             <div style="display:flex; align-items:center; gap:10px;">
@@ -739,7 +760,6 @@
               "We dream of Filipinos who passionately love their country and whose values and competencies enable them to realize their full potential and contribute meaningfully to building the nation."
             </div>
           </div>
-
           <!-- MISSION -->
           <div style="flex:1.4; padding: 20px 30px; border-right: 2px solid rgba(245,194,0,0.35); display:flex; flex-direction:column; gap:10px;">
             <div style="display:flex; align-items:center; gap:10px;">
@@ -750,25 +770,12 @@
               "To protect and promote the right of every Filipino to quality, equitable, culture-based, and complete basic education where:
             </div>
             <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px;">
-              <li style="display:flex; align-items:flex-start; gap:8px; font-family:'Merriweather',serif; font-size:1.15rem; color:white; line-height:1.6; font-style:italic;">
-                <span style="color:var(--yellow); font-weight:900; flex-shrink:0; margin-top:2px;">•</span>
-                Students learn in a child-friendly, gender-sensitive, safe, and motivating environment.
-              </li>
-              <li style="display:flex; align-items:flex-start; gap:8px; font-family:'Merriweather',serif; font-size:1.15rem; color:white; line-height:1.6; font-style:italic;">
-                <span style="color:var(--yellow); font-weight:900; flex-shrink:0; margin-top:2px;">•</span>
-                Teachers facilitate learning and constantly nurture every learner.
-              </li>
-              <li style="display:flex; align-items:flex-start; gap:8px; font-family:'Merriweather',serif; font-size:1.15rem; color:white; line-height:1.6; font-style:italic;">
-                <span style="color:var(--yellow); font-weight:900; flex-shrink:0; margin-top:2px;">•</span>
-                Administrators and staff, as stewards of the institution, ensure an enabling and supportive environment for effective learning to happen.
-              </li>
-              <li style="display:flex; align-items:flex-start; gap:8px; font-family:'Merriweather',serif; font-size:1.15rem; color:white; line-height:1.6; font-style:italic;">
-                <span style="color:var(--yellow); font-weight:900; flex-shrink:0; margin-top:2px;">•</span>
-                Family, community, and other stakeholders are actively engaged and share responsibility for developing life-long learners.
-              </li>
+              <li style="display:flex; align-items:flex-start; gap:8px; font-family:'Merriweather',serif; font-size:1.15rem; color:white; line-height:1.6; font-style:italic;"><span style="color:var(--yellow); font-weight:900; flex-shrink:0; margin-top:2px;">•</span>Students learn in a child-friendly, gender-sensitive, safe, and motivating environment.</li>
+              <li style="display:flex; align-items:flex-start; gap:8px; font-family:'Merriweather',serif; font-size:1.15rem; color:white; line-height:1.6; font-style:italic;"><span style="color:var(--yellow); font-weight:900; flex-shrink:0; margin-top:2px;">•</span>Teachers facilitate learning and constantly nurture every learner.</li>
+              <li style="display:flex; align-items:flex-start; gap:8px; font-family:'Merriweather',serif; font-size:1.15rem; color:white; line-height:1.6; font-style:italic;"><span style="color:var(--yellow); font-weight:900; flex-shrink:0; margin-top:2px;">•</span>Administrators and staff, as stewards of the institution, ensure an enabling and supportive environment for effective learning to happen.</li>
+              <li style="display:flex; align-items:flex-start; gap:8px; font-family:'Merriweather',serif; font-size:1.15rem; color:white; line-height:1.6; font-style:italic;"><span style="color:var(--yellow); font-weight:900; flex-shrink:0; margin-top:2px;">•</span>Family, community, and other stakeholders are actively engaged and share responsibility for developing life-long learners.</li>
             </ul>
           </div>
-
           <!-- CORE VALUES -->
           <div style="flex:0.9; padding: 20px 0 20px 30px; display:flex; flex-direction:column; gap:10px;">
             <div style="display:flex; align-items:center; gap:10px;">
@@ -776,80 +783,35 @@
               <div style="font-family:'Merriweather',serif; font-size:2.6rem; font-weight:900; color:var(--yellow);">Core Values</div>
             </div>
             <div style="display:flex; flex-direction:column; gap:8px; margin-top:4px;">
-              <div style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.08); border-radius:12px; padding:12px 16px;">
-                <div style="font-size:2.2rem;">🙏</div>
-                <div>
-                  <div style="color:var(--yellow); font-weight:800; font-size:1.2rem;">Maka-Diyos</div>
-                  <div style="color:rgba(255,255,255,0.75); font-size:1.05rem;">Spiritual Values</div>
-                </div>
-              </div>
-              <div style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.08); border-radius:12px; padding:12px 16px;">
-                <div style="font-size:2.2rem;">🤝</div>
-                <div>
-                  <div style="color:var(--yellow); font-weight:800; font-size:1.2rem;">Maka-tao</div>
-                  <div style="color:rgba(255,255,255,0.75); font-size:1.05rem;">Social Values</div>
-                </div>
-              </div>
-              <div style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.08); border-radius:12px; padding:12px 16px;">
-                <div style="font-size:2.2rem;">🌿</div>
-                <div>
-                  <div style="color:var(--yellow); font-weight:800; font-size:1.2rem;">Makakalikasan</div>
-                  <div style="color:rgba(255,255,255,0.75); font-size:1.05rem;">Environmental Values</div>
-                </div>
-              </div>
-              <div style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.08); border-radius:12px; padding:12px 16px;">
-                <div style="font-size:2.2rem;">🇵🇭</div>
-                <div>
-                  <div style="color:var(--yellow); font-weight:800; font-size:1.2rem;">Makabansa</div>
-                  <div style="color:rgba(255,255,255,0.75); font-size:1.05rem;">National Values</div>
-                </div>
-              </div>
+              <div style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.08); border-radius:12px; padding:12px 16px;"><div style="font-size:2.2rem;">🙏</div><div><div style="color:var(--yellow); font-weight:800; font-size:1.2rem;">Maka-Diyos</div><div style="color:rgba(255,255,255,0.75); font-size:1.05rem;">Spiritual Values</div></div></div>
+              <div style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.08); border-radius:12px; padding:12px 16px;"><div style="font-size:2.2rem;">🤝</div><div><div style="color:var(--yellow); font-weight:800; font-size:1.2rem;">Maka-tao</div><div style="color:rgba(255,255,255,0.75); font-size:1.05rem;">Social Values</div></div></div>
+              <div style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.08); border-radius:12px; padding:12px 16px;"><div style="font-size:2.2rem;">🌿</div><div><div style="color:var(--yellow); font-weight:800; font-size:1.2rem;">Makakalikasan</div><div style="color:rgba(255,255,255,0.75); font-size:1.05rem;">Environmental Values</div></div></div>
+              <div style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.08); border-radius:12px; padding:12px 16px;"><div style="font-size:2.2rem;">🇵🇭</div><div><div style="color:var(--yellow); font-weight:800; font-size:1.2rem;">Makabansa</div><div style="color:rgba(255,255,255,0.75); font-size:1.05rem;">National Values</div></div></div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
-
-
 
     <!-- 2. RESPONSABLE FRAMEWORK -->
     <div class="slide">
       <div class="slide-placeholder" style="background: linear-gradient(135deg, #6a0dad, #c0392b);">
         <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-          <img src="assets/responsable.jpg" 
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-               style="width:100%;height:100%;object-fit:contain;">
-          <div style="display:none;text-align:center;flex-direction:column;align-items:center;">
-            <div style="font-size:8rem;">📋</div>
-            <div style="font-family:'Merriweather',serif; font-size:3.8rem; font-weight:900; color:white; margin-top:16px;">RESPONSABLE Framework</div>
-            <div style="font-size:1.8rem; color:rgba(255,255,255,0.85); margin-top:8px;">"Sa Ilayang Yuni, Lahat RESPONSABLE"</div>
-          </div>
+          <img src="assets/responsable.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" style="width:100%;height:100%;object-fit:contain;">
+          <div style="display:none;text-align:center;flex-direction:column;align-items:center;"><div style="font-size:8rem;">📋</div><div style="font-family:'Merriweather',serif; font-size:3.8rem; font-weight:900; color:white; margin-top:16px;">RESPONSABLE Framework</div><div style="font-size:1.8rem; color:rgba(255,255,255,0.85); margin-top:8px;">"Sa Ilayang Yuni, Lahat RESPONSABLE"</div></div>
         </div>
       </div>
     </div>
 
-
     <!-- 3. ABOUT US -->
     <div class="slide">
       <div class="slide-placeholder" style="background: linear-gradient(135deg, #0d1e6b, #1a2fa0); padding: 16px 32px; flex-direction: row; gap: 20px; justify-content: center; align-items: center; min-height: 544px;">
-        
-        <!-- LEFT: Logo + School Name -->
         <div style="flex:0.8; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;">
           <img src="assets/logo.png" alt="IYES Logo" style="width:260px; height:260px; object-fit:contain; filter:drop-shadow(0 4px 16px rgba(0,0,0,0.4));">
-          <div style="text-align:center;">
-            <div style="font-family:'Merriweather',serif; font-size:1rem; font-weight:900; color:white; line-height:1.4;">Ilayang Yuni<br>Elementary School</div>
-            <div style="font-size:1.1rem; color:rgba(255,255,255,0.6); margin-top:4px;">Mulanay, Quezon</div>
-          </div>
-          <div style="background:var(--yellow); border-radius:10px; padding:12px 20px; text-align:center; width:100%;">
-            <div style="font-family:'Merriweather',serif; font-size:1.4rem; font-weight:900; color:#0d1e6b; line-height:1.5;">"Sa Ilayang Yuni,<br>Lahat <span style="color:#c0392b;">RESPONSABLE</span>"</div>
-          </div>
+          <div style="text-align:center;"><div style="font-family:'Merriweather',serif; font-size:1rem; font-weight:900; color:white; line-height:1.4;">Ilayang Yuni<br>Elementary School</div><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); margin-top:4px;">Mulanay, Quezon</div></div>
+          <div style="background:var(--yellow); border-radius:10px; padding:12px 20px; text-align:center; width:100%;"><div style="font-family:'Merriweather',serif; font-size:1.4rem; font-weight:900; color:#0d1e6b; line-height:1.5;">"Sa Ilayang Yuni,<br>Lahat <span style="color:#c0392b;">RESPONSABLE</span>"</div></div>
         </div>
-
-        <!-- RIGHT: School Profile + Contact -->
         <div style="flex:1.5; display:flex; flex-direction:column; gap:16px;">
-
-          <!-- School Profile -->
           <div style="background:rgba(255,255,255,0.08); border-radius:12px; padding:18px 22px; display:flex; flex-direction:column; gap:9px;">
             <div style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:var(--yellow); border-bottom:1px solid rgba(245,194,0,0.3); padding-bottom:8px;">📋 School Profile</div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 16px;">
@@ -862,15 +824,12 @@
               <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:110px;">DISTRICT</div><div style="font-size:1.05rem; color:white; font-weight:700;">Mulanay District 2</div></div>
             </div>
           </div>
-
-          <!-- Contact Information -->
           <div style="background:rgba(255,255,255,0.08); border-radius:12px; padding:18px 22px; display:flex; flex-direction:column; gap:9px;">
             <div style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:var(--yellow); border-bottom:1px solid rgba(245,194,0,0.3); padding-bottom:8px;">📍 Contact Information</div>
             <div style="display:flex; gap:8px; align-items:flex-start;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">ADDRESS</div><div style="font-size:1.05rem; color:white; font-weight:700;">Sitio Central A, Brgy. Ilayang Yuni, Mulanay, Quezon 4312</div></div>
-            <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">EMAIL</div><div id="about-email" style="font-size:1.05rem; color:white; font-weight:700;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d4e5e4ecede6ed94b0b1a4b1b0fab3bba2faa4bc">[email&#160;protected]</a></div></div>
+            <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">EMAIL</div><div id="about-email" style="font-size:1.05rem; color:white; font-weight:700;">ilayangyunies@gmail.com</div></div>
             <div style="display:flex; gap:8px;"><div style="font-size:1.1rem; color:rgba(255,255,255,0.6); font-weight:700; min-width:80px;">CONTACT</div><div id="about-contact" style="font-size:1.05rem; color:white; font-weight:700;">09302613511</div></div>
           </div>
-
         </div>
       </div>
     </div>
@@ -884,9 +843,11 @@
       </div>
     </div>
 
-    <!-- 6. WINNERS - Dynamic from Google Sheets -->
+    <!-- ============================================================ -->
+    <!-- 5. WINNERS / GRADUATES / PROMOTED — combined dynamic slide   -->
+    <!-- ============================================================ -->
     <div class="slide">
-      <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0); flex-direction:column; gap:0; justify-content:center; align-items:center; overflow:hidden; padding:0;">
+      <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0); padding:0; flex-direction:column; gap:0; justify-content:center; align-items:center; overflow:hidden;">
         <div id="winners-slide-container" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; position:relative;">
           <div style="text-align:center; padding:20px;">
             <div style="font-size:2rem;">🏆</div>
@@ -896,7 +857,7 @@
       </div>
     </div>
 
-    <!-- 7. EVENTS & ACTIVITIES - Full photo -->
+    <!-- 6. EVENTS & ACTIVITIES - Full photo -->
     <div class="slide">
       <div style="width:100%;height:100%;background:#000;overflow:hidden;position:relative;">
         <div id="events-slide-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
@@ -908,239 +869,100 @@
     <!-- 7. ENROLLMENT - All Data Combined -->
     <div class="slide">
       <div class="slide-placeholder" style="background: #f0f4ff; padding: 14px 24px; flex-direction: column; gap: 8px; justify-content: center;">
-        <!-- Title -->
         <div style="text-align:center; margin-bottom:4px;">
           <div id="enrollment-sy" style="font-size:0.95rem; font-weight:800; color:#1d4ed8; letter-spacing:2px; text-transform:uppercase;">SY 2025–2026</div>
           <div style="font-family:'Merriweather',serif; font-size:1.5rem; font-weight:900; color:#0d1e6b; margin-top:2px;">📊 Enrollment Data</div>
         </div>
-        <!-- 5 tables in a row -->
         <div style="display:flex; gap:10px; align-items:stretch; width:100%;">
-
           <!-- 1. Beginning Enrollment -->
           <div style="flex:1; background:#dbeafe; border-radius:8px; overflow:hidden;">
             <div style="font-size:0.82rem; font-weight:800; text-align:center; letter-spacing:0.5px; text-transform:uppercase; line-height:1.3; height:40px; display:flex; align-items:center; justify-content:center; border-radius:6px 6px 0 0; background:#1d4ed8; color:white;">Beginning<br>Enrollment</div>
             <table style="width:100%; border-collapse:collapse; font-size:1.35rem;">
-              <thead><tr>
-                <th style="text-align:left; padding:8px 10px; color:#334155; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">M</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">F</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">Tot</th>
-              </tr></thead>
-              <tbody id="beg-enroll">
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Kinder</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 1</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 2</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 3</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 4</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 5</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 6</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr style="background:rgba(0,0,0,0.08);"><td style="padding:5px 8px;color:#0f172a;font-weight:900;font-size:0.88rem;white-space:nowrap;">TOTAL</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td></tr>
-              </tbody>
+              <thead><tr><th style="text-align:left; padding:8px 10px; color:#334155; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">M</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">F</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">Tot</th></tr></thead>
+              <tbody id="beg-enroll"><tr><td colspan="4" style="padding:5px 8px;text-align:center;font-size:0.88rem;">—</td></tr></tbody>
             </table>
           </div>
-
           <div style="width:1px; background:rgba(245,194,0,0.3); align-self:stretch;"></div>
-
           <!-- 2. Current Enrollment -->
           <div style="flex:1; background:#dcfce7; border-radius:8px; overflow:hidden;">
             <div style="font-size:0.82rem; font-weight:800; text-align:center; letter-spacing:0.5px; text-transform:uppercase; line-height:1.3; height:40px; display:flex; align-items:center; justify-content:center; border-radius:6px 6px 0 0; background:#15803d; color:white;">Current<br>Enrollment</div>
             <table style="width:100%; border-collapse:collapse; font-size:1.35rem;">
-              <thead><tr>
-                <th style="text-align:left; padding:8px 10px; color:#334155; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">M</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">F</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">Tot</th>
-              </tr></thead>
-              <tbody id="cur-enroll">
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Kinder</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 1</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 2</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 3</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 4</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 5</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 6</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr style="background:rgba(0,0,0,0.08);"><td style="padding:5px 8px;color:#0f172a;font-weight:900;font-size:0.88rem;white-space:nowrap;">TOTAL</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td></tr>
-              </tbody>
+              <thead><tr><th style="text-align:left; padding:8px 10px; color:#334155; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">M</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">F</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">Tot</th></tr></thead>
+              <tbody id="cur-enroll"><tr><td colspan="4" style="padding:5px 8px;text-align:center;font-size:0.88rem;">—</td></tr></tbody>
             </table>
           </div>
-
           <div style="width:1px; background:rgba(245,194,0,0.3); align-self:stretch;"></div>
-
           <!-- 3. Transfer In -->
           <div style="flex:1; background:#fef9c3; border-radius:8px; overflow:hidden;">
             <div style="font-size:0.82rem; font-weight:800; text-align:center; letter-spacing:0.5px; text-transform:uppercase; line-height:1.3; height:40px; display:flex; align-items:center; justify-content:center; border-radius:6px 6px 0 0; background:#a16207; color:white;">Transfer<br>In</div>
             <table style="width:100%; border-collapse:collapse; font-size:1.35rem;">
-              <thead><tr>
-                <th style="text-align:left; padding:8px 10px; color:#334155; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">M</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">F</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">Tot</th>
-              </tr></thead>
-              <tbody id="transfer-in">
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Kinder</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 1</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 2</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 3</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 4</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 5</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 6</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr style="background:rgba(0,0,0,0.08);"><td style="padding:5px 8px;color:#0f172a;font-weight:900;font-size:0.88rem;white-space:nowrap;">TOTAL</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td></tr>
-              </tbody>
+              <thead><tr><th style="text-align:left; padding:8px 10px; color:#334155; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">M</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">F</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">Tot</th></tr></thead>
+              <tbody id="transfer-in"><tr><td colspan="4" style="padding:5px 8px;text-align:center;font-size:0.88rem;">—</td></tr></tbody>
             </table>
           </div>
-
           <div style="width:1px; background:rgba(245,194,0,0.3); align-self:stretch;"></div>
-
           <!-- 4. Transfer Out -->
           <div style="flex:1; background:#ffedd5; border-radius:8px; overflow:hidden;">
             <div style="font-size:0.82rem; font-weight:800; text-align:center; letter-spacing:0.5px; text-transform:uppercase; line-height:1.3; height:40px; display:flex; align-items:center; justify-content:center; border-radius:6px 6px 0 0; background:#c2410c; color:white;">Transfer<br>Out</div>
             <table style="width:100%; border-collapse:collapse; font-size:1.35rem;">
-              <thead><tr>
-                <th style="text-align:left; padding:8px 10px; color:#334155; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">M</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">F</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">Tot</th>
-              </tr></thead>
-              <tbody id="transfer-out">
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Kinder</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 1</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 2</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 3</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 4</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 5</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 6</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr style="background:rgba(0,0,0,0.08);"><td style="padding:5px 8px;color:#0f172a;font-weight:900;font-size:0.88rem;white-space:nowrap;">TOTAL</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td></tr>
-              </tbody>
+              <thead><tr><th style="text-align:left; padding:8px 10px; color:#334155; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">M</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">F</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">Tot</th></tr></thead>
+              <tbody id="transfer-out"><tr><td colspan="4" style="padding:5px 8px;text-align:center;font-size:0.88rem;">—</td></tr></tbody>
             </table>
           </div>
-
           <div style="width:1px; background:rgba(245,194,0,0.3); align-self:stretch;"></div>
-
           <!-- 5. Drop -->
           <div style="flex:1; background:#ffe4e6; border-radius:8px; overflow:hidden;">
             <div style="font-size:0.82rem; font-weight:800; text-align:center; letter-spacing:0.5px; text-transform:uppercase; line-height:1.3; height:40px; display:flex; align-items:center; justify-content:center; border-radius:6px 6px 0 0; background:#be123c; color:white;">Drop<br>&nbsp;</div>
             <table style="width:100%; border-collapse:collapse; font-size:1.35rem;">
-              <thead><tr>
-                <th style="text-align:left; padding:8px 10px; color:#334155; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">M</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">F</th>
-                <th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">Tot</th>
-              </tr></thead>
-              <tbody id="drop">
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Kinder</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 1</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 2</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 3</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 4</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 5</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr><td style="padding:5px 8px;color:#1e293b;font-size:0.88rem;white-space:nowrap;">Grade 6</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#334155;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#1e293b;font-weight:700;text-align:center;font-size:0.88rem;">—</td></tr>
-                <tr style="background:rgba(0,0,0,0.08);"><td style="padding:5px 8px;color:#0f172a;font-weight:900;font-size:0.88rem;white-space:nowrap;">TOTAL</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td><td style="padding:5px 6px;color:#0f172a;font-weight:900;text-align:center;font-size:0.88rem;">—</td></tr>
-              </tbody>
+              <thead><tr><th style="text-align:left; padding:8px 10px; color:#334155; font-size:1.05rem; border-bottom:1px solid rgba(245,194,0,0.25);">Grade</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">M</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">F</th><th style="padding:8px 6px; color:#475569; font-size:1.05rem; border-bottom:1px solid #94a3b8; text-align:center;">Tot</th></tr></thead>
+              <tbody id="drop"><tr><td colspan="4" style="padding:5px 8px;text-align:center;font-size:0.88rem;">—</td></tr></tbody>
             </table>
           </div>
-
         </div>
       </div>
     </div>
 
-    <!-- DIVISION TOP MANAGEMENT - Dynamic -->
+    <!-- DIVISION TOP MANAGEMENT -->
     <div class="slide" id="slide-division-top">
       <div style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0);width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;padding:0 8px 2px;">
-        <div style="text-align:center;margin-bottom:0;flex-shrink:0;">
-          <div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">DIVISION OF QUEZON</div>
-          <div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">TOP MANAGEMENT</div>
-        </div>
-        <div id="division-top-container" style="flex:1;display:flex;flex-direction:column;gap:0;justify-content:flex-start;">
-          <div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div>
-        </div>
+        <div style="text-align:center;margin-bottom:0;flex-shrink:0;"><div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">DIVISION OF QUEZON</div><div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">TOP MANAGEMENT</div></div>
+        <div id="division-top-container" style="flex:1;display:flex;flex-direction:column;gap:0;justify-content:flex-start;"><div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div></div>
       </div>
     </div>
 
-    <!-- MULANAY DISTRICT 2 SCHOOL HEADS - Dynamic -->
+    <!-- MULANAY DISTRICT 2 SCHOOL HEADS -->
     <div class="slide" id="slide-district2">
       <div style="background:linear-gradient(135deg,#1a2fa0,#2a45c8);width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;padding:0 8px 2px;">
-        <div style="text-align:center;margin-bottom:0;flex-shrink:0;">
-          <div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">MULANAY DISTRICT 2</div>
-          <div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">SCHOOL HEADS</div>
-        </div>
-        <div id="district2-container" style="flex:1;display:flex;flex-direction:column;gap:0;justify-content:flex-start;">
-          <div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div>
-        </div>
+        <div style="text-align:center;margin-bottom:0;flex-shrink:0;"><div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">MULANAY DISTRICT 2</div><div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">SCHOOL HEADS</div></div>
+        <div id="district2-container" style="flex:1;display:flex;flex-direction:column;gap:0;justify-content:flex-start;"><div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div></div>
       </div>
     </div>
 
-    <!-- 9. SCHOOL PERSONNEL - Dynamic -->
+    <!-- SCHOOL PERSONNEL -->
     <div class="slide" id="slide-personnel">
       <div style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0);width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;padding:0 8px 2px;">
-        <!-- Title -->
-        <div style="text-align:center;margin-bottom:0;flex-shrink:0;">
-          <div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;line-height:1.2;">ILAYANG YUNI ELEMENTARY SCHOOL</div>
-          <div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">TEACHING AND NON-TEACHING PERSONNEL</div>
-        </div>
-        <!-- Cards Container -->
-        <div id="personnel-slide-container" style="flex:1;display:flex;flex-direction:column;gap:0;justify-content:flex-start;">
-          <div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div>
-        </div>
+        <div style="text-align:center;margin-bottom:0;flex-shrink:0;"><div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;line-height:1.2;">ILAYANG YUNI ELEMENTARY SCHOOL</div><div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">TEACHING AND NON-TEACHING PERSONNEL</div></div>
+        <div id="personnel-slide-container" style="flex:1;display:flex;flex-direction:column;gap:0;justify-content:flex-start;"><div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div></div>
       </div>
     </div>
 
-    <!-- 10. SCHOOL MAP - Image from GitHub -->
+    <!-- SCHOOL MAP -->
     <div class="slide">
       <div class="slide-placeholder" style="background: linear-gradient(135deg, #1b5e20, #2e7d32);">
         <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-          <img src="assets/school-map.png"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-               style="max-width:100%;max-height:520px;object-fit:contain;">
-          <div style="display:none;text-align:center;flex-direction:column;align-items:center;">
-            <div style="font-size:8rem; margin-bottom:16px;">🗺️</div>
-            <div style="font-family:'Merriweather',serif; font-size:3.8rem; font-weight:900; color:white;">School Map</div>
-            <div style="font-size:1.8rem; color:rgba(255,255,255,0.85); margin-top:8px;">Ilayang Yuni, Mulanay, Quezon</div>
-          </div>
+          <img src="assets/school-map.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" style="max-width:100%;max-height:520px;object-fit:contain;">
+          <div style="display:none;text-align:center;flex-direction:column;align-items:center;"><div style="font-size:8rem; margin-bottom:16px;">🗺️</div><div style="font-family:'Merriweather',serif; font-size:3.8rem; font-weight:900; color:white;">School Map</div><div style="font-size:1.8rem; color:rgba(255,255,255,0.85); margin-top:8px;">Ilayang Yuni, Mulanay, Quezon</div></div>
         </div>
       </div>
     </div>
-
-    <!-- 8. CITIZENS CHARTER (6 slides) -->
-    <!-- CC SLIDE TEMPLATE: white bg table, maximized fonts -->
 
     <!-- CC1: Enrollment of New Learners -->
     <div class="slide">
       <div style="background:white; width:100%; height:100%; padding:0; display:flex; flex-direction:column; overflow:hidden;">
-        <div style="background:#0d1e6b; padding:10px 24px; display:flex; align-items:center; gap:12px;">
-          <span style="font-size:1rem;">📜</span>
-          <span style="font-family:'Merriweather',serif; font-size:1.15rem; font-weight:700; color:#f5c200; text-transform:uppercase; letter-spacing:2px;">Citizens Charter</span>
-          <span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span>
-          <span style="font-family:'Merriweather',serif; font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.7);">Type of Request / Transaction</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:white;">📋 Enrollment of New Learners</span>
-        </div>
+        <div style="background:#0d1e6b; padding:10px 24px; display:flex; align-items:center; gap:12px;"><span style="font-size:1rem;">📜</span><span style="font-family:'Merriweather',serif; font-size:1.15rem; font-weight:700; color:#f5c200; text-transform:uppercase; letter-spacing:2px;">Citizens Charter</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.7);">Type of Request / Transaction</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:white;">📋 Enrollment of New Learners</span></div>
         <table style="width:100%; border-collapse:collapse; flex:1; font-size:1.45rem;">
-          <thead>
-            <tr style="background:#1a2fa0;">
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:50%;">Steps / Procedures</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:12%;">Time Allotment</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:17%;">Person Responsible</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:14%;">Requirements</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:7%;">Fees</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            <tr>
-              <td style="padding:12px 16px; vertical-align:top;">
-                <div style="display:flex;flex-direction:column;gap:14px;">
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">1</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Secure enrollment form from school</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">2</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Submit complete requirements to Administrative Officer</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">3</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Interview with School Principal / Designate</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">4</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Assignment to appropriate grade level</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">5</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Encoding in LIS (Learner Information System)</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">6</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Issuance of enrollment certificate</span></div>
-                </div>
-              </td>
-              <td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e8edf8;color:#0d1e6b;font-weight:800;font-size:1.4rem;padding:9px 12px;border-radius:8px;display:inline-block;line-height:1.4;">3–5 Working Days</span></td>
-              <td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Administrative Officer<br>Principal<br>LIS Coordinator<br>Adviser</td>
-              <td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Birth Certificate (PSA)<br>SF 9 / ECCD</td>
-              <td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e6f4ea;color:#2d7d46;font-weight:800;font-size:1.4rem;padding:6px 12px;border-radius:20px;">Free</span></td>
-            </tr>
-          </tbody>
+          <thead><tr style="background:#1a2fa0;"><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:50%;">Steps / Procedures</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:12%;">Time Allotment</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:17%;">Person Responsible</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:14%;">Requirements</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:7%;">Fees</th></tr></thead>
+          <tbody><tr><td style="padding:12px 16px; vertical-align:top;"><div style="display:flex;flex-direction:column;gap:14px;"><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">1</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Secure enrollment form from school</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">2</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Submit complete requirements to Administrative Officer</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">3</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Interview with School Principal / Designate</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">4</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Assignment to appropriate grade level</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">5</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Encoding in LIS (Learner Information System)</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">6</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Issuance of enrollment certificate</span></div></div></td><td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e8edf8;color:#0d1e6b;font-weight:800;font-size:1.4rem;padding:9px 12px;border-radius:8px;display:inline-block;line-height:1.4;">3–5 Working Days</span></td><td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Administrative Officer<br>Principal<br>LIS Coordinator<br>Adviser</td><td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Birth Certificate (PSA)<br>SF 9 / ECCD</td><td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e6f4ea;color:#2d7d46;font-weight:800;font-size:1.4rem;padding:6px 12px;border-radius:20px;">Free</span></td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1148,42 +970,10 @@
     <!-- CC2: Transfer In -->
     <div class="slide">
       <div style="background:white; width:100%; height:100%; padding:0; display:flex; flex-direction:column; overflow:hidden;">
-        <div style="background:#0d1e6b; padding:10px 24px; display:flex; align-items:center; gap:12px;">
-          <span style="font-size:1rem;">📜</span>
-          <span style="font-family:'Merriweather',serif; font-size:1.15rem; font-weight:700; color:#f5c200; text-transform:uppercase; letter-spacing:2px;">Citizens Charter</span>
-          <span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span>
-          <span style="font-family:'Merriweather',serif; font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.7);">Type of Request / Transaction</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:white;">📥 Transfer In of Learners</span>
-        </div>
+        <div style="background:#0d1e6b; padding:10px 24px; display:flex; align-items:center; gap:12px;"><span style="font-size:1rem;">📜</span><span style="font-family:'Merriweather',serif; font-size:1.15rem; font-weight:700; color:#f5c200; text-transform:uppercase; letter-spacing:2px;">Citizens Charter</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.7);">Type of Request / Transaction</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:white;">📥 Transfer In of Learners</span></div>
         <table style="width:100%; border-collapse:collapse; flex:1; font-size:1.45rem;">
-          <thead>
-            <tr style="background:#1a2fa0;">
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:50%;">Steps / Procedures</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:12%;">Time Allotment</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:17%;">Person Responsible</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:14%;">Requirements</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:7%;">Fees</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            <tr>
-              <td style="padding:12px 16px; vertical-align:top;">
-                <div style="display:flex;flex-direction:column;gap:14px;">
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">1</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Submit transfer credentials to Administrative Officer</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">2</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Signed Affidavit of Undertakings if not able to submit any required documents</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">3</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Evaluation of records and grade placement / Interview with Principal</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">4</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Completion of enrollment process</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">5</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Encoding in LIS (Learner Information System)</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">6</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Enter details of received SF10 in PRISM</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">7</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Orientation on school policies</span></div>
-                </div>
-              </td>
-              <td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e8edf8;color:#0d1e6b;font-weight:800;font-size:1.4rem;padding:9px 12px;border-radius:8px;display:inline-block;line-height:1.4;">2–3 Working Days</span></td>
-              <td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Administrative Officer<br>Principal<br>LIS Coordinator<br>Adviser</td>
-              <td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Birth Certificate (PSA)<br>SF 9 / ECCD<br>Affidavit of Undertakings (if applicable)</td>
-              <td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e6f4ea;color:#2d7d46;font-weight:800;font-size:1.4rem;padding:6px 12px;border-radius:20px;">Free</span></td>
-            </tr>
-          </tbody>
+          <thead><tr style="background:#1a2fa0;"><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:50%;">Steps / Procedures</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:12%;">Time Allotment</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:17%;">Person Responsible</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:14%;">Requirements</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:7%;">Fees</th></tr></thead>
+          <tbody><tr><td style="padding:12px 16px; vertical-align:top;"><div style="display:flex;flex-direction:column;gap:14px;"><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">1</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Submit transfer credentials to Administrative Officer</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">2</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Signed Affidavit of Undertakings if not able to submit any required documents</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">3</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Evaluation of records and grade placement / Interview with Principal</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">4</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Completion of enrollment process</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">5</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Encoding in LIS (Learner Information System)</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">6</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Enter details of received SF10 in PRISM</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">7</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Orientation on school policies</span></div></div></td><td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e8edf8;color:#0d1e6b;font-weight:800;font-size:1.4rem;padding:9px 12px;border-radius:8px;display:inline-block;line-height:1.4;">2–3 Working Days</span></td><td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Administrative Officer<br>Principal<br>LIS Coordinator<br>Adviser</td><td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Birth Certificate (PSA)<br>SF 9 / ECCD<br>Affidavit of Undertakings (if applicable)</td><td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e6f4ea;color:#2d7d46;font-weight:800;font-size:1.4rem;padding:6px 12px;border-radius:20px;">Free</span></td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1191,42 +981,10 @@
     <!-- CC3: Transfer Out -->
     <div class="slide">
       <div style="background:white; width:100%; height:100%; padding:0; display:flex; flex-direction:column; overflow:hidden;">
-        <div style="background:#0d1e6b; padding:10px 24px; display:flex; align-items:center; gap:12px;">
-          <span style="font-size:1rem;">📜</span>
-          <span style="font-family:'Merriweather',serif; font-size:1.15rem; font-weight:700; color:#f5c200; text-transform:uppercase; letter-spacing:2px;">Citizens Charter</span>
-          <span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span>
-          <span style="font-family:'Merriweather',serif; font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.7);">Type of Request / Transaction</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:white;">📤 Transfer Out of Learners</span>
-        </div>
+        <div style="background:#0d1e6b; padding:10px 24px; display:flex; align-items:center; gap:12px;"><span style="font-size:1rem;">📜</span><span style="font-family:'Merriweather',serif; font-size:1.15rem; font-weight:700; color:#f5c200; text-transform:uppercase; letter-spacing:2px;">Citizens Charter</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.7);">Type of Request / Transaction</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:white;">📤 Transfer Out of Learners</span></div>
         <table style="width:100%; border-collapse:collapse; flex:1; font-size:1.45rem;">
-          <thead>
-            <tr style="background:#1a2fa0;">
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:50%;">Steps / Procedures</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:12%;">Time Allotment</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:17%;">Person Responsible</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:14%;">Requirements</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:7%;">Fees</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            <tr>
-              <td style="padding:12px 16px; vertical-align:top;">
-                <div style="display:flex;flex-direction:column;gap:14px;">
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">1</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Request for the issuance of SF9</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">2</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Issuance of SF9</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">3</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Update status in LIS (Learner Information System)</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">4</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Preparation of transfer documents</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">5</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Scan SF10 and upload to PRISM</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">6</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Enter Released Log in PRISM</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">7</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Release of SF10 and Birth Certificate</span></div>
-                </div>
-              </td>
-              <td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e8edf8;color:#0d1e6b;font-weight:800;font-size:1.4rem;padding:9px 12px;border-radius:8px;display:inline-block;line-height:1.4;">3–5 Working Days</span></td>
-              <td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Administrative Officer<br>Principal<br>LIS Coordinator<br>Adviser</td>
-              <td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Request for Transfer</td>
-              <td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e6f4ea;color:#2d7d46;font-weight:800;font-size:1.4rem;padding:6px 12px;border-radius:20px;">Free</span></td>
-            </tr>
-          </tbody>
+          <thead><tr style="background:#1a2fa0;"><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:50%;">Steps / Procedures</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:12%;">Time Allotment</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:17%;">Person Responsible</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:14%;">Requirements</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:7%;">Fees</th></tr></thead>
+          <tbody><tr><td style="padding:12px 16px; vertical-align:top;"><div style="display:flex;flex-direction:column;gap:14px;"><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">1</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Request for the issuance of SF9</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">2</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Issuance of SF9</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">3</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Update status in LIS (Learner Information System)</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">4</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Preparation of transfer documents</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">5</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Scan SF10 and upload to PRISM</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">6</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Enter Released Log in PRISM</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">7</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Release of SF10 and Birth Certificate</span></div></div></td><td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e8edf8;color:#0d1e6b;font-weight:800;font-size:1.4rem;padding:9px 12px;border-radius:8px;display:inline-block;line-height:1.4;">3–5 Working Days</span></td><td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Administrative Officer<br>Principal<br>LIS Coordinator<br>Adviser</td><td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Request for Transfer</td><td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e6f4ea;color:#2d7d46;font-weight:800;font-size:1.4rem;padding:6px 12px;border-radius:20px;">Free</span></td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1234,41 +992,10 @@
     <!-- CC4: Request for School Records -->
     <div class="slide">
       <div style="background:white; width:100%; height:100%; padding:0; display:flex; flex-direction:column; overflow:hidden;">
-        <div style="background:#0d1e6b; padding:10px 24px; display:flex; align-items:center; gap:12px;">
-          <span style="font-size:1rem;">📜</span>
-          <span style="font-family:'Merriweather',serif; font-size:1.15rem; font-weight:700; color:#f5c200; text-transform:uppercase; letter-spacing:2px;">Citizens Charter</span>
-          <span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span>
-          <span style="font-family:'Merriweather',serif; font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.7);">Type of Request / Transaction</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:white;">📁 Request for School Records</span>
-        </div>
+        <div style="background:#0d1e6b; padding:10px 24px; display:flex; align-items:center; gap:12px;"><span style="font-size:1rem;">📜</span><span style="font-family:'Merriweather',serif; font-size:1.15rem; font-weight:700; color:#f5c200; text-transform:uppercase; letter-spacing:2px;">Citizens Charter</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.7);">Type of Request / Transaction</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:white;">📁 Request for School Records</span></div>
         <table style="width:100%; border-collapse:collapse; flex:1; font-size:1.45rem;">
-          <thead>
-            <tr style="background:#1a2fa0;">
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:50%;">Steps / Procedures</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:12%;">Time Allotment</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:17%;">Person Responsible</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:14%;">Requirements</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:7%;">Fees</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            <tr>
-              <td style="padding:12px 16px; vertical-align:top;">
-                <div style="display:flex;flex-direction:column;gap:14px;">
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">1</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Search records in PRISM (Permanent Record Information System and Management)</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">2</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Fill-up Request Form</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">3</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Verification of student information</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">4</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Preparation of requested documents</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">5</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Review and approval by Principal</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">6</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Release of documents</span></div>
-                </div>
-              </td>
-              <td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e8edf8;color:#0d1e6b;font-weight:800;font-size:1.4rem;padding:9px 12px;border-radius:8px;display:inline-block;line-height:1.4;">1 Working Day</span></td>
-              <td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Administrative Officer<br>Principal</td>
-              <td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Request Form</td>
-              <td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e6f4ea;color:#2d7d46;font-weight:800;font-size:1.4rem;padding:6px 12px;border-radius:20px;">Free</span></td>
-            </tr>
-          </tbody>
+          <thead><tr style="background:#1a2fa0;"><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:50%;">Steps / Procedures</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:12%;">Time Allotment</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:17%;">Person Responsible</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:14%;">Requirements</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:7%;">Fees</th></tr></thead>
+          <tbody><tr><td style="padding:12px 16px; vertical-align:top;"><div style="display:flex;flex-direction:column;gap:14px;"><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">1</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Search records in PRISM (Permanent Record Information System and Management)</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">2</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Fill-up Request Form</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">3</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Verification of student information</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">4</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Preparation of requested documents</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">5</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Review and approval by Principal</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">6</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Release of documents</span></div></div></td><td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e8edf8;color:#0d1e6b;font-weight:800;font-size:1.4rem;padding:9px 12px;border-radius:8px;display:inline-block;line-height:1.4;">1 Working Day</span></td><td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Administrative Officer<br>Principal</td><td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Request Form</td><td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e6f4ea;color:#2d7d46;font-weight:800;font-size:1.4rem;padding:6px 12px;border-radius:20px;">Free</span></td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1276,40 +1003,10 @@
     <!-- CC5: Request for Certification -->
     <div class="slide">
       <div style="background:white; width:100%; height:100%; padding:0; display:flex; flex-direction:column; overflow:hidden;">
-        <div style="background:#0d1e6b; padding:10px 24px; display:flex; align-items:center; gap:12px;">
-          <span style="font-size:1rem;">📜</span>
-          <span style="font-family:'Merriweather',serif; font-size:1.15rem; font-weight:700; color:#f5c200; text-transform:uppercase; letter-spacing:2px;">Citizens Charter</span>
-          <span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span>
-          <span style="font-family:'Merriweather',serif; font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.7);">Type of Request / Transaction</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:white;">📜 Request for Certification</span>
-        </div>
+        <div style="background:#0d1e6b; padding:10px 24px; display:flex; align-items:center; gap:12px;"><span style="font-size:1rem;">📜</span><span style="font-family:'Merriweather',serif; font-size:1.15rem; font-weight:700; color:#f5c200; text-transform:uppercase; letter-spacing:2px;">Citizens Charter</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.7);">Type of Request / Transaction</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:white;">📜 Request for Certification</span></div>
         <table style="width:100%; border-collapse:collapse; flex:1; font-size:1.45rem;">
-          <thead>
-            <tr style="background:#1a2fa0;">
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:50%;">Steps / Procedures</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:12%;">Time Allotment</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:17%;">Person Responsible</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:14%;">Requirements</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:7%;">Fees</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            <tr>
-              <td style="padding:12px 16px; vertical-align:top;">
-                <div style="display:flex;flex-direction:column;gap:14px;">
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">1</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Fill-up Request Form specifying type of certification</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">2</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Verification of records</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">3</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Preparation of certification</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">4</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Review and signature by Principal</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">5</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Release of certification</span></div>
-                </div>
-              </td>
-              <td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e8edf8;color:#0d1e6b;font-weight:800;font-size:1.4rem;padding:9px 12px;border-radius:8px;display:inline-block;line-height:1.4;">1 Working Day</span></td>
-              <td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Administrative Officer<br>Principal</td>
-              <td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Request Form<br>Purpose of certification</td>
-              <td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e6f4ea;color:#2d7d46;font-weight:800;font-size:1.4rem;padding:6px 12px;border-radius:20px;">Free</span></td>
-            </tr>
-          </tbody>
+          <thead><tr style="background:#1a2fa0;"><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:50%;">Steps / Procedures</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:12%;">Time Allotment</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:17%;">Person Responsible</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:14%;">Requirements</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:7%;">Fees</th></tr></thead>
+          <tbody><tr><td style="padding:12px 16px; vertical-align:top;"><div style="display:flex;flex-direction:column;gap:14px;"><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">1</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Fill-up Request Form specifying type of certification</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">2</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Verification of records</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">3</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Preparation of certification</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">4</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Review and signature by Principal</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">5</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Release of certification</span></div></div></td><td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e8edf8;color:#0d1e6b;font-weight:800;font-size:1.4rem;padding:9px 12px;border-radius:8px;display:inline-block;line-height:1.4;">1 Working Day</span></td><td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Administrative Officer<br>Principal</td><td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Request Form<br>Purpose of certification</td><td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e6f4ea;color:#2d7d46;font-weight:800;font-size:1.4rem;padding:6px 12px;border-radius:20px;">Free</span></td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1317,114 +1014,58 @@
     <!-- CC6: Complaints and Grievances -->
     <div class="slide">
       <div style="background:white; width:100%; height:100%; padding:0; display:flex; flex-direction:column; overflow:hidden;">
-        <div style="background:#0d1e6b; padding:10px 24px; display:flex; align-items:center; gap:12px;">
-          <span style="font-size:1rem;">📜</span>
-          <span style="font-family:'Merriweather',serif; font-size:1.15rem; font-weight:700; color:#f5c200; text-transform:uppercase; letter-spacing:2px;">Citizens Charter</span>
-          <span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span>
-          <span style="font-family:'Merriweather',serif; font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.7);">Type of Request / Transaction</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:white;">📣 Complaints and Grievances</span>
-        </div>
+        <div style="background:#0d1e6b; padding:10px 24px; display:flex; align-items:center; gap:12px;"><span style="font-size:1rem;">📜</span><span style="font-family:'Merriweather',serif; font-size:1.15rem; font-weight:700; color:#f5c200; text-transform:uppercase; letter-spacing:2px;">Citizens Charter</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.7);">Type of Request / Transaction</span><span style="color:rgba(255,255,255,0.4); margin:0 4px;">|</span><span style="font-family:'Merriweather',serif; font-size:1.55rem; font-weight:900; color:white;">📣 Complaints and Grievances</span></div>
         <table style="width:100%; border-collapse:collapse; flex:1; font-size:1.45rem;">
-          <thead>
-            <tr style="background:#1a2fa0;">
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:50%;">Steps / Procedures</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:12%;">Time Allotment</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:17%;">Person Responsible</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:14%;">Requirements</th>
-              <th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:7%;">Fees</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            <tr>
-              <td style="padding:12px 16px; vertical-align:top;">
-                <div style="display:flex;flex-direction:column;gap:14px;">
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">1</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Submit written complaint to Principal</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">2</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Initial investigation and fact-finding</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">3</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Meeting with concerned parties</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">4</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Resolution and recommendation</span></div>
-                  <div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">5</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Implementation of corrective measures</span></div>
-                </div>
-              </td>
-              <td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e8edf8;color:#0d1e6b;font-weight:800;font-size:1.4rem;padding:9px 12px;border-radius:8px;display:inline-block;line-height:1.4;">7–15 Working Days</span></td>
-              <td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Principal<br>Administrative Officer<br>Concerned Teachers</td>
-              <td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Written complaint<br>Supporting documents</td>
-              <td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e6f4ea;color:#2d7d46;font-weight:800;font-size:1.4rem;padding:6px 12px;border-radius:20px;">Free</span></td>
-            </tr>
-          </tbody>
+          <thead><tr style="background:#1a2fa0;"><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:50%;">Steps / Procedures</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:12%;">Time Allotment</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:17%;">Person Responsible</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:left; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:14%;">Requirements</th><th style="padding:11px 16px; color:#f5c200; font-size:1.15rem; text-align:center; font-weight:800; text-transform:uppercase; letter-spacing:1px; width:7%;">Fees</th></tr></thead>
+          <tbody><tr><td style="padding:12px 16px; vertical-align:top;"><div style="display:flex;flex-direction:column;gap:14px;"><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">1</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Submit written complaint to Principal</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">2</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Initial investigation and fact-finding</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">3</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Meeting with concerned parties</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">4</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Resolution and recommendation</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span style="background:#1a2fa0;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;">5</span><span style="font-size:1.6rem;font-weight:700;color:#1a1a2e;line-height:1.5;">Implementation of corrective measures</span></div></div></td><td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e8edf8;color:#0d1e6b;font-weight:800;font-size:1.4rem;padding:9px 12px;border-radius:8px;display:inline-block;line-height:1.4;">7–15 Working Days</span></td><td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Principal<br>Administrative Officer<br>Concerned Teachers</td><td style="padding:12px 16px; vertical-align:top; font-size:1.6rem; font-weight:700; color:#1a1a2e; line-height:1.8;">Written complaint<br>Supporting documents</td><td style="padding:12px 16px; vertical-align:top; text-align:center;"><span style="background:#e6f4ea;color:#2d7d46;font-weight:800;font-size:1.4rem;padding:6px 12px;border-radius:20px;">Free</span></td></tr></tbody>
         </table>
       </div>
     </div>
-
-
 
     <!-- LIQUIDATION SLIDE -->
     <div class="slide">
       <div class="slide-placeholder" style="background:#f4f6fb; padding:12px 24px; flex-direction:column; gap:8px; justify-content:flex-start; align-items:stretch; overflow:hidden;">
         <div id="liq-slide-title" style="font-family:'Merriweather',serif; font-size:1rem; font-weight:900; color:#0d1e6b; text-align:center; text-transform:uppercase; letter-spacing:1px;">MOOE LIQUIDATION FOR FISCAL YEAR</div>
-        <div id="liq-slide-container" style="overflow:hidden;">
-          <div style="color:#6b7280; text-align:center; padding:40px;">Loading...</div>
-        </div>
+        <div id="liq-slide-container" style="overflow:hidden;"><div style="color:#6b7280; text-align:center; padding:40px;">Loading...</div></div>
       </div>
     </div>
 
-    <!-- 10. PPAs -->
+    <!-- PPAs -->
     <div class="slide">
       <div class="slide-placeholder" style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0); padding:16px 32px; flex-direction:column; gap:12px; justify-content:center;">
-        <div style="text-align:center; margin-bottom:8px;">
-          <div style="font-size:0.9rem; font-weight:800; color:var(--yellow); letter-spacing:2px; text-transform:uppercase;">Ilayang Yuni Elementary School</div>
-          <div style="font-family:'Merriweather',serif; font-size:2rem; font-weight:900; color:white; margin-top:4px;">📌 Programs, Projects &amp; Activities</div>
-        </div>
-        <div id="ppas-slide-list" style="display:flex; flex-direction:column; gap:8px;">
-          <div style="color:rgba(255,255,255,0.5); font-style:italic; font-size:1.5rem;">Naglo-load...</div>
-        </div>
+        <div style="text-align:center; margin-bottom:8px;"><div style="font-size:0.9rem; font-weight:800; color:var(--yellow); letter-spacing:2px; text-transform:uppercase;">Ilayang Yuni Elementary School</div><div style="font-family:'Merriweather',serif; font-size:2rem; font-weight:900; color:white; margin-top:4px;">📌 Programs, Projects &amp; Activities</div></div>
+        <div id="ppas-slide-list" style="display:flex; flex-direction:column; gap:8px;"><div style="color:rgba(255,255,255,0.5); font-style:italic; font-size:1.5rem;">Naglo-load...</div></div>
       </div>
     </div>
 
-    <!-- 19. SPTA - Dynamic -->
+    <!-- SPTA -->
     <div class="slide" id="slide-spta">
       <div style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0);width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;padding:0 8px 2px;">
-        <div style="text-align:center;margin-bottom:0;flex-shrink:0;">
-          <div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">ILAYANG YUNI ELEMENTARY SCHOOL</div>
-          <div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">SCHOOL PARENT-TEACHER ASSOCIATION</div>
-        </div>
-        <div id="spta-slide-inner" style="flex:1;display:flex;flex-direction:column;gap:0;justify-content:flex-start;">
-          <div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div>
-        </div>
+        <div style="text-align:center;margin-bottom:0;flex-shrink:0;"><div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">ILAYANG YUNI ELEMENTARY SCHOOL</div><div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">SCHOOL PARENT-TEACHER ASSOCIATION</div></div>
+        <div id="spta-slide-inner" style="flex:1;display:flex;flex-direction:column;gap:0;justify-content:flex-start;"><div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div></div>
       </div>
     </div>
 
-    <!-- 20. SELG - Dynamic -->
+    <!-- SELG -->
     <div class="slide" id="slide-selg">
       <div style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0);width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;padding:0 8px 2px;">
-        <div style="text-align:center;margin-bottom:0;flex-shrink:0;">
-          <div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">ILAYANG YUNI ELEMENTARY SCHOOL</div>
-          <div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">SUPREME ELEMENTARY LEARNERS GOVERNMENT</div>
-        </div>
-        <div id="selg-slide-inner" style="flex:1;display:flex;flex-direction:column;gap:0;justify-content:flex-start;">
-          <div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div>
-        </div>
+        <div style="text-align:center;margin-bottom:0;flex-shrink:0;"><div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">ILAYANG YUNI ELEMENTARY SCHOOL</div><div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">SUPREME ELEMENTARY LEARNERS GOVERNMENT</div></div>
+        <div id="selg-slide-inner" style="flex:1;display:flex;flex-direction:column;gap:0;justify-content:flex-start;"><div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div></div>
       </div>
     </div>
 
-    <!-- 21. TEACHERS CLUB - Dynamic -->
+    <!-- TEACHERS CLUB -->
     <div class="slide" id="slide-club">
       <div style="background:linear-gradient(135deg,#0d1e6b,#1a2fa0);width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;padding:0 8px 2px;">
-        <div style="text-align:center;margin-bottom:0;flex-shrink:0;">
-          <div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">ILAYANG YUNI ELEMENTARY SCHOOL</div>
-          <div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">TEACHERS' CLUB</div>
-        </div>
-        <div id="club-slide-inner" style="flex:1;display:flex;flex-direction:column;gap:0;justify-content:flex-start;">
-          <div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div>
-        </div>
+        <div style="text-align:center;margin-bottom:0;flex-shrink:0;"><div style="font-family:'Merriweather',serif;font-size:1.1rem;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">ILAYANG YUNI ELEMENTARY SCHOOL</div><div style="font-size:0.75rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:2px;margin-top:2px;">TEACHERS' CLUB</div></div>
+        <div id="club-slide-inner" style="flex:1;display:flex;flex-direction:column;gap:0;justify-content:flex-start;"><div style="color:rgba(255,255,255,0.5);text-align:center;font-size:1rem;">Naglo-load...</div></div>
       </div>
     </div>
 
-    <!-- 22. LINKS - Full photo -->
+    <!-- LINKS -->
     <div class="slide">
       <div style="width:100%;height:100%;background:#000;overflow:hidden;position:relative;">
-        <div id="links-slide-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-          <div style="color:rgba(255,255,255,0.5);font-size:1.5rem;">Naglo-load...</div>
-        </div>
+        <div id="links-slide-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><div style="color:rgba(255,255,255,0.5);font-size:1.5rem;">Naglo-load...</div></div>
       </div>
     </div>
 
@@ -1460,24 +1101,13 @@
 <!-- MAIN -->
 <div class="main">
   <div class="content">
-
-    <!-- ANNOUNCEMENTS -->
     <h2 class="section-title">Pinakabagong Announcements</h2>
-    <div id="main-announcements-container">
-      <p style="color:var(--gray); font-size:0.9rem;">Naglo-load...</p>
-    </div>
-
-    <!-- EVENTS & ACTIVITIES -->
+    <div id="main-announcements-container"><p style="color:var(--gray); font-size:0.9rem;">Naglo-load...</p></div>
     <div class="events-section">
       <h2 class="section-title">Events & Activities</h2>
-      <div class="events-grid" id="main-events-container">
-        <p style="color:var(--gray); font-size:0.9rem;">Naglo-load...</p>
-      </div>
+      <div class="events-grid" id="main-events-container"><p style="color:var(--gray); font-size:0.9rem;">Naglo-load...</p></div>
     </div>
-
   </div>
-
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="quick-links">
       <h2 class="section-title" style="margin-bottom:14px; font-size:1.55rem;">Mabilis na Links</h2>
@@ -1527,11 +1157,19 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// SLIDESHOW
+<script>
+// ============================================================
+// SLIDESHOW ENGINE
+// ============================================================
 let currentSlide = 0;
 let slides = [];
 let dots = [];
+let slideshowTimer = null;
+let slideDelays = {};
+
+function getSlideDelay(idx) {
+  return slideDelays[idx] !== undefined ? slideDelays[idx] : 25000;
+}
 
 function goToSlide(n) {
   if (!slides.length) return;
@@ -1541,15 +1179,7 @@ function goToSlide(n) {
   slides[currentSlide].classList.add('active');
   if (dots[currentSlide]) dots[currentSlide].classList.add('active');
 }
-
 window.goToSlide = goToSlide;
-
-let slideshowTimer = null;
-let slideDelays = {}; // key: slide index, value: ms
-
-function getSlideDelay(idx) {
-  return slideDelays[idx] !== undefined ? slideDelays[idx] : 25000;
-}
 
 function scheduleNextSlide() {
   if (slideshowTimer) clearTimeout(slideshowTimer);
@@ -1562,10 +1192,13 @@ function scheduleNextSlide() {
 
 document.addEventListener('DOMContentLoaded', function() {
   slides = Array.from(document.querySelectorAll('.hero-slideshow .slide'));
-  dots = Array.from(document.querySelectorAll('.slide-dots .dot'));
+  dots   = Array.from(document.querySelectorAll('.slide-dots .dot'));
   scheduleNextSlide();
 });
 
+// ============================================================
+// CSV HELPER
+// ============================================================
 const SHEET_URLS = {
   announcements: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQn2Gmg0F5OiitUdegLxMDGOUiiRsuhowFuhrqvD8tjjl2F4mr0kw9FYbHwY8eppjRplB9tdUR0iLs2/pub?gid=0&single=true&output=csv',
   enrollment:    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRzajImiWqpCb4QclB5woMSgcVFlVLzHIL_uMNSBwQ1xmTM1CEGkE-qeyW5GcrKFIr43fz8XIrWEjAB/pub?gid=0&single=true&output=csv',
@@ -1574,12 +1207,10 @@ const SHEET_URLS = {
   personnel:     'https://docs.google.com/spreadsheets/d/e/2PACX-1vQnizZJncB_od07MZzc4sM0HED8Iiwi3iTgD12w8bQ2BYpcv_H9FauezWSpz4x92zVd6X2WJQxC6M9E/pub?gid=0&single=true&output=csv',
   events:        'https://docs.google.com/spreadsheets/d/e/2PACX-1vTcahFgkkHP_K5x8dFXCxj77xXNDmZDnmprNTY5xgGytr0WcY6bdlrKNHYpGfjkB7aP0ypydeWbf7ip/pub?gid=0&single=true&output=csv',
   winners:       'https://docs.google.com/spreadsheets/d/e/2PACX-1vQwpNM941BtT1kYnzi0XfoLCLnS6n7LGPdkpg3k6a-ExgdBtVWF8xqXdHbMsSoZsTnA5BOoh2QNgaEu/pub?gid=0&single=true&output=csv',
+  guests:        'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0wuQac7iVs66G9dVrkRVe8KUXH2DU67Y7wgaLEut3f3fe_EmZxNtFLWqWV-0JBpZU2B_JZ1GlCzNE/pub?gid=0&single=true&output=csv',
 };
 
-async function fetchCSV(sheet) {
-  const url = SHEET_URLS[sheet] || '';
-  const res = await fetch(url);
-  const text = await res.text();
+function parseCSV(text) {
   const rows = text.trim().split('\n').map(r => {
     const result = []; let cur = '', inQ = false;
     for (let c of r) {
@@ -1590,9 +1221,258 @@ async function fetchCSV(sheet) {
     result.push(cur.trim()); return result;
   });
   const headers = rows[0];
-  return rows.slice(1).filter(r => r.some(c => c)).map(row => Object.fromEntries(headers.map((h,i) => [h, row[i]||''])));
+  return rows.slice(1).filter(r => r.some(c => c))
+    .map(row => Object.fromEntries(headers.map((h, i) => [h.trim().toLowerCase(), row[i] || ''])));
 }
 
+async function fetchCSV(sheet) {
+  const res = await fetch(SHEET_URLS[sheet]);
+  return parseCSV(await res.text());
+}
+
+async function fetchSheetCSV(url) {
+  const res = await fetch(url);
+  return parseCSV(await res.text());
+}
+
+// ============================================================
+// DATE HELPERS
+// ============================================================
+function todayStr() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function toDateStr(val) {
+  if (!val) return '';
+  const d = new Date(val);
+  return isNaN(d) ? '' : d.toISOString().split('T')[0];
+}
+
+function formatDateLong(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (isNaN(d)) return dateStr;
+  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase();
+}
+
+// ============================================================
+// WELCOME SLIDE — GUESTS
+// ============================================================
+async function loadWelcomeGuests() {
+  try {
+    const data = await fetchCSV('guests');
+    if (!data.length) return;
+
+    const today = todayStr();
+    const guests = data.filter(r => r.name && toDateStr(r.date) === today);
+    if (!guests.length) return; // walang bisita ngayon
+
+    const mainText   = document.getElementById('welcome-main-text');
+    const guestArea  = document.getElementById('welcome-guest-area');
+    const guestName  = document.getElementById('welcome-guest-name');
+    const guestPos   = document.getElementById('welcome-guest-position');
+
+    let guestIndex = 0;
+
+    function showGuest(idx) {
+      const g = guests[idx];
+
+      // fade out guest area first (for transitions after the first)
+      guestArea.classList.remove('visible');
+      guestArea.style.transform = 'translateY(40px)';
+
+      setTimeout(() => {
+        guestName.textContent = g.name || '';
+        guestPos.textContent  = g.position || '';
+
+        // push main text up
+        mainText.style.transform = 'translateY(-40px)';
+
+        // fade in guest
+        guestArea.classList.add('visible');
+      }, 400);
+    }
+
+    // Wait 10 seconds before showing first guest
+    setTimeout(() => {
+      showGuest(0);
+
+      if (guests.length > 1) {
+        setInterval(() => {
+          guestIndex = (guestIndex + 1) % guests.length;
+          showGuest(guestIndex);
+        }, 10000);
+      }
+    }, 10000);
+
+    // Dynamic welcome slide duration: 10s normal + 10s per guest
+    slideDelays[0] = 10000 + guests.length * 10000;
+
+  } catch(e) { console.error('Welcome guests error:', e); }
+}
+
+// ============================================================
+// WINNERS / GRADUATES / PROMOTED SLIDE
+// ============================================================
+function driveImgUrl(url) {
+  if (!url) return '';
+  const m = url.match(/\/d\/([a-zA-Z0-9_-]{25,})/);
+  if (m) return 'https://lh3.googleusercontent.com/d/' + m[1] + '=w600';
+  const m2 = url.match(/[-\w]{25,}/);
+  return m2 ? 'https://drive.google.com/uc?export=view&id=' + m2[0] : url;
+}
+
+function renderWinnerCard(w) {
+  const rankColors = { 'GRAND WINNER':'#f5c200','CHAMPION':'#f5c200','FIRST':'#f5c200','1ST':'#f5c200','SECOND':'#C0C0C0','2ND':'#C0C0C0','THIRD':'#CD7F32','3RD':'#CD7F32' };
+  const rk   = (w.rank || '').toUpperCase().replace(' PLACE','').trim();
+  const rc   = rankColors[rk] || 'white';
+  const gs   = [w.grade, w.section].filter(Boolean).join(' - ');
+  const date = w.date ? formatDateLong(w.date) : '';
+
+  return `
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%;height:100%;padding:30px 60px;gap:14px;">
+      <div style="font-family:'Merriweather',serif;font-size:2.8rem;font-weight:900;color:var(--yellow);letter-spacing:4px;text-shadow:0 2px 16px rgba(245,194,0,0.5);animation:pulse 2s ease-in-out infinite;">🏆 CONGRATULATIONS! 🏆</div>
+      <div style="font-family:'Merriweather',serif;font-size:4rem;font-weight:900;color:white;line-height:1.1;text-transform:uppercase;text-shadow:0 2px 20px rgba(0,0,0,0.5);">${w.name || ''}</div>
+      ${gs ? `<div style="font-size:1.8rem;color:rgba(255,255,255,0.8);font-weight:600;font-style:italic;">${gs}</div>` : ''}
+      <div style="background:${rc};color:#0d1e6b;font-family:'Merriweather',serif;font-size:2.6rem;font-weight:900;padding:12px 48px;border-radius:10px;letter-spacing:3px;box-shadow:0 6px 28px rgba(0,0,0,0.35);">${w.rank ? w.rank.toUpperCase() : ''}</div>
+      <div style="font-size:2.2rem;font-weight:800;color:white;text-transform:uppercase;letter-spacing:2px;">${w.event || ''}</div>
+      ${date ? `<div style="font-size:1.6rem;color:rgba(255,255,255,0.75);font-weight:600;">${date}</div>` : ''}
+      ${w.coach ? `<div style="font-size:1.5rem;color:rgba(255,255,255,0.65);">Coach: <span style="color:var(--yellow);font-weight:800;">${w.coach}</span></div>` : ''}
+    </div>`;
+}
+
+function renderGraduateCard(w) {
+  const photo = driveImgUrl(w.url);
+  const photoHtml = photo
+    ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center top;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:5rem;">👤</div>`
+    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:5rem;background:rgba(255,255,255,0.1);">👤</div>`;
+  return `
+    <div style="display:flex;flex-direction:row;align-items:center;width:100%;height:100%;gap:0;">
+      <!-- LEFT: Photo -->
+      <div style="flex:0 0 45%;height:100%;overflow:hidden;position:relative;">
+        ${photoHtml}
+        <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 80%,#0d1e6b);"></div>
+      </div>
+      <!-- RIGHT: Text -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:40px 60px 40px 40px;gap:14px;">
+        <div style="font-family:'Merriweather',serif;font-size:2.4rem;font-weight:900;color:var(--yellow);letter-spacing:3px;animation:pulse 2s ease-in-out infinite;">🎓 CONGRATULATIONS!</div>
+        <div style="font-family:'Merriweather',serif;font-size:3.2rem;font-weight:900;color:white;line-height:1.1;text-transform:uppercase;text-shadow:0 2px 16px rgba(0,0,0,0.5);">${w.name || ''}</div>
+        <div style="width:60px;height:4px;background:var(--yellow);border-radius:2px;"></div>
+        <div style="font-size:1.8rem;font-weight:700;color:rgba(255,255,255,0.9);">${w.course || ''}</div>
+        ${w.major ? `<div style="font-size:1.5rem;color:rgba(255,255,255,0.8);">Major in ${w.major}</div>` : ''}
+        ${w.school ? `<div style="font-size:1.4rem;color:var(--yellow);font-weight:600;">${w.school}</div>` : ''}
+      </div>
+    </div>`;
+}
+
+function renderPromotedCard(w) {
+  const photo = driveImgUrl(w.url);
+  const photoHtml = photo
+    ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;object-position:center top;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:5rem;">👤</div>`
+    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:5rem;background:rgba(255,255,255,0.1);">👤</div>`;
+  return `
+    <div style="display:flex;flex-direction:row;align-items:center;width:100%;height:100%;gap:0;">
+      <!-- LEFT: Photo -->
+      <div style="flex:0 0 45%;height:100%;overflow:hidden;position:relative;">
+        ${photoHtml}
+        <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 80%,#0d1e6b);"></div>
+      </div>
+      <!-- RIGHT: Text -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:40px 60px 40px 40px;gap:14px;">
+        <div style="font-family:'Merriweather',serif;font-size:2.4rem;font-weight:900;color:var(--yellow);letter-spacing:3px;animation:pulse 2s ease-in-out infinite;">🌟 CONGRATULATIONS!</div>
+        <div style="font-family:'Merriweather',serif;font-size:3.2rem;font-weight:900;color:white;line-height:1.1;text-transform:uppercase;text-shadow:0 2px 16px rgba(0,0,0,0.5);">${w.name || ''}</div>
+        <div style="width:60px;height:4px;background:var(--yellow);border-radius:2px;"></div>
+        <div style="font-size:1.8rem;font-weight:700;color:rgba(255,255,255,0.85);line-height:1.5;">
+          Promoted from <span style="color:var(--yellow);">${w.position || ''}</span> to <span style="color:var(--yellow);">${w.promotion || ''}</span>
+        </div>
+      </div>
+    </div>`;
+}
+
+async function loadWinnersSlide() {
+  try {
+    const data = await fetchCSV('winners');
+    if (!data.length) return;
+
+    const today = todayStr();
+
+    // Filter by date_end: show if today <= date_end (or no date_end set)
+    const active = data.filter(r => {
+      if (!r.name) return false;
+      if (!r.date_end) return true; // no expiry = always show
+      const end = toDateStr(r.date_end);
+      return end >= today;
+    });
+
+    if (!active.length) return;
+
+    // Sort by date descending (latest first) within each group
+    function sortDesc(arr) {
+      return arr.sort((a, b) => {
+        const da = toDateStr(a.date) || '0000-00-00';
+        const db = toDateStr(b.date) || '0000-00-00';
+        return db.localeCompare(da);
+      });
+    }
+
+    // Separate into 3 groups
+    const winners   = sortDesc(active.filter(r => r.rank || r.event));
+    const graduates = sortDesc(active.filter(r => !r.rank && r.course));
+    const promoted  = sortDesc(active.filter(r => !r.rank && !r.course && r.promotion));
+
+    // Combine in order: winners → graduates → promoted
+    const combined = [...winners, ...graduates, ...promoted];
+    if (!combined.length) return;
+
+    const el = document.getElementById('winners-slide-container');
+    if (!el) return;
+
+    let idx = 0;
+
+    function renderEntry(i) {
+      const w = combined[i];
+      let html = '';
+      if (w.rank || (w.event && !w.course && !w.promotion)) {
+        html = renderWinnerCard(w);
+      } else if (w.course) {
+        html = renderGraduateCard(w);
+      } else if (w.promotion) {
+        html = renderPromotedCard(w);
+      } else {
+        html = renderWinnerCard(w); // fallback
+      }
+      el.style.opacity = '0';
+      el.style.transition = 'opacity 0.5s ease';
+      setTimeout(() => {
+        el.innerHTML = html;
+        el.style.opacity = '1';
+      }, 300);
+    }
+
+    // Show first entry
+    renderEntry(0);
+
+    // Rotate every 10 seconds
+    if (combined.length > 1) {
+      setInterval(() => {
+        idx = (idx + 1) % combined.length;
+        renderEntry(idx);
+      }, 10000);
+    }
+
+    // Dynamic slide duration: 10s per entry
+    const winnerSlideIndex = Array.from(document.querySelectorAll('.hero-slideshow .slide'))
+      .findIndex(s => s.querySelector('#winners-slide-container'));
+    if (winnerSlideIndex !== -1) {
+      slideDelays[winnerSlideIndex] = combined.length * 10000;
+    }
+
+  } catch(e) { console.error('Winners slide error:', e); }
+}
+
+// ============================================================
+// ENROLLMENT
+// ============================================================
 const grades = ['Kinder','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6'];
 
 function renderEnrollTable(data, mKey, fKey, tKey) {
@@ -1622,118 +1502,79 @@ async function loadEnrollment() {
   try {
     const data = await fetchCSV('enrollment');
     if (!data.length) return;
-    // Update school year if available
-    const sy = data[0].school_year || data[0].school_Year || data[0].School_Year || '';
-    if (sy) {
-      const syEl = document.getElementById('enrollment-sy');
-      if (syEl) syEl.textContent = 'SY ' + sy;
-    }
-    document.getElementById('beg-enroll').innerHTML = renderEnrollTable(data,'beg_male','beg_female','beg_total');
-    document.getElementById('cur-enroll').innerHTML = renderEnrollTable(data,'cur_male','cur_female','cur_total');
-    document.getElementById('transfer-in').innerHTML = renderEnrollTable(data,'transferin_male','transferin_female','transferin_total');
-    document.getElementById('transfer-out').innerHTML = renderEnrollTable(data,'transferout_male','transferout_female','transferout_total');
-    document.getElementById('drop').innerHTML = renderEnrollTable(data,'drop_male','drop_female','drop_total');
+    const sy = data[0].school_year || data[0]['school_year'] || '';
+    if (sy) { const el = document.getElementById('enrollment-sy'); if (el) el.textContent = 'SY ' + sy; }
+    document.getElementById('beg-enroll').innerHTML    = renderEnrollTable(data,'beg_male','beg_female','beg_total');
+    document.getElementById('cur-enroll').innerHTML    = renderEnrollTable(data,'cur_male','cur_female','cur_total');
+    document.getElementById('transfer-in').innerHTML   = renderEnrollTable(data,'transferin_male','transferin_female','transferin_total');
+    document.getElementById('transfer-out').innerHTML  = renderEnrollTable(data,'transferout_male','transferout_female','transferout_total');
+    document.getElementById('drop').innerHTML          = renderEnrollTable(data,'drop_male','drop_female','drop_total');
   } catch(e) { console.error('Enrollment load error:', e); }
 }
 
+// ============================================================
 // LIQUIDATION SLIDE
+// ============================================================
 async function loadLiquidationSlide() {
   const container = document.getElementById('liq-slide-container');
   if (!container) return;
   try {
-    const res = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vT0Czxt9mN-Xdu-bz3cSW-vDhJECMV5LAKOhyQ6J-3kK8Lrhe_buOVaDEstgTpo3iL4ADRsAlk0IsyI/pub?gid=0&single=true&output=csv');
-    const text = await res.text();
-    const rows = text.trim().split('\n').map(r => {
-      const result = []; let cur = '', inQ = false;
-      for (let c of r) {
-        if (c==='"') inQ=!inQ;
-        else if (c===',' && !inQ) { result.push(cur.trim()); cur=''; }
-        else cur+=c;
-      }
-      result.push(cur.trim()); return result;
-    });
-    const headers = rows[0].map(h => h.toLowerCase().trim());
-    const data = rows.slice(1).filter(r => r.some(c=>c)).map(row =>
-      Object.fromEntries(headers.map((h,i) => [h, row[i]||'']))
-    );
+    const data = await fetchSheetCSV('https://docs.google.com/spreadsheets/d/e/2PACX-1vT0Czxt9mN-Xdu-bz3cSW-vDhJECMV5LAKOhyQ6J-3kK8Lrhe_buOVaDEstgTpo3iL4ADRsAlk0IsyI/pub?gid=0&single=true&output=csv');
     const fy = data[0] && (data[0].fiscal_year || data[0]['fiscal year'] || '');
     if (fy) document.getElementById('liq-slide-title').textContent = 'MOOE LIQUIDATION FOR FISCAL YEAR ' + fy;
-
     const MONTHS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
     const MONTH_LABELS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
     const dataRows = data.filter(r => (r.particulars||'').toLowerCase() !== 'total');
-
     let html = `<table style="width:100%;border-collapse:collapse;font-size:0.62rem;">
-      <thead>
-        <tr>
-          <th style="background:#0d1e6b;color:white;padding:3px 6px;text-align:left;border:1px solid rgba(255,255,255,0.15);">PARTICULARS</th>
-          <th style="background:#0d1e6b;color:white;padding:3px 5px;text-align:center;border:1px solid rgba(255,255,255,0.15);">UACS CODE</th>
-          ${MONTH_LABELS.map(m=>`<th style="background:#0d1e6b;color:white;padding:3px 4px;text-align:center;border:1px solid rgba(255,255,255,0.15);">${m}</th>`).join('')}
-          <th style="background:#0d1e6b;color:#f5c200;padding:3px 5px;text-align:center;border:1px solid rgba(255,255,255,0.15);">TOTAL</th>
-        </tr>
-      </thead><tbody>`;
-
+      <thead><tr>
+        <th style="background:#0d1e6b;color:white;padding:3px 6px;text-align:left;border:1px solid rgba(255,255,255,0.15);">PARTICULARS</th>
+        <th style="background:#0d1e6b;color:white;padding:3px 5px;text-align:center;border:1px solid rgba(255,255,255,0.15);">UACS CODE</th>
+        ${MONTH_LABELS.map(m=>`<th style="background:#0d1e6b;color:white;padding:3px 4px;text-align:center;border:1px solid rgba(255,255,255,0.15);">${m}</th>`).join('')}
+        <th style="background:#0d1e6b;color:#f5c200;padding:3px 5px;text-align:center;border:1px solid rgba(255,255,255,0.15);">TOTAL</th>
+      </tr></thead><tbody>`;
     const grandTotals = new Array(MONTHS.length).fill(0);
     let grandTotal = 0;
-
     dataRows.forEach(row => {
       let rowTotal = 0;
       const monthCells = MONTHS.map(m => { const v = parseFloat(row[m])||0; rowTotal += v; return v; });
       monthCells.forEach((v,i) => grandTotals[i] += v);
       grandTotal += rowTotal;
-      html += `<tr>
-        <td style="padding:2px 6px;border:1px solid #e8edf8;">${row.particulars||''}</td>
-        <td style="padding:2px 5px;border:1px solid #e8edf8;text-align:center;">${row['uacs code']||row.uacs_code||''}</td>
-        ${monthCells.map(v=>`<td style="padding:2px 4px;border:1px solid #e8edf8;text-align:right;font-weight:600;color:#0d1e6b;">${v?v.toLocaleString():''}</td>`).join('')}
-        <td style="padding:2px 5px;border:1px solid #e8edf8;text-align:right;font-weight:800;color:#0d1e6b;background:#e8edf8;">${rowTotal?rowTotal.toLocaleString():''}</td>
-      </tr>`;
+      html += `<tr><td style="padding:2px 6px;border:1px solid #e8edf8;">${row.particulars||''}</td><td style="padding:2px 5px;border:1px solid #e8edf8;text-align:center;">${row['uacs code']||row.uacs_code||''}</td>${monthCells.map(v=>`<td style="padding:2px 4px;border:1px solid #e8edf8;text-align:right;font-weight:600;color:#0d1e6b;">${v?v.toLocaleString():''}</td>`).join('')}<td style="padding:2px 5px;border:1px solid #e8edf8;text-align:right;font-weight:800;color:#0d1e6b;background:#e8edf8;">${rowTotal?rowTotal.toLocaleString():''}</td></tr>`;
     });
-
-    html += `<tr style="background:#0d1e6b;">
-      <td colspan="2" style="padding:3px 6px;color:white;font-weight:900;">TOTAL</td>
-      ${grandTotals.map(v=>`<td style="padding:3px 4px;text-align:right;color:#f5c200;font-weight:900;">${v?v.toLocaleString():''}</td>`).join('')}
-      <td style="padding:3px 5px;text-align:right;color:#f5c200;font-weight:900;">${grandTotal?grandTotal.toLocaleString():''}</td>
-    </tr></tbody></table>`;
-
+    html += `<tr style="background:#0d1e6b;"><td colspan="2" style="padding:3px 6px;color:white;font-weight:900;">TOTAL</td>${grandTotals.map(v=>`<td style="padding:3px 4px;text-align:right;color:#f5c200;font-weight:900;">${v?v.toLocaleString():''}</td>`).join('')}<td style="padding:3px 5px;text-align:right;color:#f5c200;font-weight:900;">${grandTotal?grandTotal.toLocaleString():''}</td></tr></tbody></table>`;
     container.innerHTML = html;
   } catch(e) { console.error('Liquidation slide error:', e); }
 }
-loadLiquidationSlide();
 
-// ===== PPAs SLIDESHOW (2 at a time) =====
-let ppasData = [];
-let currentPpaIndex = 0;
-let ppasInterval = null;
+// ============================================================
+// PPAs
+// ============================================================
+let ppasData = [], currentPpaIndex = 0, ppasInterval = null;
 
 function renderPpaPair(idx) {
   const el = document.getElementById('ppas-slide-list');
   if (!el || !ppasData.length) return;
   const pair = ppasData.slice(idx, idx + 2);
-  const total = ppasData.length;
+  const totalPairs = Math.ceil(ppasData.length / 2);
   const pairNum = Math.floor(idx / 2) + 1;
-  const totalPairs = Math.ceil(total / 2);
-  el.innerHTML = `
-    <div style="display:flex; flex-direction:column; gap:12px; width:100%;">
-      ${pair.map(r => `
-        <div style="background:rgba(255,255,255,0.08); border-radius:14px; padding:18px 24px; border-left:5px solid var(--yellow); display:flex; flex-direction:column; gap:6px;">
-          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:4px;">
-            ${r.bedp ? `<span style="background:rgba(245,194,0,0.2); color:var(--yellow); font-size:1.2rem; font-weight:800; padding:3px 14px; border-radius:20px;">BEDP: ${r.bedp}</span>` : ''}
-            ${r.kalilayan ? `<span style="background:rgba(255,255,255,0.1); color:white; font-size:1.2rem; font-weight:700; padding:3px 14px; border-radius:20px;">Kalilayan: ${r.kalilayan}</span>` : ''}
-            ${r.responsable ? `<span style="background:rgba(255,255,255,0.1); color:#a0cfff; font-size:1.2rem; font-weight:700; padding:3px 14px; border-radius:20px;">RESPONSABLE: ${r.responsable}</span>` : ''}
-          </div>
-          <div style="font-family:'Merriweather',serif; font-size:1.9rem; font-weight:900; color:white; line-height:1.3;">${r.title||''}</div>
-          ${r.objectives ? `<div style="font-size:1.35rem; color:rgba(255,255,255,0.75); line-height:1.5;">${r.objectives}</div>` : ''}
-        </div>`).join('')}
-    </div>
-    <div style="text-align:center; margin-top:8px; color:rgba(255,255,255,0.5); font-size:1rem; font-weight:600; letter-spacing:1px;">${pairNum} / ${totalPairs}</div>`;
+  el.innerHTML = `<div style="display:flex;flex-direction:column;gap:12px;width:100%;">
+    ${pair.map(r => `<div style="background:rgba(255,255,255,0.08);border-radius:14px;padding:18px 24px;border-left:5px solid var(--yellow);display:flex;flex-direction:column;gap:6px;">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:4px;">
+        ${r.bedp ? `<span style="background:rgba(245,194,0,0.2);color:var(--yellow);font-size:1.2rem;font-weight:800;padding:3px 14px;border-radius:20px;">BEDP: ${r.bedp}</span>` : ''}
+        ${r.kalilayan ? `<span style="background:rgba(255,255,255,0.1);color:white;font-size:1.2rem;font-weight:700;padding:3px 14px;border-radius:20px;">Kalilayan: ${r.kalilayan}</span>` : ''}
+        ${r.responsable ? `<span style="background:rgba(255,255,255,0.1);color:#a0cfff;font-size:1.2rem;font-weight:700;padding:3px 14px;border-radius:20px;">RESPONSABLE: ${r.responsable}</span>` : ''}
+      </div>
+      <div style="font-family:'Merriweather',serif;font-size:1.9rem;font-weight:900;color:white;line-height:1.3;">${r.title||''}</div>
+      ${r.objectives ? `<div style="font-size:1.35rem;color:rgba(255,255,255,0.75);line-height:1.5;">${r.objectives}</div>` : ''}
+    </div>`).join('')}
+  </div>
+  <div style="text-align:center;margin-top:8px;color:rgba(255,255,255,0.5);font-size:1rem;font-weight:600;letter-spacing:1px;">${pairNum} / ${totalPairs}</div>`;
 }
 
 async function loadPPAs() {
   try {
     const data = await fetchCSV('ppas');
     if (!data.length) return;
-    const el = document.getElementById('ppas-slide-list');
-    if (!el) return;
     ppasData = data;
     renderPpaPair(0);
     if (ppasInterval) clearInterval(ppasInterval);
@@ -1743,19 +1584,17 @@ async function loadPPAs() {
         renderPpaPair(currentPpaIndex);
       }, 5000);
     }
-  } catch(e) { console.error('PPAs load error:', e); }
+  } catch(e) { console.error('PPAs error:', e); }
 }
 
-// ===== ANNOUNCEMENTS SLIDESHOW (1 at a time, countdown) =====
-let annData = [];
-let currentAnnIndex = 0;
-let annInterval = null;
+// ============================================================
+// ANNOUNCEMENTS SLIDE
+// ============================================================
+let annData = [], currentAnnIndex = 0, annInterval = null;
 
 function annDaysUntil(dateStr) {
-  const today = new Date();
-  today.setHours(0,0,0,0);
-  const d = new Date(dateStr);
-  d.setHours(0,0,0,0);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const d = new Date(dateStr); d.setHours(0,0,0,0);
   return Math.round((d - today) / (1000 * 60 * 60 * 24));
 }
 
@@ -1765,16 +1604,9 @@ function annCountdownText(days) {
   return `HAPPENING IN ${days} DAYS`;
 }
 
-function annFormatDate(dateStr) {
-  const d = new Date(dateStr);
-  if (isNaN(d)) return dateStr;
-  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-}
-
 function applySuperscript(text) {
-  return text.replace(/(\d+)(ST|ND|RD|TH)(|(?=[^A-Z]))/gi, function(match, num, suffix) {
-    return num + '<sup style="font-size:0.55em;vertical-align:super;line-height:0;">' + suffix.toLowerCase() + '</sup>';
-  });
+  return text.replace(/(\d+)(ST|ND|RD|TH)/gi, (match, num, suffix) =>
+    num + '<sup style="font-size:0.55em;vertical-align:super;line-height:0;">' + suffix.toLowerCase() + '</sup>');
 }
 
 function renderAnnouncement(idx) {
@@ -1782,16 +1614,14 @@ function renderAnnouncement(idx) {
   if (!el || !annData.length) return;
   const row = annData[idx];
   const days = annDaysUntil(row.date);
-  const countdownText = annCountdownText(days);
-  const formattedDate = annFormatDate(row.date);
-  const titleHtml = applySuperscript(row.title || '');
-  el.innerHTML = `
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;text-align:center;padding:40px 60px;gap:0;">
-      <div style="font-family:'Merriweather',serif;font-size:1.4rem;font-weight:900;color:white;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;">📢 Announcements</div>
-      <div style="font-size:3rem;font-weight:800;color:var(--yellow);letter-spacing:3px;text-transform:uppercase;margin-bottom:28px;">${countdownText}</div>
-      <div style="font-family:'Merriweather',serif;font-size:4.2rem;font-weight:900;color:white;line-height:1.15;text-transform:uppercase;margin-bottom:0;">${titleHtml}</div>
-      <div style="font-size:1.6rem;font-weight:600;color:rgba(255,255,255,0.7);margin-top:6px;">${formattedDate}</div>
-    </div>`;
+  const d = new Date(row.date);
+  const formattedDate = isNaN(d) ? row.date : d.toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' });
+  el.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;text-align:center;padding:40px 60px;gap:0;">
+    <div style="font-family:'Merriweather',serif;font-size:1.4rem;font-weight:900;color:white;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;">📢 Announcements</div>
+    <div style="font-size:3rem;font-weight:800;color:var(--yellow);letter-spacing:3px;text-transform:uppercase;margin-bottom:28px;">${annCountdownText(days)}</div>
+    <div style="font-family:'Merriweather',serif;font-size:4.2rem;font-weight:900;color:white;line-height:1.15;text-transform:uppercase;margin-bottom:0;">${applySuperscript(row.title||'')}</div>
+    <div style="font-size:1.6rem;font-weight:600;color:rgba(255,255,255,0.7);margin-top:6px;">${formattedDate}</div>
+  </div>`;
 }
 
 async function loadAnnouncements() {
@@ -1800,186 +1630,42 @@ async function loadAnnouncements() {
     if (!data.length) return;
     const el = document.getElementById('ann-slide-container');
     if (!el) return;
-    // Filter out past announcements
     const today = new Date(); today.setHours(0,0,0,0);
-    annData = data.filter(r => {
-      const d = new Date(r.date); d.setHours(0,0,0,0);
-      return !isNaN(d) && d >= today;
-    });
+    annData = data.filter(r => { const d = new Date(r.date); d.setHours(0,0,0,0); return !isNaN(d) && d >= today; });
     if (!annData.length) {
-      el.innerHTML = `
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;text-align:center;padding:40px 60px;gap:0;">
-          <div style="font-family:'Merriweather',serif;font-size:1.4rem;font-weight:900;color:white;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;">📢 Announcements</div>
-          <div style="font-size:3rem;font-weight:800;color:var(--yellow);letter-spacing:3px;text-transform:uppercase;">NO UPCOMING EVENTS</div>
-        </div>`;
+      el.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;text-align:center;padding:40px 60px;"><div style="font-family:'Merriweather',serif;font-size:1.4rem;font-weight:900;color:white;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;">📢 Announcements</div><div style="font-size:3rem;font-weight:800;color:var(--yellow);letter-spacing:3px;text-transform:uppercase;">NO UPCOMING EVENTS</div></div>`;
       return;
     }
-    // Set dynamic slide duration: 5 sec per announcement
-    const annSlideIndex = Array.from(document.querySelectorAll('.hero-slideshow .slide')).findIndex(el => el.querySelector('#ann-slide-container'));
-    if (annSlideIndex !== -1) {
-      slideDelays[annSlideIndex] = annData.length * 5000;
-    }
+    const annSlideIndex = Array.from(document.querySelectorAll('.hero-slideshow .slide')).findIndex(s => s.querySelector('#ann-slide-container'));
+    if (annSlideIndex !== -1) slideDelays[annSlideIndex] = annData.length * 5000;
     renderAnnouncement(0);
-    if (annInterval) clearInterval(annInterval);
     if (annData.length > 1) {
-      annInterval = setInterval(() => {
-        currentAnnIndex = (currentAnnIndex + 1) % annData.length;
-        renderAnnouncement(currentAnnIndex);
-      }, 5000);
+      annInterval = setInterval(() => { currentAnnIndex = (currentAnnIndex + 1) % annData.length; renderAnnouncement(currentAnnIndex); }, 5000);
     }
-  } catch(e) { console.error('Announcements load error:', e); }
+  } catch(e) { console.error('Announcements error:', e); }
 }
 
+// ============================================================
+// SETTINGS
+// ============================================================
 async function loadSettings() {
   try {
     const data = await fetchCSV('settings');
     const s = {};
     data.forEach(r => { if(r.key) s[r.key] = r.value; });
-
     function driveUrl(url) {
       if (!url) return '';
       const m = url.match(/[-\w]{25,}/);
       return m ? `https://drive.google.com/uc?export=view&id=${m[0]}` : url;
     }
-
-    // Image slideshows
-    const imgKeys = ['announcements_image_slideshow','events_image_slideshow','personnel_image_slideshow',
-      'liquidation_image_slideshow','school_map_image_slideshow','spta_image_slideshow',
-      'selg_image_slideshow','teachers_club_image_slideshow','links_image_slideshow'];
-    imgKeys.forEach(key => {
-      const el = document.getElementById(key + '-container');
-      if (el && s[key]) {
-        const imgUrl = driveUrl(s[key]) || s[key];
-        const isPersonnel = key === 'personnel_image_slideshow';
-        el.innerHTML = `<img src="${imgUrl}" style="width:${isPersonnel?'90%':'100%'};height:${isPersonnel?'90%':'100%'};object-fit:contain;">`;
-      }
-    });
-
-    // Introductory Video
-    if (s['introductory_video']) {
-      const el = document.getElementById('introductory_video-container');
-      if (el) {
-        // Support YouTube links
-        const ytMatch = s['introductory_video'].match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]+)/);
-        if (ytMatch) {
-          el.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&mute=1&loop=1&playlist=${ytMatch[1]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="display:block;"></iframe>`;
-        } else {
-          el.innerHTML = `<video src="${s['introductory_video']}" autoplay muted loop style="width:100%;height:100%;object-fit:cover;"></video>`;
-        }
-      }
-    }
-
-    // RESPONSABLE Framework image
-    // About Us contact info
-    if (s['contact_number']) {
-      const el = document.getElementById('about-contact');
-      if (el) el.textContent = s['contact_number'];
-    }
-    if (s['email_address']) {
-      const el = document.getElementById('about-email');
-      if (el) el.textContent = s['email_address'];
-    }
-
-  } catch(e) { console.error('Settings load error:', e); }
+    if (s['contact_number']) { const el = document.getElementById('about-contact'); if (el) el.textContent = s['contact_number']; }
+    if (s['email_address'])  { const el = document.getElementById('about-email');   if (el) el.textContent = s['email_address']; }
+  } catch(e) { console.error('Settings error:', e); }
 }
 
-loadEnrollment();
-loadPPAs();
-loadAnnouncements();
-loadSettings();
-
-
-// ===== WINNERS SLIDESHOW =====
-let winnersData = [];
-let currentWinnerIndex = 0;
-let winnersInterval = null;
-
-function formatDate(dateStr) {
-  if (!dateStr) return '';
-  const d = new Date(dateStr);
-  if (isNaN(d)) return dateStr;
-  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase();
-}
-
-function renderWinner(w) {
-  // Support both lowercase and uppercase column names
-  const name = w.name || w.Name || '';
-  const rank = w.rank || w.Rank || '';
-  const event = w.event || w.Event || '';
-  const date = w.date || w.Date || '';
-  const section = w.section || w.Section || '';
-  const grade = w.grade || w.Grade || '';
-  const coach = w.coach || w.Coach || '';
-  const sectionDisplay = grade && section ? `${grade} - ${section}` : grade || section;
-
-  const rankColors = {
-    'FIRST': '#f5c200', 'SECOND': '#C0C0C0', 'THIRD': '#CD7F32',
-    '1ST': '#f5c200', '2ND': '#C0C0C0', '3RD': '#CD7F32',
-  };
-  const rankKey = rank.toUpperCase().replace(' PLACE','').trim();
-  const rankColor = rankColors[rankKey] || 'white';
-  const rankDisplay = rank.toUpperCase();
-
-  return `
-    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; width:100%; height:100%; padding:30px 60px; gap:14px;">
-      <div style="font-family:'Merriweather',serif; font-size:2.8rem; font-weight:900; color:var(--yellow); letter-spacing:4px; text-shadow:0 2px 16px rgba(245,194,0,0.5); animation:pulse 2s ease-in-out infinite;">🏆 CONGRATULATIONS! 🏆</div>
-      <div style="font-family:'Merriweather',serif; font-size:4rem; font-weight:900; color:white; line-height:1.1; text-transform:uppercase; text-shadow:0 2px 20px rgba(0,0,0,0.5);">${name}</div>
-      ${sectionDisplay ? `<div style="font-size:1.8rem; color:rgba(255,255,255,0.8); font-weight:600; font-style:italic;">${sectionDisplay}</div>` : ''}
-      <div style="background:${rankColor}; color:#0d1e6b; font-family:'Merriweather',serif; font-size:2.6rem; font-weight:900; padding:12px 48px; border-radius:10px; letter-spacing:3px; box-shadow:0 6px 28px rgba(0,0,0,0.35);">${rankDisplay}</div>
-      <div style="font-size:2.2rem; font-weight:800; color:white; text-transform:uppercase; letter-spacing:2px;">${event}</div>
-      ${date ? `<div style="font-size:1.6rem; color:rgba(255,255,255,0.75); font-weight:600;">${formatDate(date)}</div>` : ''}
-      ${coach ? `<div style="font-size:1.5rem; color:rgba(255,255,255,0.65);"><span style="color:var(--yellow); font-weight:800;">${coach}</span></div>` : ''}
-    </div>`;
-}
-
-function showWinner(idx) {
-  const el = document.getElementById('winners-slide-container');
-  if (!el || !winnersData.length) return;
-  el.innerHTML = renderWinner(winnersData[idx]);
-}
-
-async function loadWinners() {
-  try {
-    const data = await fetchCSV('winners');
-    if (!data.length) return;
-    winnersData = data;
-    showWinner(0);
-    if (winnersInterval) clearInterval(winnersInterval);
-    if (winnersData.length > 1) {
-      winnersInterval = setInterval(() => {
-        currentWinnerIndex = (currentWinnerIndex + 1) % winnersData.length;
-        showWinner(currentWinnerIndex);
-      }, 8000);
-    }
-  } catch(e) { console.error('Winners load error:', e); }
-}
-
-// ===== EVENTS SLIDE - Full photo =====
-async function loadEventsSlide() {
-  try {
-    const data = await fetchSheetCSV('https://docs.google.com/spreadsheets/d/e/2PACX-1vTcahFgkkHP_K5x8dFXCxj77xXNDmZDnmprNTY5xgGytr0WcY6bdlrKNHYpGfjkB7aP0ypydeWbf7ip/pub?gid=0&single=true&output=csv');
-    const el = document.getElementById('events-slide-container');
-    if (!el || !data.length) return;
-    const row = data.find(r => r.photo_url);
-    if (!row) return;
-    const url = driveThumbUrl(row.photo_url).replace('=w200','=w1600');
-    el.innerHTML = `<img src="${url}" style="width:80%;height:80%;object-fit:cover;object-position:center center;">`;
-  } catch(e) { console.error('Events slide error:', e); }
-}
-
-// ===== LINKS SLIDE - Full photo =====
-async function loadLinksSlide() {
-  try {
-    const data = await fetchSheetCSV('https://docs.google.com/spreadsheets/d/e/2PACX-1vRCisp-y68BU0-E1JSfLwZ64KymhaPibM02ozwyKq4fObnm2Tx0kEafSbG456Woh-Ytsjvjf117aSEp/pub?gid=0&single=true&output=csv');
-    const el = document.getElementById('links-slide-container');
-    if (!el || !data.length) return;
-    const row = data.find(r => r.photo_url);
-    if (!row) return;
-    const url = driveThumbUrl(row.photo_url).replace('=w200','=w1600');
-    el.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover;object-position:center center;">`;
-  } catch(e) { console.error('Links slide error:', e); }
-}
-
+// ============================================================
+// MAIN ANNOUNCEMENTS + EVENTS (body section)
+// ============================================================
 async function loadMainAnnouncements() {
   try {
     const data = await fetchCSV('announcements');
@@ -1989,14 +1675,10 @@ async function loadMainAnnouncements() {
     el.innerHTML = data.map(row => {
       const d = new Date(row.date);
       const day = isNaN(d) ? '--' : d.getDate();
-      const mon = isNaN(d) ? row.date : d.toLocaleString('en', {month:'short'});
+      const mon = isNaN(d) ? row.date : d.toLocaleString('en',{month:'short'});
       return `<div class="announcement-card">
         <div class="ann-date"><span class="day">${day}</span><span>${mon}</span></div>
-        <div class="ann-content">
-          <span class="ann-tag">${row.tag||''}</span>
-          <h4>${row.title||''}</h4>
-          <p>${row.content||''}</p>
-        </div>
+        <div class="ann-content"><span class="ann-tag">${row.tag||''}</span><h4>${row.title||''}</h4><p>${row.content||''}</p></div>
       </div>`;
     }).join('');
   } catch(e) { console.error('Main announcements error:', e); }
@@ -2011,27 +1693,18 @@ async function loadMainEvents() {
     el.innerHTML = data.map(row => {
       const d = new Date(row.date);
       const day = isNaN(d) ? '--' : d.getDate();
-      const mon = isNaN(d) ? row.date : d.toLocaleString('en', {month:'short'});
+      const mon = isNaN(d) ? row.date : d.toLocaleString('en',{month:'short'});
       return `<div class="event-card">
-        <div class="event-header">
-          <div class="event-date-box"><span class="eday">${day}</span><span>${mon}</span></div>
-          <h4>${row.title||''}</h4>
-        </div>
-
-        <div class="event-body">
-          <p>${row.description||''}</p>
-        </div>
+        <div class="event-header"><div class="event-date-box"><span class="eday">${day}</span><span>${mon}</span></div><h4>${row.title||''}</h4></div>
+        <div class="event-body"><p>${row.description||''}</p></div>
       </div>`;
     }).join('');
   } catch(e) { console.error('Main events error:', e); }
 }
 
-loadMainAnnouncements();
-loadMainEvents();
-loadWinners();
-loadEventsSlide();
-
-// ===== SHARED HELPERS FOR NEW DYNAMIC SLIDES =====
+// ============================================================
+// EVENTS SLIDE / LINKS SLIDE (full photo)
+// ============================================================
 function driveThumbUrl(url) {
   if (!url) return '';
   const m = url.match(/\/d\/([a-zA-Z0-9_-]{25,})/);
@@ -2040,6 +1713,33 @@ function driveThumbUrl(url) {
   return m2 ? 'https://drive.google.com/uc?export=view&id=' + m2[0] : url;
 }
 
+async function loadEventsSlide() {
+  try {
+    const data = await fetchSheetCSV('https://docs.google.com/spreadsheets/d/e/2PACX-1vTcahFgkkHP_K5x8dFXCxj77xXNDmZDnmprNTY5xgGytr0WcY6bdlrKNHYpGfjkB7aP0ypydeWbf7ip/pub?gid=0&single=true&output=csv');
+    const el = document.getElementById('events-slide-container');
+    if (!el || !data.length) return;
+    const row = data.find(r => r.photo_url);
+    if (!row) return;
+    const url = driveThumbUrl(row.photo_url).replace('=w200','=w1600');
+    el.innerHTML = `<img src="${url}" style="width:80%;height:80%;object-fit:cover;object-position:center center;">`;
+  } catch(e) { console.error('Events slide error:', e); }
+}
+
+async function loadLinksSlide() {
+  try {
+    const data = await fetchSheetCSV('https://docs.google.com/spreadsheets/d/e/2PACX-1vRCisp-y68BU0-E1JSfLwZ64KymhaPibM02ozwyKq4fObnm2Tx0kEafSbG456Woh-Ytsjvjf117aSEp/pub?gid=0&single=true&output=csv');
+    const el = document.getElementById('links-slide-container');
+    if (!el || !data.length) return;
+    const row = data.find(r => r.photo_url);
+    if (!row) return;
+    const url = driveThumbUrl(row.photo_url).replace('=w200','=w1600');
+    el.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover;object-position:center center;">`;
+  } catch(e) { console.error('Links slide error:', e); }
+}
+
+// ============================================================
+// PERSONNEL CARD HELPERS
+// ============================================================
 function slideCard(row, extraLine) {
   const photo = row.photo_url ? driveThumbUrl(row.photo_url) : '';
   const photoHtml = photo
@@ -2064,7 +1764,7 @@ function slideCardLarge(row, extraLine) {
     <div style="width:72px;aspect-ratio:5/7;overflow:hidden;background:rgba(255,255,255,0.15);border-radius:5px 5px 0 0;flex-shrink:0;">${photoHtml}</div>
     <div style="padding:3px 4px;text-align:center;width:144px;background:rgba(255,255,255,0.1);border-radius:0 0 5px 5px;flex-shrink:0;">
       <div style="font-size:0.54rem;font-weight:700;color:white;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${row.name||''}</div>
-      <div style="font-size:0.48rem;color:var(--yellow);font-weight:600;line-height:1.2;white-space:normal;word-break:break-word;overflow-wrap:break-word;">${row.position||''}</div>
+      <div style="font-size:0.48rem;color:var(--yellow);font-weight:600;line-height:1.2;white-space:normal;word-break:break-word;">${row.position||''}</div>
       ${extraLine ? `<div style="font-size:0.43rem;color:rgba(255,255,255,0.75);line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${extraLine}</div>` : ''}
     </div>
   </div>`;
@@ -2100,165 +1800,166 @@ function slideCardSmallDynamic(row, extraLine) {
   </div>`;
 }
 
-function renderRow(cards, gap) {
-  return `<div style="display:flex;justify-content:center;gap:${gap||6}px;flex-wrap:nowrap;">${cards.join('')}</div>`;
-}
-
-async function fetchSheetCSV(url) {
-  const res = await fetch(url);
-  const text = await res.text();
-  const rows = text.trim().split('\n').map(r => {
-    const result = []; let cur = '', inQ = false;
-    for (let c of r) {
-      if (c === '"') inQ = !inQ;
-      else if (c === ',' && !inQ) { result.push(cur.trim()); cur = ''; }
-      else cur += c;
-    }
-    result.push(cur.trim()); return result;
-  });
-  const headers = rows[0];
-  return rows.slice(1).filter(r => r.some(c => c)).map(row => Object.fromEntries(headers.map((h,i) => [h.trim(), row[i]||''])));
-}
-
 function spreadRow(cards, noGap) {
   const gap = noGap ? '0' : '10px';
-  const mb = noGap ? '0' : '6px';
-  if (cards.length === 1) {
-    return `<div style="display:flex;justify-content:center;width:100%;margin-bottom:${mb};">${cards[0]}</div>`;
-  }
+  const mb  = noGap ? '0' : '6px';
+  if (cards.length === 1) return `<div style="display:flex;justify-content:center;width:100%;margin-bottom:${mb};">${cards[0]}</div>`;
   return `<div style="display:flex;justify-content:center;gap:${gap};width:100%;margin-bottom:${mb};">${cards.join('')}</div>`;
 }
 
-// ===== DIVISION TOP MANAGEMENT =====
+// ============================================================
+// DIVISION TOP MANAGEMENT
+// ============================================================
 async function loadDivisionTop() {
   try {
     const data = await fetchSheetCSV('https://docs.google.com/spreadsheets/d/e/2PACX-1vSmMjv6iYxzyoMej_5ki7hSnFgOEmOH0lCtZaOmcnJWu_m3Zzft5jvmo9YfH6NrAEspt6I2dIm6cPFz/pub?gid=0&single=true&output=csv');
     const el = document.getElementById('division-top-container');
     if (!el || !data.length) return;
     const valid = data.filter(r => r.name);
-    const sds = valid.slice(0, 1);
-    const asds = valid.slice(1, 4);
-    const chiefs = valid.slice(4, 6);
+    const sds   = valid.slice(0,1);
+    const asds   = valid.slice(1,4);
+    const chiefs = valid.slice(4,6);
     let html = '';
-    if (sds.length) html += spreadRow(sds.map(r => slideCardLargeDynamic(r, '')));
-    if (asds.length) html += spreadRow(asds.map(r => slideCardLargeDynamic(r, '')));
-    if (chiefs.length) html += spreadRow(chiefs.map(r => slideCardLargeDynamic(r, '')));
+    if (sds.length)   html += spreadRow(sds.map(r => slideCardLargeDynamic(r,'')));
+    if (asds.length)  html += spreadRow(asds.map(r => slideCardLargeDynamic(r,'')));
+    if (chiefs.length) html += spreadRow(chiefs.map(r => slideCardLargeDynamic(r,'')));
     el.innerHTML = html;
   } catch(e) { console.error('Division top error:', e); }
 }
 
-// ===== MULANAY DISTRICT 2 SCHOOL HEADS =====
+// ============================================================
+// MULANAY DISTRICT 2
+// ============================================================
 async function loadDistrict2() {
   try {
     const data = await fetchSheetCSV('https://docs.google.com/spreadsheets/d/e/2PACX-1vRKOKh4G_935FBpvUgA7Qc2r7VHLmptzx4CBiTNTDTcDDmadKk20gJWSKBEFPceOF0VMDNDubDiuttd/pub?gid=0&single=true&output=csv');
     const el = document.getElementById('district2-container');
     if (!el || !data.length) return;
-    const valid = data.filter(function(r){ return r.name && r.name.trim(); });
-    const psds = valid.slice(0, 1);
-    const heads1 = valid.slice(1, 9);
-    const heads2 = valid.slice(9, 17);
+    const valid = data.filter(r => r.name && r.name.trim());
+    const psds   = valid.slice(0,1);
+    const heads1 = valid.slice(1,9);
+    const heads2 = valid.slice(9,17);
     let html = '';
-    if (psds.length) html += spreadRow(psds.map(function(r){ return slideCardLarge(r, r.school||''); }));
-    if (heads1.length) html += spreadRow(heads1.map(function(r){ return slideCardLarge(r, r.school||''); }));
-    if (heads2.length) html += spreadRow(heads2.map(function(r){ return slideCardLarge(r, r.school||''); }));
+    if (psds.length)   html += spreadRow(psds.map(r => slideCardLarge(r, r.school||'')));
+    if (heads1.length) html += spreadRow(heads1.map(r => slideCardLarge(r, r.school||'')));
+    if (heads2.length) html += spreadRow(heads2.map(r => slideCardLarge(r, r.school||'')));
     el.innerHTML = html;
   } catch(e) { console.error('District2 error:', e); }
 }
 
-// ===== PERSONNEL SLIDE =====
+// ============================================================
+// PERSONNEL SLIDE
+// ============================================================
 async function loadPersonnelSlide() {
   try {
     const data = await fetchSheetCSV('https://docs.google.com/spreadsheets/d/e/2PACX-1vTsazmsH513VVHt4PxV6TH1vWjUdO23C9YgfaBu_2VJIZ5WDgzkPtkeJtVeBhnSeEckz6Qantg2swAX/pub?gid=0&single=true&output=csv');
     const el = document.getElementById('personnel-slide-container');
     if (!el || !data.length) return;
-    const valid = data.filter(r => r.name);
+    const valid     = data.filter(r => r.name);
     const principal = valid.filter(r => /principal/i.test(r.position));
-    const head = valid.filter(r => /head teacher/i.test(r.position));
-    const rest = valid.filter(r => !/principal/i.test(r.position) && !/head teacher/i.test(r.position));
-    const line3 = rest.slice(0, 10);
-    const line4 = rest.slice(10, 20);
-
+    const head      = valid.filter(r => /head teacher/i.test(r.position));
+    const rest      = valid.filter(r => !/principal/i.test(r.position) && !/head teacher/i.test(r.position));
+    const line3 = rest.slice(0,10);
+    const line4 = rest.slice(10,20);
     function pCard(r, large) {
       const gs = [r.grade, r.section].filter(Boolean).join(' - ');
       return large ? slideCardLarge(r, gs) : slideCard(r, gs);
     }
-
     let html = '';
-    if (principal.length) html += spreadRow(principal.map(r => pCard(r, true)), true);
-    if (head.length) html += spreadRow(head.map(r => pCard(r, false)), true);
-    if (line3.length) html += spreadRow(line3.map(r => pCard(r, false)), true);
-    if (line4.length) html += spreadRow(line4.map(r => pCard(r, false)), true);
+    if (principal.length) html += spreadRow(principal.map(r => pCard(r,true)),true);
+    if (head.length)      html += spreadRow(head.map(r => pCard(r,false)),true);
+    if (line3.length)     html += spreadRow(line3.map(r => pCard(r,false)),true);
+    if (line4.length)     html += spreadRow(line4.map(r => pCard(r,false)),true);
     el.innerHTML = html;
   } catch(e) { console.error('Personnel slide error:', e); }
 }
 
-// ===== SPTA SLIDE =====
+// ============================================================
+// SPTA
+// ============================================================
 async function loadSptaSlide() {
   try {
     const data = await fetchSheetCSV('https://docs.google.com/spreadsheets/d/e/2PACX-1vRSPY_QNzh4q_Lb3CS5Sz4zv6OG9L0I1c5jycD4C6rqPfaL89O980kyjZIknJq5dVbC-wuWB_CIXdG0/pub?gid=0&single=true&output=csv');
     const el = document.getElementById('spta-slide-inner');
     if (!el || !data.length) return;
-    const valid = data.filter(r => r.name);
-    const president = valid.slice(0, 1);
-    const vp = valid.slice(1, 2);
-    const officers = valid.slice(2, 12).filter(r => r.name);
+    const valid    = data.filter(r => r.name);
+    const president = valid.slice(0,1);
+    const vp       = valid.slice(1,2);
+    const officers  = valid.slice(2,12).filter(r => r.name);
     const remaining = valid.slice(12).filter(r => r.name);
     let html = '';
-    if (president.length) html += spreadRow(president.map(r => slideCardSmallDynamic(r, '')));
-    if (vp.length) html += spreadRow(vp.map(r => slideCardSmallDynamic(r, '')));
-    if (officers.length) html += spreadRow(officers.map(r => slideCardSmallDynamic(r, '')));
-    if (remaining.length) html += spreadRow(remaining.map(r => slideCardSmallDynamic(r, '')));
+    if (president.length) html += spreadRow(president.map(r => slideCardSmallDynamic(r,'')));
+    if (vp.length)        html += spreadRow(vp.map(r => slideCardSmallDynamic(r,'')));
+    if (officers.length)  html += spreadRow(officers.map(r => slideCardSmallDynamic(r,'')));
+    if (remaining.length) html += spreadRow(remaining.map(r => slideCardSmallDynamic(r,'')));
     el.innerHTML = html;
-  } catch(e) { console.error('SPTA slide error:', e); }
+  } catch(e) { console.error('SPTA error:', e); }
 }
 
-// ===== SELG SLIDE =====
+// ============================================================
+// SELG
+// ============================================================
 async function loadSelgSlide() {
   try {
     const data = await fetchSheetCSV('https://docs.google.com/spreadsheets/d/e/2PACX-1vTOAMZaFwJWN5SARqtQLnKzJWn7dYVfBx0a4jfSRB6cYgRVu4qjJ0CqtzGMkx6lNXidUaoxjaDm7TBW/pub?gid=0&single=true&output=csv');
     const el = document.getElementById('selg-slide-inner');
     if (!el || !data.length) return;
-    const valid = data.filter(r => r.name);
-    const president = valid.slice(0, 1);
-    const vp = valid.slice(1, 2);
-    const adviser = valid.filter(r => /adviser/i.test(r.position));
+    const valid   = data.filter(r => r.name);
+    const president = valid.slice(0,1);
+    const vp      = valid.slice(1,2);
+    const adviser  = valid.filter(r => /adviser/i.test(r.position));
     const officers = valid.slice(2).filter(r => !(/adviser/i.test(r.position)));
     let html = '';
-    if (president.length) html += spreadRow(president.map(r => slideCardSmallDynamic(r, '')));
-    if (vp.length) html += spreadRow(vp.map(r => slideCardSmallDynamic(r, '')));
-    if (officers.length) html += spreadRow(officers.map(r => slideCardSmallDynamic(r, '')));
-    if (adviser.length) html += spreadRow(adviser.map(r => slideCardSmallDynamic(r, '')));
+    if (president.length) html += spreadRow(president.map(r => slideCardSmallDynamic(r,'')));
+    if (vp.length)        html += spreadRow(vp.map(r => slideCardSmallDynamic(r,'')));
+    if (officers.length)  html += spreadRow(officers.map(r => slideCardSmallDynamic(r,'')));
+    if (adviser.length)   html += spreadRow(adviser.map(r => slideCardSmallDynamic(r,'')));
     el.innerHTML = html;
-  } catch(e) { console.error('SELG slide error:', e); }
+  } catch(e) { console.error('SELG error:', e); }
 }
 
-// ===== TEACHERS CLUB SLIDE =====
+// ============================================================
+// TEACHERS CLUB
+// ============================================================
 async function loadClubSlide() {
   try {
     const data = await fetchSheetCSV('https://docs.google.com/spreadsheets/d/e/2PACX-1vTGf-aqL7WXYtJd5Q_PjXQWOTx8xePueMmAgB8eqtv7VtcYIPEFvlPyKPFKg1QBFAjJyWLXcH4sTuKO/pub?gid=0&single=true&output=csv');
     const el = document.getElementById('club-slide-inner');
     if (!el || !data.length) return;
-    const valid = data.filter(r => r.name);
-    const president = valid.slice(0, 1);
-    const vp = valid.slice(1, 2);
-    const adviser = valid.filter(r => /adviser/i.test(r.position));
-    const officers = valid.slice(2).filter(r => !(/adviser/i.test(r.position)));
+    const valid    = data.filter(r => r.name);
+    const president = valid.slice(0,1);
+    const vp       = valid.slice(1,2);
+    const adviser   = valid.filter(r => /adviser/i.test(r.position));
+    const officers  = valid.slice(2).filter(r => !(/adviser/i.test(r.position)));
     let html = '';
-    if (president.length) html += spreadRow(president.map(r => slideCardSmallDynamic(r, '')));
-    if (vp.length) html += spreadRow(vp.map(r => slideCardSmallDynamic(r, '')));
-    if (officers.length) html += spreadRow(officers.map(r => slideCardSmallDynamic(r, '')));
-    if (adviser.length) html += spreadRow(adviser.map(r => slideCardSmallDynamic(r, '')));
+    if (president.length) html += spreadRow(president.map(r => slideCardSmallDynamic(r,'')));
+    if (vp.length)        html += spreadRow(vp.map(r => slideCardSmallDynamic(r,'')));
+    if (officers.length)  html += spreadRow(officers.map(r => slideCardSmallDynamic(r,'')));
+    if (adviser.length)   html += spreadRow(adviser.map(r => slideCardSmallDynamic(r,'')));
     el.innerHTML = html;
-  } catch(e) { console.error('Club slide error:', e); }
+  } catch(e) { console.error('Club error:', e); }
 }
 
+// ============================================================
+// INIT — call all loaders
+// ============================================================
+loadWelcomeGuests();
+loadWinnersSlide();
+loadEnrollment();
+loadLiquidationSlide();
+loadPPAs();
+loadAnnouncements();
+loadSettings();
+loadMainAnnouncements();
+loadMainEvents();
+loadEventsSlide();
+loadLinksSlide();
 loadDivisionTop();
 loadDistrict2();
 loadPersonnelSlide();
 loadSptaSlide();
 loadSelgSlide();
 loadClubSlide();
-loadLinksSlide();
 </script>
 </body>
 </html>
