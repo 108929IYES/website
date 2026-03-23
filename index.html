@@ -711,36 +711,32 @@
         <!-- stripe accent -->
         <div style="position:absolute;top:0;right:0;width:40%;height:100%;background:repeating-linear-gradient(-55deg,transparent,transparent 18px,rgba(255,255,255,0.025) 18px,rgba(255,255,255,0.025) 36px);"></div>
 
-        <!-- LEFT: Logo -->
-        <div style="flex:0 0 auto;height:100%;display:flex;align-items:center;justify-content:center;padding:16px 0 16px 40px;position:relative;z-index:2;">
-          <img src="assets/logo.png" alt="IYES Logo" style="height:100%;max-height:648px;width:auto;object-fit:contain;filter:drop-shadow(0 4px 32px rgba(0,0,0,0.4));animation:float 4s ease-in-out infinite;">
-        </div>
-
-        <!-- Spacer + Divider -->
-        <div style="flex:0 0 60px;position:relative;z-index:2;"></div>
-        <div style="width:3px;height:70%;background:rgba(255,255,255,0.5);border-radius:2px;flex-shrink:0;position:relative;z-index:2;"></div>
-        <div style="flex:0 0 60px;position:relative;z-index:2;"></div>
-
-        <!-- RIGHT: Text Area -->
-        <div style="flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding-right:60px;gap:10px;position:relative;z-index:2;overflow:hidden;">
-
-          <!-- Main welcome text -->
-          <div id="welcome-main-text" style="display:flex;flex-direction:column;gap:10px;">
+        <!-- ORIGINAL CONTENT (will be hidden when guest shows) -->
+        <div id="welcome-original" style="width:100%;height:100%;display:flex;flex-direction:row;align-items:center;justify-content:center;position:absolute;inset:0;transition:opacity 0.8s ease;">
+          <!-- LEFT: Logo -->
+          <div style="flex:0 0 auto;height:100%;display:flex;align-items:center;justify-content:center;padding:16px 0 16px 40px;position:relative;z-index:2;">
+            <img src="assets/logo.png" alt="IYES Logo" style="height:100%;max-height:648px;width:auto;object-fit:contain;filter:drop-shadow(0 4px 32px rgba(0,0,0,0.4));animation:float 4s ease-in-out infinite;">
+          </div>
+          <div style="flex:0 0 60px;position:relative;z-index:2;"></div>
+          <div style="width:3px;height:70%;background:rgba(255,255,255,0.5);border-radius:2px;flex-shrink:0;position:relative;z-index:2;"></div>
+          <div style="flex:0 0 60px;position:relative;z-index:2;"></div>
+          <!-- RIGHT: Text -->
+          <div style="flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding-right:60px;gap:10px;position:relative;z-index:2;">
             <div style="font-size:1.1rem;font-weight:800;color:var(--yellow);letter-spacing:4px;text-transform:uppercase;">WELCOME TO</div>
             <div style="font-family:'Merriweather',serif;font-size:4.2rem;font-weight:900;color:white;line-height:1.05;text-transform:uppercase;text-shadow:0 2px 16px rgba(0,0,0,0.4);">ILAYANG YUNI</div>
             <div style="font-family:'Merriweather',serif;font-size:2.6rem;font-weight:900;color:rgba(255,255,255,0.9);line-height:1.1;text-transform:uppercase;">ELEMENTARY SCHOOL</div>
             <div style="width:80px;height:4px;background:var(--yellow);border-radius:2px;margin:4px 0;"></div>
             <div style="font-size:1.1rem;color:rgba(255,255,255,0.75);font-style:italic;letter-spacing:0.5px;">"Sa Ilayang Yuni, Lahat RESPONSABLE"</div>
           </div>
-
-          <!-- Guest area (hidden initially, full screen overlay) -->
-          <div id="welcome-guest-area" style="position:absolute;inset:0;background:linear-gradient(135deg,#0d1e6b 0%,#1a2fa0 55%,#2a45c8 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px;gap:24px;opacity:0;transition:opacity 0.8s ease;pointer-events:none;z-index:10;">
-            <div style="font-size:2rem;font-weight:800;color:var(--yellow);letter-spacing:6px;text-transform:uppercase;">WELCOME</div>
-            <div id="welcome-guest-name" style="font-family:'Merriweather',serif;font-size:5rem;font-weight:900;color:white;line-height:1.05;text-transform:uppercase;text-shadow:0 4px 24px rgba(0,0,0,0.5);"></div>
-            <div id="welcome-guest-position" style="font-size:1.8rem;font-weight:600;color:rgba(255,255,255,0.85);line-height:1.4;"></div>
-          </div>
-
         </div>
+
+        <!-- GUEST OVERLAY (full screen, hidden initially) -->
+        <div id="welcome-guest-area" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px;gap:20px;opacity:0;transition:opacity 0.8s ease;z-index:20;">
+          <div style="font-family:'Merriweather',serif;font-size:2.5rem;font-weight:900;color:var(--yellow);letter-spacing:6px;text-transform:uppercase;">WELCOME</div>
+          <div id="welcome-guest-name" style="font-family:'Merriweather',serif;font-size:5.5rem;font-weight:900;color:white;line-height:1.05;text-transform:uppercase;text-shadow:0 4px 24px rgba(0,0,0,0.5);"></div>
+          <div id="welcome-guest-position" style="font-size:2rem;font-weight:600;color:rgba(255,255,255,0.85);line-height:1.4;"></div>
+        </div>
+
       </div>
     </div>
 
@@ -1277,7 +1273,7 @@ async function loadWelcomeGuests() {
     const guests = data.filter(r => r.name && toDateStr(r.date) === today);
     if (!guests.length) return; // walang bisita ngayon
 
-    const mainText   = document.getElementById('welcome-main-text');
+    const original   = document.getElementById('welcome-original');
     const guestArea  = document.getElementById('welcome-guest-area');
     const guestName  = document.getElementById('welcome-guest-name');
     const guestPos   = document.getElementById('welcome-guest-position');
@@ -1286,22 +1282,20 @@ async function loadWelcomeGuests() {
 
     function showGuest(idx) {
       const g = guests[idx];
+      // Get position — try all possible key variants
+      const pos = g.position || g['position '] || Object.entries(g).find(([k]) => k.includes('position'))?.[1] || '';
+      console.log('Guest data:', g, 'Position found:', pos);
 
-      // Update content
       guestName.textContent = g.name || '';
-      guestPos.textContent  = g.position || '';
+      guestPos.textContent  = pos;
 
-      // Reset then fade in
+      // Hide original content
+      if (original) original.style.opacity = '0';
+
+      // Fade in guest overlay
       guestArea.style.opacity = '0';
-      guestArea.style.pointerEvents = 'none';
-      setTimeout(() => {
-        guestArea.style.opacity = '1';
-        guestArea.style.pointerEvents = 'auto';
-      }, 100);
+      setTimeout(() => { guestArea.style.opacity = '1'; }, 200);
     }
-
-    // Reset main text (no transform needed anymore)
-    mainText.style.transform = '';
 
     // Wait 10 seconds before showing first guest
     setTimeout(() => {
@@ -1440,6 +1434,13 @@ async function loadWinnersSlide() {
     const el = document.getElementById('winners-slide-container');
     if (!el) return;
 
+    // Set slide delay FIRST before anything else
+    const winnerSlideIndex = Array.from(document.querySelectorAll('.hero-slideshow .slide'))
+      .findIndex(s => s.querySelector('#winners-slide-container'));
+    if (winnerSlideIndex !== -1) {
+      slideDelays[winnerSlideIndex] = combined.length * 10000;
+    }
+
     let idx = 0;
 
     function renderEntry(i) {
@@ -1475,13 +1476,6 @@ async function loadWinnersSlide() {
         }
         renderEntry(idx);
       }, 10000);
-    }
-
-    // Dynamic slide duration: 10s per entry
-    const winnerSlideIndex = Array.from(document.querySelectorAll('.hero-slideshow .slide'))
-      .findIndex(s => s.querySelector('#winners-slide-container'));
-    if (winnerSlideIndex !== -1) {
-      slideDelays[winnerSlideIndex] = combined.length * 10000;
     }
 
   } catch(e) { console.error('Winners slide error:', e); }
