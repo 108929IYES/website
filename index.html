@@ -733,10 +733,11 @@
             <div style="font-size:1.1rem;color:rgba(255,255,255,0.75);font-style:italic;letter-spacing:0.5px;">"Sa Ilayang Yuni, Lahat RESPONSABLE"</div>
           </div>
 
-          <!-- Guest area (hidden initially) -->
-          <div id="welcome-guest-area">
-            <div id="welcome-guest-name" style="font-family:'Merriweather',serif;font-size:3rem;font-weight:900;color:var(--yellow);line-height:1.1;text-transform:uppercase;text-shadow:0 2px 16px rgba(0,0,0,0.4);margin-top:10px;"></div>
-            <div id="welcome-guest-position" style="font-size:1.4rem;font-weight:700;color:rgba(255,255,255,0.85);line-height:1.4;margin-top:6px;"></div>
+          <!-- Guest area (hidden initially, full screen overlay) -->
+          <div id="welcome-guest-area" style="position:absolute;inset:0;background:linear-gradient(135deg,#0d1e6b 0%,#1a2fa0 55%,#2a45c8 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px;gap:24px;opacity:0;transition:opacity 0.8s ease;pointer-events:none;z-index:10;">
+            <div style="font-size:2rem;font-weight:800;color:var(--yellow);letter-spacing:6px;text-transform:uppercase;">WELCOME</div>
+            <div id="welcome-guest-name" style="font-family:'Merriweather',serif;font-size:5rem;font-weight:900;color:white;line-height:1.05;text-transform:uppercase;text-shadow:0 4px 24px rgba(0,0,0,0.5);"></div>
+            <div id="welcome-guest-position" style="font-size:1.8rem;font-weight:600;color:rgba(255,255,255,0.85);line-height:1.4;"></div>
           </div>
 
         </div>
@@ -1286,21 +1287,21 @@ async function loadWelcomeGuests() {
     function showGuest(idx) {
       const g = guests[idx];
 
-      // fade out guest area first (for transitions after the first)
-      guestArea.classList.remove('visible');
-      guestArea.style.transform = 'translateY(40px)';
+      // Update content
+      guestName.textContent = g.name || '';
+      guestPos.textContent  = g.position || '';
 
+      // Reset then fade in
+      guestArea.style.opacity = '0';
+      guestArea.style.pointerEvents = 'none';
       setTimeout(() => {
-        guestName.textContent = g.name || '';
-        guestPos.textContent  = g.position || '';
-
-        // push main text up
-        mainText.style.transform = 'translateY(-40px)';
-
-        // fade in guest
-        guestArea.classList.add('visible');
-      }, 400);
+        guestArea.style.opacity = '1';
+        guestArea.style.pointerEvents = 'auto';
+      }, 100);
     }
+
+    // Reset main text (no transform needed anymore)
+    mainText.style.transform = '';
 
     // Wait 10 seconds before showing first guest
     setTimeout(() => {
@@ -1428,6 +1429,9 @@ async function loadWinnersSlide() {
     const winners   = sortDesc(active.filter(r => r.rank && r.rank.trim() !== ''));
     const graduates = sortDesc(active.filter(r => (!r.rank || r.rank.trim() === '') && r.course && r.course.trim() !== ''));
     const promoted  = sortDesc(active.filter(r => (!r.rank || r.rank.trim() === '') && (!r.course || r.course.trim() === '') && r.promotion && r.promotion.trim() !== ''));
+
+    console.log('Winners:', winners.length, 'Graduates:', graduates.length, 'Promoted:', promoted.length);
+    console.log('Active data sample:', active[0]);
 
     // Combine in order: winners → graduates → promoted
     const combined = [...winners, ...graduates, ...promoted];
